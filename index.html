@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المسار المهني</title>
+    <style>
+        :root {
+            --bg: #fdfdfd;
+            --text: #374151; /* Softer dark grey */
+            --subtext: #9ca3af;
+            --border: #f3f4f6;
+            --active-bg: #f9fafb;
+            
+            /* Pastel Palette */
+            --p1-light: #E0F2FE; /* Pastel Blue BG */
+            --p1-dark: #7DD3FC;  /* Pastel Blue Accent */
+            
+            --p2-light: #F3E8FF; /* Pastel Purple BG */
+            --p2-dark: #C084FC;  /* Pastel Purple Accent */
+            
+            --p3-light: #FEF3C7; /* Pastel Amber BG */
+            --p3-dark: #FCD34D;  /* Pastel Amber Accent */
+            
+            --p4-light: #DCFCE7; /* Pastel Green BG */
+            --p4-dark: #86EFAC;  /* Pastel Green Accent */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            padding-bottom: 120px;
+        }
+
+        /* --- GRID LIST --- */
+        .grid-container {
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid var(--border);
+        }
+
+        .phase-header {
+            padding: 15px 20px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+            color: #4b5563;
+            margin-top: -1px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Pastel Phases */
+        .p1 { background-color: var(--p1-light); border-right: 6px solid var(--p1-dark); color: #0c4a6e; }
+        .p2 { background-color: var(--p2-light); border-right: 6px solid var(--p2-dark); color: #581c87; }
+        .p3 { background-color: var(--p3-light); border-right: 6px solid var(--p3-dark); color: #78350f; }
+        .p4 { background-color: var(--p4-light); border-right: 6px solid var(--p4-dark); color: #14532d; }
+
+        .row {
+            display: flex;
+            align-items: flex-start; /* Align top for longer descriptions */
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border);
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .row:active { background: var(--active-bg); }
+
+        /* CIRCLE INDICATOR */
+        .circle {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            margin-left: 15px;
+            margin-top: 4px; /* Align with title */
+            flex-shrink: 0;
+            position: relative;
+            background: white;
+        }
+
+        .row.checked .circle {
+            background: #374151;
+            border-color: #374151;
+        }
+        .row.checked .circle::after {
+            content: "";
+            position: absolute;
+            left: 6px; top: 3px;
+            width: 4px; height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .content { flex: 1; }
+        
+        .title { 
+            font-size: 0.95rem; 
+            font-weight: 700; 
+            line-height: 1.4; 
+            color: #111827;
+        }
+        .english-name {
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 400;
+            direction: ltr;
+            display: inline-block;
+        }
+        
+        .desc { 
+            font-size: 0.8rem; 
+            color: #6b7280; 
+            margin-top: 6px; 
+            line-height: 1.5;
+            max-width: 90%;
+        }
+        
+        .time-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 4px 10px;
+            border-radius: 6px;
+            margin-right: 10px;
+            white-space: nowrap;
+            align-self: flex-start;
+            margin-top: 2px;
+        }
+
+        /* Checked State */
+        .row.checked .title { color: #111827; }
+        .row.checked .desc { color: #d1d5db; }
+        .row.checked .english-name { color: #d1d5db; }
+
+        /* --- FOOTER --- */
+        .footer {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
+        }
+
+        .stat-col { display: flex; flex-direction: column; }
+        .stat-lbl { font-size: 0.65rem; text-transform: uppercase; color: #9ca3af; font-weight: 700; letter-spacing: 0.05em; }
+        .stat-val { font-size: 1.2rem; font-weight: 800; color: #374151; }
+
+        .progress-bar {
+            flex: 1; margin: 0 25px;
+            height: 8px; background: #f3f4f6;
+            border-radius: 4px; overflow: hidden;
+            direction: ltr;
+        }
+        .fill { height: 100%; background: #374151; width: 0%; transition: width 0.3s; }
+
+    </style>
+</head>
+<body>
+
+    <div class="grid-container">
+
+        <!-- P1: Foundation (Pastel Blue) -->
+        <div class="phase-header p1">المرحلة 1: التأسيس</div>
+        
+        <div class="row" onclick="check(0)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">البرمجة للجميع <span class="english-name">(Programming for Everybody)</span></div>
+                <div class="desc">تعلم أساسيات لغة بايثون، المتغيرات، والحلقات التكرارية لبناء منطق برمجي قوي.</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(1)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">هياكل البيانات <span class="english-name">(Data Structures)</span></div>
+                <div class="desc">تنظيم البيانات المعقدة باستخدام القوائم (Lists) والقواميس (Dictionaries).</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(2)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">الوصول لبيانات الويب <span class="english-name">(Access Web Data)</span></div>
+                <div class="desc">كتابة نصوص برمجية (Scripts) لاستخراج البيانات من المواقع والتعامل مع ملفات JSON.</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(3)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">قواعد البيانات <span class="english-name">(Databases with Python)</span></div>
+                <div class="desc">تصميم وإدارة قواعد بيانات SQL لتخزين واسترجاع المعلومات بكفاءة.</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(4)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">مشروع البيانات <span class="english-name">(Capstone Project)</span></div>
+                <div class="desc">تطبيق عملي شامل لجمع البيانات ومعالجتها وتصويرها بيانيًا.</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(5)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">الجبر الخطي <span class="english-name">(Linear Algebra)</span></div>
+                <div class="desc">فهم المصفوفات والمتجهات؛ اللغة الرياضية التي يستخدمها الذكاء الاصطناعي لرؤية الصور.</div>
+            </div>
+            <div class="time-badge">10 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(6)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">التفاضل والتكامل <span class="english-name">(Multivariate Calculus)</span></div>
+                <div class="desc">إتقان "الانحدار المتدرج" (Gradient Descent) لفهم كيف تتعلم النماذج وتصحح أخطائها.</div>
+            </div>
+            <div class="time-badge">13 يوم</div>
+        </div>
+
+        <div class="row" onclick="check(7)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">تحليل المكونات <span class="english-name">(PCA)</span></div>
+                <div class="desc">تقنية لتبسيط البيانات المعقدة وتقليل أبعادها مع الحفاظ على المعلومات المهمة.</div>
+            </div>
+            <div class="time-badge">10 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(8)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">علوم البيانات <span class="english-name">(Python for Data Science)</span></div>
+                <div class="desc">احتراف مكتبات Pandas و NumPy للتعامل مع الجداول والعمليات الحسابية الضخمة.</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+
+        <!-- P2: Engineering (Pastel Purple) -->
+        <div class="phase-header p2">المرحلة 2: الهندسة (IBM)</div>
+
+        <div class="row" onclick="check(9)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">تعلم الآلة <span class="english-name">(Machine Learning)</span></div>
+                <div class="desc">بناء نماذج التوقع (Regression) والتصنيف (Classification) لحل مشكلات واقعية.</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(10)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">التعلم العميق <span class="english-name">(Intro to Deep Learning)</span></div>
+                <div class="desc">إنشاء أول شبكة عصبية اصطناعية باستخدام مكتبة Keras للتجربة السريعة.</div>
+            </div>
+            <div class="time-badge">8 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(11)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">شبكات PyTorch <span class="english-name">(Deep Neural Networks)</span></div>
+                <div class="desc">إتقان إطار العمل PyTorch؛ المعيار الذهبي للأبحاث الحديثة وتطوير النماذج.</div>
+            </div>
+            <div class="time-badge">13 يوم</div>
+        </div>
+
+        <div class="row" onclick="check(12)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">أنظمة TensorFlow <span class="english-name">(Building Models)</span></div>
+                <div class="desc">العمل على إطار Google الشهير لبناء أنظمة إنتاجية قابلة للتوسع.</div>
+            </div>
+            <div class="time-badge">13 يوم</div>
+        </div>
+
+        <div class="row" onclick="check(13)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">مشروع التخرج <span class="english-name">(AI Capstone)</span></div>
+                <div class="desc">تطوير تطبيق ذكاء اصطناعي متكامل باستخدام التعلم العميق لإثبات مهاراتك.</div>
+            </div>
+            <div class="time-badge">18 يوم</div>
+        </div>
+
+
+        <!-- P3: Cloud (Pastel Amber) -->
+        <div class="phase-header p3">المرحلة 3: السحابة (Google)</div>
+
+        <div class="row" onclick="check(14)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">البيانات الضخمة <span class="english-name">(Big Data & ML)</span></div>
+                <div class="desc">استكشاف البنية التحتية لسحابة Google وكيفية معالجة أحمال العمل الضخمة.</div>
+            </div>
+            <div class="time-badge">6 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(15)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">هندسة الخصائص <span class="english-name">(Feature Engineering)</span></div>
+                <div class="desc">فنون تنظيف البيانات ومعالجتها لتحسين دقة النماذج بشكل جذري.</div>
+            </div>
+            <div class="time-badge">9 أيام</div>
+        </div>
+
+        <div class="row" onclick="check(16)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">نشر النماذج <span class="english-name">(Deploy Models)</span></div>
+                <div class="desc">نقل النموذج من جهازك الشخصي إلى خوادم سحابية لخدمة المستخدمين الحقيقيين.</div>
+            </div>
+            <div class="time-badge">13 يوم</div>
+        </div>
+
+        <div class="row" onclick="check(17)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">عمليات MLOps <span class="english-name">(MLOps Fundamentals)</span></div>
+                <div class="desc">أتمتة عمليات التدريب والنشر لضمان عمل النظام 24/7 دون توقف.</div>
+            </div>
+            <div class="time-badge">13 يوم</div>
+        </div>
+
+
+        <!-- P4: Localization (Pastel Green) -->
+        <div class="phase-header p4">المرحلة 4: التوطين</div>
+
+        <div class="row" onclick="check(18)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">اللغة العربية <span class="english-name">(Arabic NLP)</span></div>
+                <div class="desc">ضبط نموذج AraBERT لفهم النصوص العربية وتحليل المشاعر في اللهجات السعودية.</div>
+            </div>
+            <div class="time-badge">13 يوم</div>
+        </div>
+
+        <div class="row" onclick="check(19)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">الرؤية السعودية <span class="english-name">(Computer Vision)</span></div>
+                <div class="desc">تدريب نموذج YOLO للتعرف على اللوحات المرورية والمركبات في بيئة المملكة.</div>
+            </div>
+            <div class="time-badge">13 يوم</div>
+        </div>
+
+        <div class="row" onclick="check(20)">
+            <div class="circle"></div>
+            <div class="content">
+                <div class="title">الشهادة المهنية <span class="english-name">(Google Certification)</span></div>
+                <div class="desc">المراجعة النهائية المكثفة والاختبارات التجريبية للحصول على الاعتماد الرسمي.</div>
+            </div>
+            <div class="time-badge">20 يوم</div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="stat-col">
+            <span class="stat-lbl">الإنجاز</span>
+            <span class="stat-val" id="pct">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="fill" id="bar"></div>
+        </div>
+        <div class="stat-col" style="text-align:left">
+            <span class="stat-lbl">المتبقي</span>
+            <span class="stat-val" id="left">10.5 أشهر</span>
+        </div>
+    </div>
+
+    <script>
+        const days = [8,8,8,8,8, 10,13,10,8, 8,8,13,13,18, 6,9,13,13, 13,13,20];
+        const total = days.reduce((a,b)=>a+b,0);
+        const KEY = "saudi_tracker_v_pastel";
+
+        function check(idx) {
+            const rows = document.querySelectorAll('.row');
+            rows.forEach((r, i) => {
+                if(i <= idx) r.classList.add('checked');
+                else r.classList.remove('checked');
+            });
+            localStorage.setItem(KEY, idx);
+            calc();
+        }
+
+        function calc() {
+            const rows = document.querySelectorAll('.row');
+            let done = 0;
+            rows.forEach((r, i) => {
+                if(r.classList.contains('checked')) done += days[i];
+            });
+
+            const pct = Math.round((done / total) * 100);
+            document.getElementById('pct').innerText = pct + "%";
+            document.getElementById('bar').style.width = pct + "%";
+
+            const rem = total - done;
+            const months = (rem / 22).toFixed(1);
+            let txt = "";
+            if(rem > 22) txt = months + " أشهر";
+            else if(rem > 0) txt = rem + " أيام";
+            else txt = "مكتمل";
+            document.getElementById('left').innerText = txt;
+        }
+
+        const saved = localStorage.getItem(KEY);
+        if(saved !== null) check(parseInt(saved));
+    </script>
+</body>
+</html>
