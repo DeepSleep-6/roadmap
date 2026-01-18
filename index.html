@@ -8,11 +8,7 @@
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
     <style>
         body { font-family: 'Inter', sans-serif; }
         .font-arabic { font-family: 'IBM Plex Sans Arabic', sans-serif; }
@@ -38,9 +34,6 @@
         };
         const Icon = ({ n, c }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={n==="Check"?3:2} strokeLinecap="round" strokeLinejoin="round" className={c}>{ICONS[n]}</svg>;
 
-        // --- DATA STRUCTURE V1.3 (Bilingual) ---
-        // Phase: [EnTitle, ArTitle, Subtitle, Color, Border, Text, Icon, [Steps...]]
-        // Step:  [EnTitle, ArTitle, Hours, Link, Focus, [Details], CriticalMsg?]
         const DATA = [
             ["PHASE 1: FOUNDATION TRACK", "المسار التأسيسي", "Mathematical Core & Python Basics", "bg-slate-50", "border-slate-200", "text-slate-500", "Calculator", [
                 ["Programming for Everybody", "البرمجة للجميع", 12, "python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"]],
@@ -98,6 +91,11 @@
                 setDone(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
             };
 
+            // [MODIFICATION: DEADLINE CALCULATOR]
+            const targetDate = new Date("2026-05-31");
+            const today = new Date();
+            const daysLeft = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+            
             let totalHrs = 0, doneHrs = 0, totalItems = 0, doneItems = 0;
             DATA.forEach((phase, pIdx) => phase[7].forEach((step, sIdx) => {
                 const id = `${pIdx}-${sIdx}`;
@@ -106,9 +104,17 @@
                 totalHrs += hrs; totalItems++;
                 if (isComp) { doneHrs += hrs; doneItems++; }
             }));
+
+            // Logic: Remaining Hours / Remaining Days = Hours Per Day
+            const remainingHrs = totalHrs - doneHrs;
+            const hrsPerDay = daysLeft > 0 ? (remainingHrs / daysLeft).toFixed(1) : 0;
             
-            const daysLeft = ((totalHrs - doneHrs) / 15) * 7;
-            const timeStr = daysLeft > 60 ? `${Math.round(daysLeft/30)} Months Left` : `${Math.round(daysLeft)} Days Left`;
+            // Dynamic Label: If pace > 4, warn user. If done, celebrate.
+            let timeStr;
+            if (remainingHrs <= 0) timeStr = "Complete!";
+            else if (daysLeft <= 0) timeStr = "Overdue";
+            else timeStr = `Target: ${hrsPerDay} Hrs/Day`;
+
             const pct = Math.round((doneItems / totalItems) * 100);
 
             return (
@@ -117,8 +123,9 @@
                         <div className="max-w-4xl mx-auto px-6">
                             <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
                                 <h1 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">Machine Learning Engineer Roadmap</h1>
-                                <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-stone-100 flex items-center gap-2 text-sm font-semibold">
-                                    <Icon n="Clock" c="w-4 h-4 text-blue-400" /> <span>{timeStr}</span>
+                                <div className={`px-4 py-2 rounded-lg shadow-sm border border-stone-100 flex items-center gap-2 text-sm font-semibold ${hrsPerDay > 4 ? 'bg-rose-50 text-rose-600 border-rose-100' : 'bg-white text-slate-600'}`}>
+                                    <Icon n="Clock" c={`w-4 h-4 ${hrsPerDay > 4 ? 'text-rose-500' : 'text-blue-400'}`} /> 
+                                    <span>{timeStr}</span>
                                 </div>
                             </div>
                             <div className="w-full bg-stone-200 rounded-full h-3 overflow-hidden">
@@ -184,7 +191,7 @@
                             </div>
                         ))}
                     </div>
-                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.3</div>
+                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.4</div>
                 </div>
             );
         };
