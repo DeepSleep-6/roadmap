@@ -74,7 +74,6 @@
             ]]
         ];
 
-        // [MODIFICATION: THEME MAPPING] 
         // Maps Phase Index to specific color styles for active/hover states
         const PHASE_THEMES = [
             { active: "bg-slate-50 border-slate-300", hover: "hover:bg-slate-50 hover:border-slate-300" },
@@ -85,21 +84,17 @@
         ];
 
         const STYLES = {
-            // [MODIFICATION] Removed generic bg/border classes here to allow dynamic override
             cardBase: "group relative rounded-xl p-3 md:p-4 shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer flex flex-col gap-2 border",
             btnBase: "mt-0.5 shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors duration-200",
             pill: "text-xs font-semibold bg-stone-100 text-slate-500 px-2 py-1 rounded-md whitespace-nowrap"
         };
 
         const RoadmapTracker = () => {
-            // [MODIFICATION: LOGIC] Start empty by default
             const [done, setDone] = useState(() => JSON.parse(localStorage.getItem('roadmapV2')) || []);
             useEffect(() => localStorage.setItem('roadmapV2', JSON.stringify(done)), [done]);
 
             const getUrl = (u) => u.startsWith('http') ? u : `https://www.coursera.org/learn/${u}`;
 
-            // [MODIFICATION: TIMELINE LOGIC]
-            // Flatten all steps to a single list of IDs to determine order
             const allStepIds = useMemo(() => 
                 DATA.flatMap((phase, pIdx) => phase[7].map((_, sIdx) => `${pIdx}-${sIdx}`))
             , []);
@@ -109,18 +104,33 @@
                 if (index === -1) return;
 
                 if (done.includes(id)) {
-                    // Rewind: Uncheck this AND everything after it. Keep 0 to index-1.
+                    // Rewind: Uncheck this AND everything after it
                     setDone(allStepIds.slice(0, index));
                 } else {
-                    // Fill: Check this AND everything before it. Keep 0 to index.
+                    // Fill: Check this AND everything before it
                     setDone(allStepIds.slice(0, index + 1));
                 }
             };
 
-            const targetDate = new Date("2026-05-31");
-            const today = new Date();
-            const daysLeft = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
+            // [MODIFICATION START: TIME ENGINE v2.0]
+            const START_ANCHOR = new Date("2025-06-01");
+            const END_ANCHOR = new Date("2026-05-31");
+            const now = new Date();
+
+            // Calculate Dynamic Window (Days Remaining)
+            let daysLeft;
+            if (now < START_ANCHOR) {
+                // Pre-Year: Full capacity
+                daysLeft = Math.ceil((END_ANCHOR - START_ANCHOR) / (1000 * 60 * 60 * 24));
+            } else if (now > END_ANCHOR) {
+                // Post-Year: Zero
+                daysLeft = 0;
+            } else {
+                // Active Year
+                daysLeft = Math.ceil((END_ANCHOR - now) / (1000 * 60 * 60 * 24));
+            }
             
+            // Work Loop
             let totalHrs = 0, doneHrs = 0, totalItems = 0, doneItems = 0;
             DATA.forEach((phase, pIdx) => phase[7].forEach((step, sIdx) => {
                 const id = `${pIdx}-${sIdx}`;
@@ -130,16 +140,20 @@
                 if (isComp) { doneHrs += hrs; doneItems++; }
             }));
 
+            // Metrics Calculation
             const remainingHrs = totalHrs - doneHrs;
-            const hrsPerDay = daysLeft > 0 ? Math.round(remainingHrs / daysLeft) : 0;
-            const durationStr = daysLeft > 60 ? `${Math.round(daysLeft/30)} Months Left` : `${Math.round(daysLeft)} Days Left`;
+            // Using toFixed(1) for "2.5 Hrs/Day" style
+            const hrsPerDay = daysLeft > 0 ? (remainingHrs / daysLeft).toFixed(1) : 0;
+            const durationStr = daysLeft > 60 ? `${Math.round(daysLeft/30)} Months Left` : `${daysLeft} Days Left`;
 
+            // Status Logic
             let statusLabel;
             if (remainingHrs <= 0) statusLabel = "Complete!";
-            else if (daysLeft <= 0) statusLabel = "Overdue";
+            else if (daysLeft <= 0) statusLabel = "Time's Up";
             else statusLabel = `Target: ${hrsPerDay} Hrs/Day`;
-
+            
             const pct = Math.round((doneItems / totalItems) * 100);
+            // [MODIFICATION END: TIME ENGINE]
 
             return (
                 <div className="min-h-screen bg-stone-50 selection:bg-blue-100 pb-20">
@@ -180,17 +194,10 @@
                                         const isDone = done.includes(id);
                                         const theme = PHASE_THEMES[pIdx];
                                         
-                                        // [MODIFICATION: DYNAMIC THEME]
-                                        // If done: Use active theme.
-                                        // If not done: Use white + hover theme.
                                         const cardClass = isDone 
                                             ? `${STYLES.cardBase} ${theme.active}`
                                             : `${STYLES.cardBase} bg-white border-stone-100 ${theme.hover}`;
 
-                                        // Button Color Logic
-                                        // Using specific colors for checks based on phase would be nice, but Emerald is the standard "Done" color.
-                                        // We'll stick to Emerald for the checkmark to denote "Success", but the border of the card matches the phase.
-                                        
                                         return (
                                             <div key={id} onClick={() => toggle(id)} className={cardClass}>
                                                 
@@ -215,7 +222,6 @@
                                                     </div>
                                                 </div>
 
-                                                {/* Arabic Description: First in Body */}
                                                 <div className="w-full bg-amber-50/60 p-2 rounded-lg text-sm text-slate-700 font-arabic border border-amber-100/50 leading-relaxed mt-1" dir="rtl">
                                                     {descAr}
                                                 </div>
