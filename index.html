@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Roadmap</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖥️</text></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
@@ -18,7 +20,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useMemo } = React;
 
         const ICONS = {
             Calculator: <><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></>,
@@ -34,7 +36,6 @@
         };
         const Icon = ({ n, c }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={n==="Check"?3:2} strokeLinecap="round" strokeLinejoin="round" className={c}>{ICONS[n]}</svg>;
 
-        // Data Format: [EnTitle, ArTitle, Hours, Link, Focus, [Details], CriticalMsg?, ArDesc]
         const DATA = [
             ["PHASE 1: FOUNDATION TRACK", "المسار التأسيسي", "Mathematical Core & Python Basics", "bg-slate-50", "border-slate-200", "text-slate-500", "Calculator", [
                 ["Programming for Everybody", "البرمجة للجميع", 12, "python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"], null, "اللغة الأساسية لبرمجة الذكاء الاصطناعي؛ تمكننا من بناء الأنظمة والتحكم في البيانات بدقة."],
@@ -73,23 +74,47 @@
             ]]
         ];
 
+        // [MODIFICATION: THEME MAPPING] 
+        // Maps Phase Index to specific color styles for active/hover states
+        const PHASE_THEMES = [
+            { active: "bg-slate-50 border-slate-300", hover: "hover:bg-slate-50 hover:border-slate-300" },
+            { active: "bg-blue-50/50 border-blue-200", hover: "hover:bg-blue-50/50 hover:border-blue-200" },
+            { active: "bg-emerald-50/50 border-emerald-200", hover: "hover:bg-emerald-50/50 hover:border-emerald-200" },
+            { active: "bg-purple-50/50 border-purple-200", hover: "hover:bg-purple-50/50 hover:border-purple-200" },
+            { active: "bg-rose-50/50 border-rose-200", hover: "hover:bg-rose-50/50 hover:border-rose-200" }
+        ];
+
         const STYLES = {
-            card: "group relative bg-white border border-stone-100 rounded-xl p-3 md:p-4 shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer hover:bg-stone-50",
-            cardDone: "opacity-70 bg-stone-50",
+            // [MODIFICATION] Removed generic bg/border classes here to allow dynamic override
+            cardBase: "group relative rounded-xl p-3 md:p-4 shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer flex flex-col gap-2 border",
             btnBase: "mt-0.5 shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors duration-200",
-            btnDone: "bg-emerald-400 border-emerald-400 text-white",
-            btnTodo: "border-stone-300 text-transparent hover:border-emerald-300",
             pill: "text-xs font-semibold bg-stone-100 text-slate-500 px-2 py-1 rounded-md whitespace-nowrap"
         };
 
         const RoadmapTracker = () => {
+            // [MODIFICATION: LOGIC] Start empty by default
             const [done, setDone] = useState(() => JSON.parse(localStorage.getItem('roadmapV2')) || []);
             useEffect(() => localStorage.setItem('roadmapV2', JSON.stringify(done)), [done]);
 
             const getUrl = (u) => u.startsWith('http') ? u : `https://www.coursera.org/learn/${u}`;
-            const toggle = (id, pIdx) => {
-                if (pIdx === 0) return;
-                setDone(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+
+            // [MODIFICATION: TIMELINE LOGIC]
+            // Flatten all steps to a single list of IDs to determine order
+            const allStepIds = useMemo(() => 
+                DATA.flatMap((phase, pIdx) => phase[7].map((_, sIdx) => `${pIdx}-${sIdx}`))
+            , []);
+
+            const toggle = (id) => {
+                const index = allStepIds.indexOf(id);
+                if (index === -1) return;
+
+                if (done.includes(id)) {
+                    // Rewind: Uncheck this AND everything after it. Keep 0 to index-1.
+                    setDone(allStepIds.slice(0, index));
+                } else {
+                    // Fill: Check this AND everything before it. Keep 0 to index.
+                    setDone(allStepIds.slice(0, index + 1));
+                }
             };
 
             const targetDate = new Date("2026-05-31");
@@ -100,7 +125,7 @@
             DATA.forEach((phase, pIdx) => phase[7].forEach((step, sIdx) => {
                 const id = `${pIdx}-${sIdx}`;
                 const hrs = step[2];
-                const isComp = pIdx === 0 || done.includes(id);
+                const isComp = done.includes(id);
                 totalHrs += hrs; totalItems++;
                 if (isComp) { doneHrs += hrs; doneItems++; }
             }));
@@ -152,20 +177,32 @@
                                 <div className="grid gap-3">
                                     {steps.map(([tit, tAr, hrs, url, foc, dets, crit, descAr], sIdx) => {
                                         const id = `${pIdx}-${sIdx}`;
-                                        const isP1 = pIdx === 0;
-                                        const isDone = isP1 || done.includes(id);
+                                        const isDone = done.includes(id);
+                                        const theme = PHASE_THEMES[pIdx];
+                                        
+                                        // [MODIFICATION: DYNAMIC THEME]
+                                        // If done: Use active theme.
+                                        // If not done: Use white + hover theme.
+                                        const cardClass = isDone 
+                                            ? `${STYLES.cardBase} ${theme.active}`
+                                            : `${STYLES.cardBase} bg-white border-stone-100 ${theme.hover}`;
+
+                                        // Button Color Logic
+                                        // Using specific colors for checks based on phase would be nice, but Emerald is the standard "Done" color.
+                                        // We'll stick to Emerald for the checkmark to denote "Success", but the border of the card matches the phase.
+                                        
                                         return (
-                                            <div key={id} onClick={() => toggle(id, pIdx)} className={`${STYLES.card} ${isDone ? STYLES.cardDone : ''} flex flex-col gap-2`}>
+                                            <div key={id} onClick={() => toggle(id)} className={cardClass}>
                                                 
                                                 <div className="flex gap-3 items-start">
-                                                    <button className={`${STYLES.btnBase} ${isDone ? STYLES.btnDone : STYLES.btnTodo} ${isP1 ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'}`} disabled={isP1}>
+                                                    <button className={`${STYLES.btnBase} ${isDone ? 'bg-emerald-400 border-emerald-400 text-white' : 'border-stone-300 text-transparent hover:border-emerald-300'}`}>
                                                         <Icon n="Check" c="w-4 h-4" />
                                                     </button>
                                                     
                                                     <div className="flex-1 min-w-0">
                                                         <div className="flex justify-between items-start gap-2">
                                                             <div>
-                                                                <h3 className={`font-bold text-base md:text-lg leading-tight ${isDone ? 'text-slate-400 line-through decoration-slate-300' : 'text-slate-800'}`}>{tit}</h3>
+                                                                <h3 className={`font-bold text-base md:text-lg leading-tight ${isDone ? 'text-slate-500 line-through decoration-slate-400' : 'text-slate-800'}`}>{tit}</h3>
                                                                 <span className={`text-xs md:text-sm font-arabic block mt-0.5 ${isDone ? 'text-slate-400' : 'text-slate-500'}`}>{tAr}</span>
                                                             </div>
                                                             <a href={getUrl(url)} target="_blank" onClick={(e) => e.stopPropagation()} className="shrink-0 text-slate-300 hover:text-blue-500 transition-colors p-1">
@@ -178,8 +215,7 @@
                                                     </div>
                                                 </div>
 
-                                                {/* [MODIFICATION: POSITION CHANGE] */}
-                                                {/* Moved the Arabic Description Box here (First in body), and set RTL direction */}
+                                                {/* Arabic Description: First in Body */}
                                                 <div className="w-full bg-amber-50/60 p-2 rounded-lg text-sm text-slate-700 font-arabic border border-amber-100/50 leading-relaxed mt-1" dir="rtl">
                                                     {descAr}
                                                 </div>
@@ -209,7 +245,7 @@
                             </div>
                         ))}
                     </div>
-                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.9</div>
+                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v2.0</div>
                 </div>
             );
         };
