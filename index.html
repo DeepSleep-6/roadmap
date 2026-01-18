@@ -37,39 +37,39 @@
         // Data Format: [EnTitle, ArTitle, Hours, Link, Focus, [Details], CriticalMsg?, ArDesc]
         const DATA = [
             ["PHASE 1: FOUNDATION TRACK", "المسار التأسيسي", "Mathematical Core & Python Basics", "bg-slate-50", "border-slate-200", "text-slate-500", "Calculator", [
-                ["Programming for Everybody", "البرمجة للجميع", 12, "python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"], null, "بداية الرحلة! سنتعلم هنا كيف نتحدث مع الكمبيوتر ونعطيه الأوامر."],
-                ["Python Data Structures", "هياكل البيانات", 15, "python-data", "Lists, Dicts, Tuples.", ["List Manipulation", "Immutability", "JSON Prep"], null, "كيف نرتب البيانات داخل الكمبيوتر بذكاء ليسهل استخدامها لاحقاً."],
-                ["Using Python to Access Web Data", "الوصول لبيانات الويب", 15, "python-network-data", "Harvesting data, APIs.", ["JSON/XML Parsing", "REST APIs", "Data Eng Prep"], null, "سحب البيانات من الإنترنت تلقائياً بدلاً من البحث والنسخ اليدوي الممل."],
-                ["Linear Algebra for ML", "الجبر الخطي", 20, "linear-algebra-machine-learning", "Vectors, Matrices.", ["Vector Spaces", "Matrix Ops", "Embeddings Math"], null, "لغة الأرقام التي تفهمها الآلة، الأساس الرياضي لكل السحر الذي سيأتي."],
-                ["Multivariate Calculus", "التفاضل والتكامل", 20, "multivariate-calculus-machine-learning", "Gradient Descent.", ["Derivatives", "Chain Rule", "Backprop Math"], null, "كيف تتعلم الآلة من أخطائها وتقوم بتصحيح نفسها بنفسها."],
-                ["PCA", "تحليل المكونات الرئيسية", 15, "pca-machine-learning", "Dim Reduction.", ["Eigenvectors", "Projections", "Compression"], null, "فن التبسيط: كيف نختصر المعلومات الكثيرة والمعقدة دون أن نفقد معناها."]
+                ["Programming for Everybody", "البرمجة للجميع", 12, "python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"], null, "اللغة الأساسية لبرمجة الذكاء الاصطناعي؛ تمكننا من بناء الأنظمة والتحكم في البيانات بدقة."],
+                ["Python Data Structures", "هياكل البيانات", 15, "python-data", "Lists, Dicts, Tuples.", ["List Manipulation", "Immutability", "JSON Prep"], null, "طرق تنظيم البيانات في الذاكرة لضمان سرعة المعالجة وكفاءة الأداء في الأنظمة الكبيرة."],
+                ["Using Python to Access Web Data", "الوصول لبيانات الويب", 15, "python-network-data", "Harvesting data, APIs.", ["JSON/XML Parsing", "REST APIs", "Data Eng Prep"], null, "أتمتة جمع البيانات من الإنترنت لتحويل الويب إلى مصدر معلومات ضخم لتدريب النماذج."],
+                ["Linear Algebra for ML", "الجبر الخطي", 20, "linear-algebra-machine-learning", "Vectors, Matrices.", ["Vector Spaces", "Matrix Ops", "Embeddings Math"], null, "الرياضيات التي تحول الكلمات والصور إلى أرقام يمكن للحاسوب معالجتها وفهم العلاقات بينها."],
+                ["Multivariate Calculus", "التفاضل والتكامل", 20, "multivariate-calculus-machine-learning", "Gradient Descent.", ["Derivatives", "Chain Rule", "Backprop Math"], null, "الآلية الرياضية التي تسمح للنماذج بالتعلم من الأخطاء وتحسين دقتها تدريجيًا."],
+                ["PCA", "تحليل المكونات الرئيسية", 15, "pca-machine-learning", "Dim Reduction.", ["Eigenvectors", "Projections", "Compression"], null, "تقنية لضغط البيانات المعقدة مع الحفاظ على المعلومات الجوهرية، مما يسرع عملية التعلم."]
             ]],
             ["PHASE 2: CORE ENGINEERING TRACK", "المسار الهندسي", "IBM AI Engineering", "bg-blue-50", "border-blue-100", "text-blue-600", "Terminal", [
-                ["Python for Data Science", "بايثون لعلوم البيانات", 30, "python-for-applied-data-science-ai", "Pandas & NumPy.", ["Skip Modules 1-3", "DataFrames", "Vectorization", "Stack Std"], null, "أدوات المحترفين لتحليل الجداول والبيانات الضخمة بسرعة خارقة."],
-                ["Machine Learning with Python", "تعلم الآلة مع بايثون", 45, "machine-learning-with-python", "Scikit-Learn.", ["Regression/SVMs", "Clustering", "Decision Trees", "SMOTE"], null, "تعليم الكمبيوتر كيف يتوقع المستقبل بناءً على خبرات الماضي."],
-                ["Intro to DL with Keras", "مقدمة في التعلم العميق", 30, "introduction-to-deep-learning-with-keras", "Keras API, Backprop.", ["Layers", "Activations", "Gradient Descent", "Sequential Models"], null, "بناء شبكات عصبية تشبه دماغ الإنسان لتتعلم مهام معقدة."],
-                ["DL with Keras & TF", "التعلم العميق (تنسرفلو)", 45, "deep-learning-with-keras-and-tensorflow", "TF Ecosystem.", ["tf.data pipelines", "Bottlenecks", "TFRecords", "HDF5/SavedModel"], null, "بناء أنظمة ذكاء اصطناعي قوية يمكنها التعامل مع بيانات ضخمة جداً."],
-                ["Intro to NN & PyTorch", "الشبكات العصبية وباي تورش", 30, "introduction-to-neural-networks-and-pytorch", "Tensors, Autograd.", ["GPU Tensors", "AutoDiff", "PyTorch Syntax", "Dynamic Graphs"], null, "طريقة أخرى لبناء العقول الرقمية، مرنة جداً ومحبوبة في مجال الأبحاث."],
-                ["Deep Learning with PyTorch", "التعلم العميق مع باي تورش", 45, "deep-neural-networks-with-pytorch", "CNNs, ResNet.", ["Stride/Pooling", "Fine-tuning", "Replaces DeepLearning.AI", "LLM Prep"], "CRITICAL STOP: PAUSE IBM CERT HERE.", "تقنيات متقدمة جداً، وهي الأساس الذي بنيت عليه النماذج الحديثة اليوم."]
+                ["Python for Data Science", "بايثون لعلوم البيانات", 30, "python-for-applied-data-science-ai", "Pandas & NumPy.", ["Skip Modules 1-3", "DataFrames", "Vectorization", "Stack Std"], null, "أدوات متقدمة لتحليل ومعالجة ملايين السجلات البيانية في ثوانٍ لاستخراج الأنماط."],
+                ["Machine Learning with Python", "تعلم الآلة مع بايثون", 45, "machine-learning-with-python", "Scikit-Learn.", ["Regression/SVMs", "Clustering", "Decision Trees", "SMOTE"], null, "بناء خوارزميات تتنبأ بالنتائج المستقبلية بناءً على البيانات التاريخية دون برمجة صريحة."],
+                ["Intro to DL with Keras", "مقدمة في التعلم العميق", 30, "introduction-to-deep-learning-with-keras", "Keras API, Backprop.", ["Layers", "Activations", "Gradient Descent", "Sequential Models"], null, "محاكاة طريقة عمل الشبكات العصبية في الدماغ البشري لحل مشكلات معقدة."],
+                ["DL with Keras & TF", "التعلم العميق (تنسرفلو)", 45, "deep-learning-with-keras-and-tensorflow", "TF Ecosystem.", ["tf.data pipelines", "Bottlenecks", "TFRecords", "HDF5/SavedModel"], null, "بناء وتشغيل نماذج ذكاء اصطناعي ضخمة قابلة للتوسع على مستوى الإنتاج."],
+                ["Intro to NN & PyTorch", "الشبكات العصبية وباي تورش", 30, "introduction-to-neural-networks-and-pytorch", "Tensors, Autograd.", ["GPU Tensors", "AutoDiff", "PyTorch Syntax", "Dynamic Graphs"], null, "إطار عمل مرن يستخدمه الباحثون لتطوير تقنيات ذكاء اصطناعي جديدة ومبتكرة."],
+                ["Deep Learning with PyTorch", "التعلم العميق مع باي تورش", 45, "deep-neural-networks-with-pytorch", "CNNs, ResNet.", ["Stride/Pooling", "Fine-tuning", "Replaces DeepLearning.AI", "LLM Prep"], "CRITICAL STOP: PAUSE IBM CERT HERE.", "تقنيات الرؤية الحاسوبية التي تمكن الآلة من 'رؤية' وتصنيف الصور بدقة تفوق البشر."]
             ]],
             ["PHASE 3: INFRASTRUCTURE TRACK", "مسار البنية التحتية", "Google Cloud ML Engineer", "bg-emerald-50", "border-emerald-100", "text-emerald-600", "Database", [
-                ["Intro to AI on GCP", "الذكاء الاصطناعي على جوجل كلاود", 30, "google-cloud-java-machine-learning", "Build vs Buy.", ["Vision API vs Custom", "BigQuery ML", "Data Gravity", "GCP Hierarchy"], null, "نقل الذكاء من لابتوبك الصغير إلى حواسيب جوجل السحابية العملاقة."],
-                ["Feature Engineering", "هندسة الخصائص", 30, "feature-engineering", "Dataflow, tf.Transform.", ["Windowing/Triggers", "Skew Prevention", "Feature Store", "Categorical Data"], null, "تجهيز البيانات وتنظيفها لتكون وجبة سهلة الهضم لنماذج الذكاء الاصطناعي."],
-                ["ML in the Enterprise", "تعلم الآلة للمؤسسات", 30, "machine-learning-enterprise", "Vizier, Governance.", ["Bayesian Opt", "Search Algos", "Model Registry", "Vertex Exp"], null, "كيف تدير الشركات الكبرى مشاريع الذكاء الاصطناعي بشكل منظم وآمن."],
-                ["Production ML Systems", "أنظمة تعلم الآلة الإنتاجية", 30, "production-machine-learning-systems", "Dist. Training, Serving.", ["MirroredStrategy", "TPU vs GPU", "Static vs Dynamic", "TF Serving"], null, "جعل الذكاء الاصطناعي يعمل 24 ساعة لخدمة ملايين المستخدمين دون توقف."],
-                ["MLOps Fundamentals", "أساسيات MLOps", 30, "mlops-fundamentals", "Pipelines, CI/CD.", ["Kubeflow DSL", "Cloud Build", "DAGs", "Pipeline Auto"], null, "أتمتة كل شيء ليعمل النظام كخط إنتاج مصنع ذكي دون تدخل بشري."]
+                ["Intro to AI on GCP", "الذكاء الاصطناعي على جوجل كلاود", 30, "google-cloud-java-machine-learning", "Build vs Buy.", ["Vision API vs Custom", "BigQuery ML", "Data Gravity", "GCP Hierarchy"], null, "نقل النماذج من بيئة التطوير إلى خوادم جوجل السحابية لتتحمل ملايين المستخدمين."],
+                ["Feature Engineering", "هندسة الخصائص", 30, "feature-engineering", "Dataflow, tf.Transform.", ["Windowing/Triggers", "Skew Prevention", "Feature Store", "Categorical Data"], null, "فن تحويل البيانات الخام إلى خصائص ذكية ترفع من دقة وذكاء النموذج."],
+                ["ML in the Enterprise", "تعلم الآلة للمؤسسات", 30, "machine-learning-enterprise", "Vizier, Governance.", ["Bayesian Opt", "Search Algos", "Model Registry", "Vertex Exp"], null, "إدارة دورة حياة الذكاء الاصطناعي في الشركات الكبرى من التجربة إلى التطبيق الآمن."],
+                ["Production ML Systems", "أنظمة تعلم الآلة الإنتاجية", 30, "production-machine-learning-systems", "Dist. Training, Serving.", ["MirroredStrategy", "TPU vs GPU", "Static vs Dynamic", "TF Serving"], null, "استراتيجيات نشر النماذج لتعمل بكفاءة وسرعة عالية في بيئات العمل الحقيقية."],
+                ["MLOps Fundamentals", "أساسيات MLOps", 30, "mlops-fundamentals", "Pipelines, CI/CD.", ["Kubeflow DSL", "Cloud Build", "DAGs", "Pipeline Auto"], null, "أتمتة عمليات التدريب والتحديث لضمان بقاء النماذج دقيقة ومحدثة باستمرار."]
             ]],
             ["PHASE 4: GENAI DELTA", "الذكاء الاصطناعي التوليدي", "Generative AI Specialization", "bg-purple-50", "border-purple-100", "text-purple-600", "Brain", [
-                ["GenAI Architecture", "معمارية النماذج التوليدية", 15, "generative-ai-llms-architecture-data-preparation", "Transformers.", ["Encoder-Decoder", "Attention", "Positional Enc", "Tokenization"], null, "كشف السحر خلف ChatGPT: كيف تفهم الآلة الكلام وتنتجه."],
-                ["Foundational Models NLP", "النماذج اللغوية التأسيسية", 15, "generative-ai-foundational-models-for-nlp-and-language-understanding", "BERT, GPT.", ["Encoder vs Decoder", "Prompt Eng", "Domain Adapt", "BLEU/ROUGE"], null, "كيف نجعل الآلة تقرأ وتكتب وتلخص النصوص ببراعة تفوق البشر أحياناً."],
-                ["Gen AI Fine-Tuning", "الضبط الدقيق للنماذج", 15, "generative-ai-engineering-and-fine-tuning-transformers", "PEFT, LoRA.", ["Freezing Weights", "Low-Rank Adapt", "RLHF", "Quantization"], null, "تخصيص الذكاء الاصطناعي العام ليصبح خبيراً في مجال محدد جداً."],
-                ["AI Agents (RAG)", "الوكلاء الذكيين (RAG)", 15, "generative-ai-agents-rag-langchain", "Vector DBs, RAG.", ["RAG Flow", "Agent Builder", "ScaNN", "Grounding"], null, "بناء مساعد ذكي يمتلك ذاكرة ويمكنه البحث في مستنداتك الخاصة للإجابة."]
+                ["GenAI Architecture", "معمارية النماذج التوليدية", 15, "generative-ai-llms-architecture-data-preparation", "Transformers.", ["Encoder-Decoder", "Attention", "Positional Enc", "Tokenization"], null, "الفهم العميق لمعمارية Transformers التي غيرت وجه الذكاء الاصطناعي الحديث."],
+                ["Foundational Models NLP", "النماذج اللغوية التأسيسية", 15, "generative-ai-foundational-models-for-nlp-and-language-understanding", "BERT, GPT.", ["Encoder vs Decoder", "Prompt Eng", "Domain Adapt", "BLEU/ROUGE"], null, "كيف تفهم النماذج اللغوية السياق والمعنى الدقيق للنصوص البشرية."],
+                ["Gen AI Fine-Tuning", "الضبط الدقيق للنماذج", 15, "generative-ai-engineering-and-fine-tuning-transformers", "PEFT, LoRA.", ["Freezing Weights", "Low-Rank Adapt", "RLHF", "Quantization"], null, "تطويع النماذج العامة لتصبح متخصصة في مجالات دقيقة مثل الطب أو القانون."],
+                ["AI Agents (RAG)", "الوكلاء الذكيين (RAG)", 15, "generative-ai-agents-rag-langchain", "Vector DBs, RAG.", ["RAG Flow", "Agent Builder", "ScaNN", "Grounding"], null, "ربط الذكاء التوليدي بقواعد بيانات حقيقية لتقديم إجابات موثوقة ومحدثة."]
             ]],
             ["PHASE 5: LOCALIZATION & EXECUTION", "التوطين والتنفيذ", "Portfolio & Exam", "bg-rose-50", "border-rose-100", "text-rose-600", "Map", [
-                ["Project 1: Arabic NLP", "مشروع 1: معالجة اللغات الطبيعية", 30, "https://cloud.google.com/vertex-ai-notebooks", "AraBERT Tuning.", ["Fine-tune CamelBERT", "Saudi Dialects", "Sentiment Analysis", "Vertex Workbench"], null, "تطبيق عملي: بناء ذكاء اصطناعي يفهم لهجتنا السعودية ويحلل المشاعر."],
-                ["Project 2: Smart City", "مشروع 2: المدن الذكية", 30, "https://www.ultralytics.com/yolo", "YOLOv8 on ArTS.", ["YOLOv8", "Arabic Signs", "Glare/Dust", "Edge Sim"], null, "تطبيق عملي: عين ذكية تراقب الطرق وتفهم إشارات المرور السعودية."],
-                ["Exam Simulation", "محاكاة الاختبار", 20, "https://www.whizlabs.com/", "Whizlabs, Quests.", ["Timed Mocks", "Skills Boost", "Gap Analysis", "<1min/q Speed"], null, "بروفة نهائية مكثفة للتأكد من جاهزيتك التامة للاختبار الحقيقي."],
-                ["FINAL EXAM: GCP PMLE", "الاختبار النهائي", 5, "https://cloud.google.com/learn/certification/machine-learning-engineer", "Execution.", ["Remote/On-site", "ID Check", "Clean Desk", "Trust Prep"], "Good luck. You are ready.", "اللحظة الحاسمة لتتويج كل هذا الجهد بشهادة جوجل المعتمدة عالمياً."]
+                ["Project 1: Arabic NLP", "مشروع 1: معالجة اللغات الطبيعية", 30, "https://cloud.google.com/vertex-ai-notebooks", "AraBERT Tuning.", ["Fine-tune CamelBERT", "Saudi Dialects", "Sentiment Analysis", "Vertex Workbench"], null, "تطوير نموذج لغوي متخصص في فهم اللهجات العربية وتحليل المشاعر المحلية."],
+                ["Project 2: Smart City", "مشروع 2: المدن الذكية", 30, "https://www.ultralytics.com/yolo", "YOLOv8 on ArTS.", ["YOLOv8", "Arabic Signs", "Glare/Dust", "Edge Sim"], null, "تطوير نظام رؤية ذكي لتحليل حركة المرور والبيئة في المدن السعودية."],
+                ["Exam Simulation", "محاكاة الاختبار", 20, "https://www.whizlabs.com/", "Whizlabs, Quests.", ["Timed Mocks", "Skills Boost", "Gap Analysis", "<1min/q Speed"], null, "قياس الجاهزية الفنية وسد الفجوات المعرفية قبل الاختبار النهائي."],
+                ["FINAL EXAM: GCP PMLE", "الاختبار النهائي", 5, "https://cloud.google.com/learn/certification/machine-learning-engineer", "Execution.", ["Remote/On-site", "ID Check", "Clean Desk", "Trust Prep"], "Good luck. You are ready.", "اعتماد الخبرة الفنية بمعيار عالمي يفتح أبوابًا مهنية متقدمة."]
             ]]
         ];
 
@@ -150,7 +150,6 @@
                                     </div>
                                 </div>
                                 <div className="grid gap-3">
-                                    {/* [MODIFICATION: MAP] Now destructing 'descAr' (Arabic Description) */}
                                     {steps.map(([tit, tAr, hrs, url, foc, dets, crit, descAr], sIdx) => {
                                         const id = `${pIdx}-${sIdx}`;
                                         const isP1 = pIdx === 0;
@@ -179,6 +178,12 @@
                                                     </div>
                                                 </div>
 
+                                                {/* [MODIFICATION: POSITION CHANGE] */}
+                                                {/* Moved the Arabic Description Box here (First in body), and set RTL direction */}
+                                                <div className="w-full bg-amber-50/60 p-2 rounded-lg text-sm text-slate-700 font-arabic border border-amber-100/50 leading-relaxed mt-1" dir="rtl">
+                                                    {descAr}
+                                                </div>
+
                                                 {crit && <div className="flex gap-2 text-xs font-bold text-rose-500 bg-rose-50 p-2 rounded border border-rose-100"><Icon n="Alert" c="w-4 h-4" />{crit}</div>}
                                                 
                                                 <div className="grid md:grid-cols-2 gap-2 mt-1">
@@ -197,12 +202,6 @@
                                                     </div>
                                                 </div>
 
-                                                {/* [MODIFICATION: THE THIRD BOX] */}
-                                                {/* Added a warm amber box at the bottom, full width, for the Arabic investment hook */}
-                                                <div className="w-full bg-amber-50/60 p-2 rounded-lg text-sm text-slate-700 font-arabic border border-amber-100/50 leading-relaxed mt-1">
-                                                    {descAr}
-                                                </div>
-
                                             </div>
                                         )
                                     })}
@@ -210,7 +209,7 @@
                             </div>
                         ))}
                     </div>
-                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.8</div>
+                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.9</div>
                 </div>
             );
         };
