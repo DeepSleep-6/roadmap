@@ -15,10 +15,8 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+        const { useState, useEffect } = React;
 
-        // --- OPTIMIZATION 1: ICON FACTORY ---
-        // We strip all SVG boilerplate. Just the path data remains.
         const ICONS = {
             Calculator: <><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></>,
             Terminal: <><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></>,
@@ -27,64 +25,53 @@
             Map: <><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></>,
             Clock: <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,
             Check: <><polyline points="20 6 9 17 4 12"/></>,
-            Lock: <><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
             Alert: <><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></>,
             Star: <><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></>,
             Link: <><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></>
         };
+        const Icon = ({ n, c }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={n==="Check"?3:2} strokeLinecap="round" strokeLinejoin="round" className={c}>{ICONS[n]}</svg>;
 
-        const Icon = ({ n, c }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={n==="Check"?3:2} strokeLinecap="round" strokeLinejoin="round" className={c}>
-                {ICONS[n]}
-            </svg>
-        );
-
-        // --- OPTIMIZATION 2: DATA COMPRESSION ---
-        // Format: [id, title, subtitle, color, border, iconColor, iconName]
-        const RAW_PHASES = [
-            ["phase1", "PHASE 1: FOUNDATION TRACK", "Mathematical Core & Python Basics", "bg-slate-50", "border-slate-200", "text-slate-500", "Calculator"],
-            ["phase2", "PHASE 2: CORE ENGINEERING TRACK", "IBM AI Engineering", "bg-blue-50", "border-blue-100", "text-blue-600", "Terminal"],
-            ["phase3", "PHASE 3: INFRASTRUCTURE TRACK", "Google Cloud ML Engineer", "bg-emerald-50", "border-emerald-100", "text-emerald-600", "Database"],
-            ["phase4", "PHASE 4: GENAI DELTA", "Generative AI Specialization", "bg-purple-50", "border-purple-100", "text-purple-600", "Brain"],
-            ["phase5", "PHASE 5: LOCALIZATION & EXECUTION", "Portfolio & Exam", "bg-rose-50", "border-rose-100", "text-rose-600", "Map"]
+        // --- DATA STRUCTURE V1.2 (Nested) ---
+        // Phase: [Title, Subtitle, Color, Border, Text, Icon, [Steps...]]
+        // Step:  [Title, Hours, Link, Focus, [Details], CriticalMsg?]
+        const DATA = [
+            ["PHASE 1: FOUNDATION TRACK", "Mathematical Core & Python Basics", "bg-slate-50", "border-slate-200", "text-slate-500", "Calculator", [
+                ["Programming for Everybody", 12, "python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"]],
+                ["Python Data Structures", 15, "python-data", "Lists, Dicts, Tuples.", ["List Manipulation", "Immutability", "JSON Prep"]],
+                ["Using Python to Access Web Data", 15, "python-network-data", "Harvesting data, APIs.", ["JSON/XML Parsing", "REST APIs", "Data Eng Prep"]],
+                ["Linear Algebra for ML", 20, "linear-algebra-machine-learning", "Vectors, Matrices.", ["Vector Spaces", "Matrix Ops", "Embeddings Math"]],
+                ["Multivariate Calculus", 20, "multivariate-calculus-machine-learning", "Gradient Descent.", ["Derivatives", "Chain Rule", "Backprop Math"]],
+                ["PCA", 15, "pca-machine-learning", "Dim Reduction.", ["Eigenvectors", "Projections", "Compression"]]
+            ]],
+            ["PHASE 2: CORE ENGINEERING TRACK", "IBM AI Engineering", "bg-blue-50", "border-blue-100", "text-blue-600", "Terminal", [
+                ["Python for Data Science", 30, "python-for-applied-data-science-ai", "Pandas & NumPy.", ["Skip Modules 1-3", "DataFrames", "Vectorization", "Stack Std"]],
+                ["Machine Learning with Python", 45, "machine-learning-with-python", "Scikit-Learn.", ["Regression/SVMs", "Clustering", "Decision Trees", "SMOTE"]],
+                ["Intro to DL with Keras", 30, "introduction-to-deep-learning-with-keras", "Keras API, Backprop.", ["Layers", "Activations", "Gradient Descent", "Sequential Models"]],
+                ["DL with Keras & TF", 45, "deep-learning-with-keras-and-tensorflow", "TF Ecosystem.", ["tf.data pipelines", "Bottlenecks", "TFRecords", "HDF5/SavedModel"]],
+                ["Intro to NN & PyTorch", 30, "introduction-to-neural-networks-and-pytorch", "Tensors, Autograd.", ["GPU Tensors", "AutoDiff", "PyTorch Syntax", "Dynamic Graphs"]],
+                ["Deep Learning with PyTorch", 45, "deep-neural-networks-with-pytorch", "CNNs, ResNet.", ["Stride/Pooling", "Fine-tuning", "Replaces DeepLearning.AI", "LLM Prep"], "CRITICAL STOP: PAUSE IBM CERT HERE."]
+            ]],
+            ["PHASE 3: INFRASTRUCTURE TRACK", "Google Cloud ML Engineer", "bg-emerald-50", "border-emerald-100", "text-emerald-600", "Database", [
+                ["Intro to AI on GCP", 30, "google-cloud-java-machine-learning", "Build vs Buy.", ["Vision API vs Custom", "BigQuery ML", "Data Gravity", "GCP Hierarchy"]],
+                ["Feature Engineering", 30, "feature-engineering", "Dataflow, tf.Transform.", ["Windowing/Triggers", "Skew Prevention", "Feature Store", "Categorical Data"]],
+                ["ML in the Enterprise", 30, "machine-learning-enterprise", "Vizier, Governance.", ["Bayesian Opt", "Search Algos", "Model Registry", "Vertex Exp"]],
+                ["Production ML Systems", 30, "production-machine-learning-systems", "Dist. Training, Serving.", ["MirroredStrategy", "TPU vs GPU", "Static vs Dynamic", "TF Serving"]],
+                ["MLOps Fundamentals", 30, "mlops-fundamentals", "Pipelines, CI/CD.", ["Kubeflow DSL", "Cloud Build", "DAGs", "Pipeline Auto"]]
+            ]],
+            ["PHASE 4: GENAI DELTA", "Generative AI Specialization", "bg-purple-50", "border-purple-100", "text-purple-600", "Brain", [
+                ["GenAI Architecture", 15, "generative-ai-llms-architecture-data-preparation", "Transformers.", ["Encoder-Decoder", "Attention", "Positional Enc", "Tokenization"]],
+                ["Foundational Models NLP", 15, "generative-ai-foundational-models-for-nlp-and-language-understanding", "BERT, GPT.", ["Encoder vs Decoder", "Prompt Eng", "Domain Adapt", "BLEU/ROUGE"]],
+                ["Gen AI Fine-Tuning", 15, "generative-ai-engineering-and-fine-tuning-transformers", "PEFT, LoRA.", ["Freezing Weights", "Low-Rank Adapt", "RLHF", "Quantization"]],
+                ["AI Agents (RAG)", 15, "generative-ai-agents-rag-langchain", "Vector DBs, RAG.", ["RAG Flow", "Agent Builder", "ScaNN", "Grounding"]]
+            ]],
+            ["PHASE 5: LOCALIZATION & EXECUTION", "Portfolio & Exam", "bg-rose-50", "border-rose-100", "text-rose-600", "Map", [
+                ["Project 1: Arabic NLP", 30, "https://cloud.google.com/vertex-ai-notebooks", "AraBERT Tuning.", ["Fine-tune CamelBERT", "Saudi Dialects", "Sentiment Analysis", "Vertex Workbench"]],
+                ["Project 2: Smart City", 30, "https://www.ultralytics.com/yolo", "YOLOv8 on ArTS.", ["YOLOv8", "Arabic Signs", "Glare/Dust", "Edge Sim"]],
+                ["Exam Simulation", 20, "https://www.whizlabs.com/", "Whizlabs, Quests.", ["Timed Mocks", "Skills Boost", "Gap Analysis", "<1min/q Speed"]],
+                ["FINAL EXAM: GCP PMLE", 5, "https://cloud.google.com/learn/certification/machine-learning-engineer", "Execution.", ["Remote/On-site", "ID Check", "Clean Desk", "Trust Prep"], "Good luck. You are ready."]
+            ]]
         ];
 
-        const BASE_COURSERA = "https://www.coursera.org/learn/";
-        
-        // Format: [id, phaseId, title, hours, url, focus, [details], criticalMsg?]
-        const RAW_STEPS = [
-            [101, "phase1", "Programming for Everybody", 12, BASE_COURSERA+"python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"]],
-            [102, "phase1", "Python Data Structures", 15, BASE_COURSERA+"python-data", "Lists, Dicts, Tuples.", ["List Manipulation", "Immutability", "JSON Prep"]],
-            [103, "phase1", "Using Python to Access Web Data", 15, BASE_COURSERA+"python-network-data", "Harvesting data, APIs.", ["JSON/XML Parsing", "REST APIs", "Data Eng Prep"]],
-            [104, "phase1", "Linear Algebra for ML", 20, BASE_COURSERA+"linear-algebra-machine-learning", "Vectors, Matrices.", ["Vector Spaces", "Matrix Ops", "Embeddings Math"]],
-            [105, "phase1", "Multivariate Calculus", 20, BASE_COURSERA+"multivariate-calculus-machine-learning", "Gradient Descent.", ["Derivatives", "Chain Rule", "Backprop Math"]],
-            [106, "phase1", "PCA", 15, BASE_COURSERA+"pca-machine-learning", "Dim Reduction.", ["Eigenvectors", "Projections", "Compression"]],
-            
-            [1, "phase2", "Python for Data Science", 30, BASE_COURSERA+"python-for-applied-data-science-ai", "Pandas & NumPy.", ["Skip Modules 1-3", "DataFrames", "Vectorization", "Stack Std"]],
-            [2, "phase2", "Machine Learning with Python", 45, BASE_COURSERA+"machine-learning-with-python", "Scikit-Learn.", ["Regression/SVMs", "Clustering", "Decision Trees", "SMOTE"]],
-            [3, "phase2", "Intro to DL with Keras", 30, BASE_COURSERA+"introduction-to-deep-learning-with-keras", "Keras API, Backprop.", ["Layers", "Activations", "Gradient Descent", "Sequential Models"]],
-            [4, "phase2", "DL with Keras & TF", 45, BASE_COURSERA+"deep-learning-with-keras-and-tensorflow", "TF Ecosystem.", ["tf.data pipelines", "Bottlenecks", "TFRecords", "HDF5/SavedModel"]],
-            [5, "phase2", "Intro to NN & PyTorch", 30, BASE_COURSERA+"introduction-to-neural-networks-and-pytorch", "Tensors, Autograd.", ["GPU Tensors", "AutoDiff", "PyTorch Syntax", "Dynamic Graphs"]],
-            [6, "phase2", "Deep Learning with PyTorch", 45, BASE_COURSERA+"deep-neural-networks-with-pytorch", "CNNs, ResNet.", ["Stride/Pooling", "Fine-tuning", "Replaces DeepLearning.AI", "LLM Prep"], "CRITICAL STOP: PAUSE IBM CERT HERE."],
-            
-            [7, "phase3", "Intro to AI on GCP", 30, BASE_COURSERA+"google-cloud-java-machine-learning", "Build vs Buy.", ["Vision API vs Custom", "BigQuery ML", "Data Gravity", "GCP Hierarchy"]],
-            [8, "phase3", "Feature Engineering", 30, BASE_COURSERA+"feature-engineering", "Dataflow, tf.Transform.", ["Windowing/Triggers", "Skew Prevention", "Feature Store", "Categorical Data"]],
-            [9, "phase3", "ML in the Enterprise", 30, BASE_COURSERA+"machine-learning-enterprise", "Vizier, Governance.", ["Bayesian Opt", "Search Algos", "Model Registry", "Vertex Exp"]],
-            [10, "phase3", "Production ML Systems", 30, BASE_COURSERA+"production-machine-learning-systems", "Dist. Training, Serving.", ["MirroredStrategy", "TPU vs GPU", "Static vs Dynamic", "TF Serving"]],
-            [11, "phase3", "MLOps Fundamentals", 30, BASE_COURSERA+"mlops-fundamentals", "Pipelines, CI/CD.", ["Kubeflow DSL", "Cloud Build", "DAGs", "Pipeline Auto"]],
-            
-            [12, "phase4", "GenAI Architecture", 15, BASE_COURSERA+"generative-ai-llms-architecture-data-preparation", "Transformers.", ["Encoder-Decoder", "Attention", "Positional Enc", "Tokenization"]],
-            [13, "phase4", "Foundational Models NLP", 15, BASE_COURSERA+"generative-ai-foundational-models-for-nlp-and-language-understanding", "BERT, GPT.", ["Encoder vs Decoder", "Prompt Eng", "Domain Adapt", "BLEU/ROUGE"]],
-            [14, "phase4", "Gen AI Fine-Tuning", 15, BASE_COURSERA+"generative-ai-engineering-and-fine-tuning-transformers", "PEFT, LoRA.", ["Freezing Weights", "Low-Rank Adapt", "RLHF", "Quantization"]],
-            [15, "phase4", "AI Agents (RAG)", 15, BASE_COURSERA+"generative-ai-agents-rag-langchain", "Vector DBs, RAG.", ["RAG Flow", "Agent Builder", "ScaNN", "Grounding"]],
-            
-            [16, "phase5", "Project 1: Arabic NLP", 30, "https://cloud.google.com/vertex-ai-notebooks", "AraBERT Tuning.", ["Fine-tune CamelBERT", "Saudi Dialects", "Sentiment Analysis", "Vertex Workbench"]],
-            [17, "phase5", "Project 2: Smart City", 30, "https://www.ultralytics.com/yolo", "YOLOv8 on ArTS.", ["YOLOv8", "Arabic Signs", "Glare/Dust", "Edge Sim"]],
-            [18, "phase5", "Exam Simulation", 20, "https://www.whizlabs.com/", "Whizlabs, Quests.", ["Timed Mocks", "Skills Boost", "Gap Analysis", "<1min/q Speed"]],
-            [19, "phase5", "FINAL EXAM: GCP PMLE", 5, "https://cloud.google.com/learn/certification/machine-learning-engineer", "Execution.", ["Remote/On-site", "ID Check", "Clean Desk", "Trust Prep"], "Good luck. You are ready."]
-        ];
-
-        const PHASE1_IDS = [101, 102, 103, 104, 105, 106];
         const STYLES = {
             card: "group relative bg-white border border-stone-100 rounded-xl p-6 shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer hover:bg-stone-50",
             cardDone: "opacity-70 bg-stone-50",
@@ -95,74 +82,74 @@
         };
 
         const RoadmapTracker = () => {
-            // --- OPTIMIZATION 4: INLINE STATE ---
-            const [done, setDone] = useState(() => JSON.parse(localStorage.getItem('roadmapProgress')) || [...PHASE1_IDS]);
+            // State now only tracks completion of Phase 2+ items. Phase 1 is auto-locked.
+            const [done, setDone] = useState(() => JSON.parse(localStorage.getItem('roadmapV2')) || []);
+            useEffect(() => localStorage.setItem('roadmapV2', JSON.stringify(done)), [done]);
 
-            useEffect(() => localStorage.setItem('roadmapProgress', JSON.stringify(done)), [done]);
-
-            const toggle = (id) => {
-                if (PHASE1_IDS.includes(id)) return; // Keep Phase 1 locked as "Done"
+            const getUrl = (u) => u.startsWith('http') ? u : `https://www.coursera.org/learn/${u}`;
+            const toggle = (id, pIdx) => {
+                if (pIdx === 0) return; // Lock Phase 1
                 setDone(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
             };
 
-            const stats = useMemo(() => {
-                const total = RAW_STEPS.reduce((acc, s) => acc + s[3], 0);
-                const completed = RAW_STEPS.filter(s => PHASE1_IDS.includes(s[0]) || done.includes(s[0])).reduce((acc, s) => acc + s[3], 0);
-                const days = ((total - completed) / 15) * 7; // 15hrs/week pace
-                return { 
-                    pct: Math.round(((new Set([...done, ...PHASE1_IDS]).size) / RAW_STEPS.length) * 100),
-                    time: days > 60 ? `${Math.round(days/30)} Months Left` : `${Math.round(days)} Days Left`
-                };
-            }, [done]);
+            // Calculate stats on the fly
+            let totalHrs = 0, doneHrs = 0, totalItems = 0, doneItems = 0;
+            DATA.forEach((phase, pIdx) => phase[6].forEach((step, sIdx) => {
+                const id = `${pIdx}-${sIdx}`;
+                const hrs = step[1];
+                const isComp = pIdx === 0 || done.includes(id);
+                totalHrs += hrs; totalItems++;
+                if (isComp) { doneHrs += hrs; doneItems++; }
+            }));
+            
+            const daysLeft = ((totalHrs - doneHrs) / 15) * 7;
+            const timeStr = daysLeft > 60 ? `${Math.round(daysLeft/30)} Months Left` : `${Math.round(daysLeft)} Days Left`;
+            const pct = Math.round((doneItems / totalItems) * 100);
 
             return (
                 <div className="min-h-screen bg-stone-50 selection:bg-blue-100 pb-20">
-                    {/* Header */}
                     <div className="sticky top-0 z-50 bg-stone-50/90 backdrop-blur-md border-b border-stone-200 shadow-sm py-2 md:py-4">
                         <div className="max-w-4xl mx-auto px-6">
                             <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
                                 <h1 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">Machine Learning Engineer Roadmap</h1>
                                 <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-stone-100 flex items-center gap-2 text-sm font-semibold">
-                                    <Icon n="Clock" c="w-4 h-4 text-blue-400" /> <span>{stats.time}</span>
+                                    <Icon n="Clock" c="w-4 h-4 text-blue-400" /> <span>{timeStr}</span>
                                 </div>
                             </div>
                             <div className="w-full bg-stone-200 rounded-full h-3 overflow-hidden">
-                                <div className="bg-gradient-to-r from-blue-300 via-purple-300 to-rose-300 h-3 rounded-full transition-all duration-1000 ease-out" style={{ width: `${stats.pct}%` }}></div>
+                                <div className="bg-gradient-to-r from-blue-300 via-purple-300 to-rose-300 h-3 rounded-full transition-all duration-1000 ease-out" style={{ width: `${pct}%` }}></div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Content */}
                     <div className="max-w-4xl mx-auto px-6 py-8 space-y-12">
-                        {RAW_PHASES.map(([pid, title, sub, bg, bdr, txt, icon]) => (
-                            <div key={pid} className="relative">
+                        {DATA.map(([pTit, pSub, bg, bdr, txt, icon, steps], pIdx) => (
+                            <div key={pIdx} className="relative">
                                 <div className={`sticky top-20 md:top-32 z-30 mb-6 p-4 rounded-xl border ${bdr} ${bg} shadow-sm backdrop-blur-sm flex items-center gap-4`}>
                                     <div className={`p-2 bg-white rounded-lg shadow-sm ${txt}`}><Icon n={icon} c="w-6 h-6" /></div>
-                                    <div><h2 className={`text-lg font-bold ${txt}`}>{title}</h2><p className="text-sm text-slate-600 opacity-90">{sub}</p></div>
+                                    <div><h2 className={`text-lg font-bold ${txt}`}>{pTit}</h2><p className="text-sm text-slate-600 opacity-90">{pSub}</p></div>
                                 </div>
-
                                 <div className="grid gap-4">
-                                    {RAW_STEPS.filter(s => s[1] === pid).map(([id, _, title, hrs, link, focus, dets, critMsg]) => {
-                                        const isP1 = PHASE1_IDS.includes(id);
+                                    {steps.map(([tit, hrs, url, foc, dets, crit], sIdx) => {
+                                        const id = `${pIdx}-${sIdx}`;
+                                        const isP1 = pIdx === 0;
                                         const isDone = isP1 || done.includes(id);
-                                        
                                         return (
-                                            <div key={id} onClick={() => toggle(id)} className={`${STYLES.card} ${isDone ? STYLES.cardDone : ''}`}>
+                                            <div key={id} onClick={() => toggle(id, pIdx)} className={`${STYLES.card} ${isDone ? STYLES.cardDone : ''}`}>
                                                 <div className="flex items-start gap-4">
                                                     <button className={`${STYLES.btnBase} ${isDone ? STYLES.btnDone : STYLES.btnTodo} ${isP1 ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'}`} disabled={isP1}>
                                                         <Icon n="Check" c="w-4 h-4" />
                                                     </button>
                                                     <div className="flex-1">
                                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-                                                            <h3 className={`font-bold text-lg ${isDone ? 'text-slate-400 line-through decoration-slate-300' : 'text-slate-800'}`}>{title}</h3>
+                                                            <h3 className={`font-bold text-lg ${isDone ? 'text-slate-400 line-through decoration-slate-300' : 'text-slate-800'}`}>{tit}</h3>
                                                             <span className={STYLES.pill}>~{hrs} Hours</span>
                                                         </div>
-                                                        {critMsg && <div className="mb-3 flex gap-2 text-xs font-bold text-rose-500 bg-rose-50 p-2 rounded border border-rose-100"><Icon n="Alert" c="w-4 h-4" />{critMsg}</div>}
-                                                        
+                                                        {crit && <div className="mb-3 flex gap-2 text-xs font-bold text-rose-500 bg-rose-50 p-2 rounded border border-rose-100"><Icon n="Alert" c="w-4 h-4" />{crit}</div>}
                                                         <div className="mt-4 grid md:grid-cols-2 gap-4">
                                                             <div className="bg-blue-50/50 p-3 rounded-lg border border-blue-50">
                                                                 <span className="block text-xs font-bold text-blue-400 mb-1 uppercase tracking-wide">Focus</span>
-                                                                <p className="text-sm text-slate-700 leading-relaxed">{focus}</p>
+                                                                <p className="text-sm text-slate-700 leading-relaxed">{foc}</p>
                                                             </div>
                                                             <div className="bg-slate-50 p-3 rounded-lg border border-stone-100">
                                                                 <span className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide flex items-center gap-1"><Icon n="Star" c="w-3 h-3" /> Key Concepts</span>
@@ -170,7 +157,7 @@
                                                             </div>
                                                         </div>
                                                         <div className="mt-4 flex justify-end">
-                                                            <a href={link} target="_blank" onClick={(e) => e.stopPropagation()} className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-blue-500 hover:underline">
+                                                            <a href={getUrl(url)} target="_blank" onClick={(e) => e.stopPropagation()} className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-blue-500 hover:underline">
                                                                 Launch Course <Icon n="Link" c="w-3 h-3" />
                                                             </a>
                                                         </div>
@@ -183,7 +170,7 @@
                             </div>
                         ))}
                     </div>
-                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.1</div>
+                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.2</div>
                 </div>
             );
         };
