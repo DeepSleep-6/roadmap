@@ -4,672 +4,186 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Machine Learning Engineer Roadmap</title>
-    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 <body class="bg-stone-50 text-slate-700">
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useMemo } = React;
 
-        // [MODIFICATION: PERFORMANCE] 
-        // Hoisted the icon definitions OUTSIDE the component. 
-        // Previously, this object was recreated on every single render cycle (dozens of times per second), causing memory churn.
-        // Converted to functions that accept className to maintain style flexibility.
-        const ICON_MAP = {
-            Calculator: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>,
-            Terminal: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>,
-            Database: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>,
-            Brain: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>,
-            Map: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></svg>,
-            Clock: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-            Check: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={cls}><polyline points="20 6 9 17 4 12"/></svg>,
-            Lock: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
-            AlertTriangle: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>,
-            Star: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
-            ExternalLink: (cls) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={cls}><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
+        // --- OPTIMIZATION 1: ICON FACTORY ---
+        // We strip all SVG boilerplate. Just the path data remains.
+        const ICONS = {
+            Calculator: <><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></>,
+            Terminal: <><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></>,
+            Database: <><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></>,
+            Brain: <><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2ZM14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></>,
+            Map: <><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" x2="9" y1="3" y2="18"/><line x1="15" x2="15" y1="6" y2="21"/></>,
+            Clock: <><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></>,
+            Check: <><polyline points="20 6 9 17 4 12"/></>,
+            Lock: <><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></>,
+            Alert: <><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></>,
+            Star: <><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></>,
+            Link: <><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></>
         };
 
-        const Icon = ({ name, className }) => {
-            return ICON_MAP[name] ? ICON_MAP[name](className) : null;
-        };
+        const Icon = ({ n, c }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={n==="Check"?3:2} strokeLinecap="round" strokeLinejoin="round" className={c}>
+                {ICONS[n]}
+            </svg>
+        );
 
-        // --- DATA ---
-        const phases = [
-            {
-                id: "phase1",
-                title: "PHASE 1: FOUNDATION TRACK",
-                subtitle: "Mathematical Core & Python Basics",
-                color: "bg-slate-50",
-                borderColor: "border-slate-200",
-                iconColor: "text-slate-500",
-                iconName: "Calculator"
-            },
-            {
-                id: "phase2",
-                title: "PHASE 2: CORE ENGINEERING TRACK",
-                subtitle: "IBM AI Engineering",
-                color: "bg-blue-50",
-                borderColor: "border-blue-100",
-                iconColor: "text-blue-600",
-                iconName: "Terminal"
-            },
-            {
-                id: "phase3",
-                title: "PHASE 3: INFRASTRUCTURE TRACK",
-                subtitle: "Google Cloud ML Engineer",
-                color: "bg-emerald-50",
-                borderColor: "border-emerald-100",
-                iconColor: "text-emerald-600",
-                iconName: "Database"
-            },
-            {
-                id: "phase4",
-                title: "PHASE 4: GENAI DELTA",
-                subtitle: "Generative AI Specialization",
-                color: "bg-purple-50",
-                borderColor: "border-purple-100",
-                iconColor: "text-purple-600",
-                iconName: "Brain"
-            },
-            {
-                id: "phase5",
-                title: "PHASE 5: LOCALIZATION & EXECUTION",
-                subtitle: "Portfolio & Exam",
-                color: "bg-rose-50",
-                borderColor: "border-rose-100",
-                iconColor: "text-rose-600",
-                iconName: "Map"
-            }
+        // --- OPTIMIZATION 2: DATA COMPRESSION ---
+        // Format: [id, title, subtitle, color, border, iconColor, iconName]
+        const RAW_PHASES = [
+            ["phase1", "PHASE 1: FOUNDATION TRACK", "Mathematical Core & Python Basics", "bg-slate-50", "border-slate-200", "text-slate-500", "Calculator"],
+            ["phase2", "PHASE 2: CORE ENGINEERING TRACK", "IBM AI Engineering", "bg-blue-50", "border-blue-100", "text-blue-600", "Terminal"],
+            ["phase3", "PHASE 3: INFRASTRUCTURE TRACK", "Google Cloud ML Engineer", "bg-emerald-50", "border-emerald-100", "text-emerald-600", "Database"],
+            ["phase4", "PHASE 4: GENAI DELTA", "Generative AI Specialization", "bg-purple-50", "border-purple-100", "text-purple-600", "Brain"],
+            ["phase5", "PHASE 5: LOCALIZATION & EXECUTION", "Portfolio & Exam", "bg-rose-50", "border-rose-100", "text-rose-600", "Map"]
         ];
 
-        const steps = [
-            // PHASE 1
-            {
-                id: 101,
-                phaseId: "phase1",
-                title: "Programming for Everybody (Python)",
-                hours: 12,
-                link: "https://www.coursera.org/learn/python",
-                focus: "Control flow, logic, algorithmic thinking.",
-                details: [
-                "Core Python Syntax & Logic",
-                "Conditionals & Iteration",
-                "Prerequisite for: Algorithm implementations"
-                ],
-                critical: false
-            },
-            {
-                id: 102,
-                phaseId: "phase1",
-                title: "Python Data Structures",
-                hours: 15,
-                link: "https://www.coursera.org/learn/python-data",
-                focus: "Lists, Dictionaries, Tuples.",
-                details: [
-                "Manipulating Lists & Dictionaries",
-                "Tuple immutability",
-                "Essential for: Handling JSON/API responses"
-                ],
-                critical: false
-            },
-            {
-                id: 103,
-                phaseId: "phase1",
-                title: "Using Python to Access Web Data",
-                hours: 15,
-                link: "https://www.coursera.org/learn/python-network-data",
-                focus: "Harvesting unstructured data, APIs.",
-                details: [
-                "JSON/XML parsing",
-                "REST API interaction",
-                "Precursor to Data Engineering pipelines"
-                ],
-                critical: false
-            },
-            {
-                id: 104,
-                phaseId: "phase1",
-                title: "Linear Algebra for ML",
-                hours: 20,
-                link: "https://www.coursera.org/learn/linear-algebra-machine-learning",
-                focus: "Vectors, Matrices, Tensors.",
-                details: [
-                "Vector Spaces & Basis",
-                "Matrix Multiplication & Inversion",
-                "Foundational for: Embeddings & Vector Search"
-                ],
-                critical: false
-            },
-            {
-                id: 105,
-                phaseId: "phase1",
-                title: "Multivariate Calculus",
-                hours: 20,
-                link: "https://www.coursera.org/learn/multivariate-calculus-machine-learning",
-                focus: "Gradient Descent, Chain Rule.",
-                details: [
-                "Partial Derivatives & Jacobians",
-                "The Chain Rule in Neural Networks",
-                "Foundational for: Backpropagation Algorithms"
-                ],
-                critical: false
-            },
-            {
-                id: 106,
-                phaseId: "phase1",
-                title: "Principal Component Analysis (PCA)",
-                hours: 15,
-                link: "https://www.coursera.org/learn/pca-machine-learning",
-                focus: "Dimensionality Reduction.",
-                details: [
-                "Eigenvectors & Eigenvalues",
-                "Projections & Reconstruction Error",
-                "Foundational for: Feature Engineering & Compression"
-                ],
-                critical: false
-            },
-
-            // PHASE 2
-            {
-                id: 1,
-                phaseId: "phase2",
-                title: "Python for Data Science, AI & Development",
-                hours: 30,
-                link: "https://www.coursera.org/learn/python-for-applied-data-science-ai",
-                focus: "Start at Module 4 (Pandas) & 5 (NumPy). Skip basic loops/functions.",
-                details: [
-                "Speed-run: Skip Modules 1-3 (Variables/Loops)",
-                "Pandas: DataFrames, Cleaning, Manipulation",
-                "NumPy: Vectorized operations & Broadcasting",
-                "Goal: Standardize Data Science Stack proficiency"
-                ],
-                critical: false
-            },
-            {
-                id: 2,
-                phaseId: "phase2",
-                title: "Machine Learning with Python",
-                hours: 45,
-                link: "https://www.coursera.org/learn/machine-learning-with-python",
-                focus: "Scikit-Learn, Regression, Classification, Clustering.",
-                details: [
-                "Supervised: Regression (Linear/Poly) & SVMs",
-                "Unsupervised: K-Means, DBSCAN, Hierarchical",
-                "Exam Map: Interpretability (Decision Trees vs. Neural Nets)",
-                "Handling Class Imbalance (SMOTE)"
-                ],
-                critical: false
-            },
-            {
-                id: 3,
-                phaseId: "phase2",
-                title: "Intro to Deep Learning & Neural Networks with Keras",
-                hours: 30,
-                link: "https://www.coursera.org/learn/introduction-to-deep-learning-with-keras",
-                focus: "Keras API, Activation Functions (ReLU, Sigmoid), Backpropagation.",
-                details: [
-                "Architecture: Input, Hidden, Output Layers",
-                "Activations: ReLU (Hidden) vs Sigmoid/Softmax (Output)",
-                "Backpropagation logic & Gradient Descent",
-                "Building Sequential Models in Keras"
-                ],
-                critical: false
-            },
-            {
-                id: 4,
-                phaseId: "phase2",
-                title: "Deep Learning with Keras and TensorFlow",
-                hours: 45,
-                link: "https://www.coursera.org/learn/deep-learning-with-keras-and-tensorflow",
-                focus: "TensorFlow Ecosystem, tf.data pipelines.",
-                details: [
-                "Critical: tf.data pipelines (prefetch, interleave)",
-                "Resolving Input Pipeline Bottlenecks (High Exam Frequency)",
-                "TFRecords & Binary Storage Formats",
-                "Saving/Loading Models (HDF5 vs SavedModel)"
-                ],
-                critical: false
-            },
-            {
-                id: 5,
-                phaseId: "phase2",
-                title: "Introduction to Neural Networks and PyTorch",
-                hours: 30,
-                link: "https://www.coursera.org/learn/introduction-to-neural-networks-and-pytorch",
-                focus: "Tensors, Autograd.",
-                details: [
-                "Tensors: N-dimensional array manipulation on GPU",
-                "Autograd: Automatic Differentiation mechanics",
-                "PyTorch Syntax vs TensorFlow",
-                "Dynamic Computation Graphs"
-                ],
-                critical: false
-            },
-            {
-                id: 6,
-                phaseId: "phase2",
-                title: "Deep Learning with PyTorch",
-                hours: 45,
-                link: "https://www.coursera.org/learn/deep-neural-networks-with-pytorch",
-                focus: "CNNs, Transfer Learning (ResNet).",
-                details: [
-                "CNNs: Stride, Padding, Pooling Layers",
-                "Transfer Learning: Fine-tuning ResNet-50",
-                "Strategic Pivot: Replaces DeepLearning.AI specialization",
-                "Predecessor to LLM Tuning logic"
-                ],
-                critical: true,
-                criticalMsg: "CRITICAL STOP: DO NOT PROCEED TO IBM COURSE 7. PAUSE IBM CERT HERE."
-            },
-            // PHASE 3
-            {
-                id: 7,
-                phaseId: "phase3",
-                title: "Intro to AI and Machine Learning on Google Cloud",
-                hours: 30,
-                link: "https://www.coursera.org/learn/google-cloud-java-machine-learning",
-                focus: "'Build vs. Buy' decision matrix, BigQuery ML.",
-                details: [
-                "Build vs Buy: Vision/Translation API vs Custom Models",
-                "BigQuery ML: Training Regression/ARIMA via SQL",
-                "Minimizing Data Movement (Train where data lives)",
-                "GCP Hierarchy: Org -> Folder -> Project"
-                ],
-                critical: false
-            },
-            {
-                id: 8,
-                phaseId: "phase3",
-                title: "Feature Engineering",
-                hours: 30,
-                link: "https://www.coursera.org/learn/feature-engineering",
-                focus: "Dataflow (Apache Beam), tf.Transform, Vertex AI Feature Store.",
-                details: [
-                "Dataflow: Windowing, Watermarks, Triggers",
-                "tf.Transform: Preventing Training-Serving Skew",
-                "Vertex AI Feature Store: Online vs Batch Serving",
-                "Handling High-Cardinality Categorical Data"
-                ],
-                critical: false
-            },
-            {
-                id: 9,
-                phaseId: "phase3",
-                title: "Machine Learning in the Enterprise",
-                hours: 30,
-                link: "https://www.coursera.org/learn/machine-learning-enterprise",
-                focus: "Vertex AI Vizier (Hyperparameter Tuning), Model Governance.",
-                details: [
-                "Vertex AI Vizier: Bayesian Optimization",
-                "Search Algorithms: Random vs Grid vs Bayesian",
-                "Model Registry: Versioning & Lineage",
-                "Vertex AI Experiments"
-                ],
-                critical: false
-            },
-            {
-                id: 10,
-                phaseId: "phase3",
-                title: "Production Machine Learning Systems",
-                hours: 30,
-                link: "https://www.coursera.org/learn/production-machine-learning-systems",
-                focus: "Distributed Training (TPU vs GPU), Static vs Dynamic Training.",
-                details: [
-                "Distributed Strategies: MirroredStrategy, MultiWorker",
-                "Hardware: TPUs (Matrix Math) vs GPUs (General)",
-                "Training Patterns: Static vs Dynamic Retraining",
-                "Model Serving: TensorFlow Serving & Vertex AI Prediction"
-                ],
-                critical: false
-            },
-            {
-                id: 11,
-                phaseId: "phase3",
-                title: "MLOps Fundamentals",
-                hours: 30,
-                link: "https://www.coursera.org/learn/mlops-fundamentals",
-                focus: "Vertex AI Pipelines (Kubeflow/TFX), CI/CD for ML.",
-                details: [
-                "Vertex AI Pipelines: KFP (Kubeflow) DSL",
-                "CI/CD: Cloud Build Triggers for ML",
-                "Orchestration: Directed Acyclic Graphs (DAGs)",
-                "HIGHEST EXAM WEIGHT: Automating Pipelines"
-                ],
-                critical: false
-            },
-            // PHASE 4
-            {
-                id: 12,
-                phaseId: "phase4",
-                title: "GenAI & LLMs: Architecture and Data Prep",
-                hours: 15,
-                link: "https://www.coursera.org/learn/generative-ai-llms-architecture-data-preparation",
-                focus: "Transformer Architecture, Attention Mechanisms.",
-                details: [
-                "Transformer Deep Dive: Encoder-Decoder Blocks",
-                "Attention: Self-Attention & Multi-Head Attention",
-                "Positional Encodings",
-                "Scaling Laws & Tokenization"
-                ],
-                critical: false
-            },
-            {
-                id: 13,
-                phaseId: "phase4",
-                title: "Gen AI Foundational Models for NLP",
-                hours: 15,
-                link: "https://www.coursera.org/learn/generative-ai-foundational-models-for-nlp-and-language-understanding",
-                focus: "BERT, GPT, Prompt Engineering.",
-                details: [
-                "Model Selection: BERT (Encoder) vs GPT (Decoder)",
-                "Prompt Engineering: Zero-shot, Few-shot, Chain-of-Thought",
-                "Domain Adaptation strategies",
-                "Evaluation Metrics: BLEU, ROUGE"
-                ],
-                critical: false
-            },
-            {
-                id: 14,
-                phaseId: "phase4",
-                title: "Gen AI Engineering and Fine-Tuning",
-                hours: 15,
-                link: "https://www.coursera.org/learn/generative-ai-engineering-and-fine-tuning-transformers",
-                focus: "PEFT (Parameter-Efficient Fine-Tuning), LoRA, RLHF.",
-                details: [
-                "PEFT: Freezing weights to save VRAM",
-                "LoRA: Low-Rank Adaptation matrices",
-                "RLHF: Reinforcement Learning from Human Feedback",
-                "Quantization Techniques"
-                ],
-                critical: false
-            },
-            {
-                id: 15,
-                phaseId: "phase4",
-                title: "Fundamentals of AI Agents (RAG & LangChain)",
-                hours: 15,
-                link: "https://www.coursera.org/learn/generative-ai-agents-rag-langchain",
-                focus: "Vector Databases, RAG Architecture, Vertex AI Agent Builder.",
-                details: [
-                "RAG Flow: Embedding -> Vector DB -> Retrieval -> Generation",
-                "Vertex AI Agent Builder & Search",
-                "Vector Search Algorithms (ScaNN)",
-                "Grounding & Citation logic"
-                ],
-                critical: false
-            },
-            // PHASE 5
-            {
-                id: 16,
-                phaseId: "phase5",
-                title: "Project 1: Arabic NLP (Local Market)",
-                hours: 30,
-                link: "https://cloud.google.com/vertex-ai-notebooks",
-                focus: "Fine-tune AraBERT for Saudi dialect sentiment analysis on Vertex AI.",
-                details: [
-                "Model: Fine-tune AraBERT or CamelBERT",
-                "Data: Saudi Newspapers / ASTD (Tweets)",
-                "Task: Sentiment Analysis (Najdi/Hejazi dialects)",
-                "Platform: Vertex AI Workbench"
-                ],
-                critical: false
-            },
-            {
-                id: 17,
-                phaseId: "phase5",
-                title: "Project 2: Smart City Vision (Vision 2030)",
-                hours: 30,
-                link: "https://www.ultralytics.com/yolo",
-                focus: "Train YOLOv8 on ArTS (Arabic Traffic Sign) dataset.",
-                details: [
-                "Model: YOLOv8 Object Detection",
-                "Data: ArTS (Arabic Traffic Signs) Dataset",
-                "Challenge: Handling High Glare & Sandstorm Noise",
-                "Target: Edge Deployment Simulation"
-                ],
-                critical: false
-            },
-            {
-                id: 18,
-                phaseId: "phase5",
-                title: "Exam Simulation",
-                hours: 20,
-                link: "https://www.whizlabs.com/",
-                focus: "Whizlabs Practice Exams, Google Cloud Skills Boost Quests.",
-                details: [
-                "Whizlabs: Full-length timed mock exams",
-                "Skills Boost: 'Machine Learning Engineer' Quest",
-                "Review: Incorrect answers & domain gaps",
-                "Speed: Aim for < 1 min per question"
-                ],
-                critical: false
-            },
-            {
-                id: 19,
-                phaseId: "phase5",
-                title: "FINAL EXAM: Google Cloud PMLE",
-                hours: 5,
-                link: "https://cloud.google.com/learn/certification/machine-learning-engineer",
-                focus: "Certification execution.",
-                details: [
-                "Schedule: Remote proctored or On-site",
-                "ID Check: Valid Passport/ID",
-                "Environment: Clean desk, no electronics",
-                "Execution: Trust the preparation."
-                ],
-                critical: true,
-                criticalMsg: "Good luck. You are ready."
-            }
-        ];
-
-        const phase1Ids = [101, 102, 103, 104, 105, 106];
-
-        // --- COMPONENT ---
-        const RoadmapTracker = () => {
-            const [completedSteps, setCompletedSteps] = useState([]);
+        const BASE_COURSERA = "https://www.coursera.org/learn/";
+        
+        // Format: [id, phaseId, title, hours, url, focus, [details], criticalMsg?]
+        const RAW_STEPS = [
+            [101, "phase1", "Programming for Everybody", 12, BASE_COURSERA+"python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"]],
+            [102, "phase1", "Python Data Structures", 15, BASE_COURSERA+"python-data", "Lists, Dicts, Tuples.", ["List Manipulation", "Immutability", "JSON Prep"]],
+            [103, "phase1", "Using Python to Access Web Data", 15, BASE_COURSERA+"python-network-data", "Harvesting data, APIs.", ["JSON/XML Parsing", "REST APIs", "Data Eng Prep"]],
+            [104, "phase1", "Linear Algebra for ML", 20, BASE_COURSERA+"linear-algebra-machine-learning", "Vectors, Matrices.", ["Vector Spaces", "Matrix Ops", "Embeddings Math"]],
+            [105, "phase1", "Multivariate Calculus", 20, BASE_COURSERA+"multivariate-calculus-machine-learning", "Gradient Descent.", ["Derivatives", "Chain Rule", "Backprop Math"]],
+            [106, "phase1", "PCA", 15, BASE_COURSERA+"pca-machine-learning", "Dim Reduction.", ["Eigenvectors", "Projections", "Compression"]],
             
-            useEffect(() => {
-                const savedProgress = localStorage.getItem('roadmapProgress');
-                if (savedProgress) {
-                    setCompletedSteps(JSON.parse(savedProgress));
-                } else {
-                    setCompletedSteps([...phase1Ids]);
-                }
-            }, []);
+            [1, "phase2", "Python for Data Science", 30, BASE_COURSERA+"python-for-applied-data-science-ai", "Pandas & NumPy.", ["Skip Modules 1-3", "DataFrames", "Vectorization", "Stack Std"]],
+            [2, "phase2", "Machine Learning with Python", 45, BASE_COURSERA+"machine-learning-with-python", "Scikit-Learn.", ["Regression/SVMs", "Clustering", "Decision Trees", "SMOTE"]],
+            [3, "phase2", "Intro to DL with Keras", 30, BASE_COURSERA+"introduction-to-deep-learning-with-keras", "Keras API, Backprop.", ["Layers", "Activations", "Gradient Descent", "Sequential Models"]],
+            [4, "phase2", "DL with Keras & TF", 45, BASE_COURSERA+"deep-learning-with-keras-and-tensorflow", "TF Ecosystem.", ["tf.data pipelines", "Bottlenecks", "TFRecords", "HDF5/SavedModel"]],
+            [5, "phase2", "Intro to NN & PyTorch", 30, BASE_COURSERA+"introduction-to-neural-networks-and-pytorch", "Tensors, Autograd.", ["GPU Tensors", "AutoDiff", "PyTorch Syntax", "Dynamic Graphs"]],
+            [6, "phase2", "Deep Learning with PyTorch", 45, BASE_COURSERA+"deep-neural-networks-with-pytorch", "CNNs, ResNet.", ["Stride/Pooling", "Fine-tuning", "Replaces DeepLearning.AI", "LLM Prep"], "CRITICAL STOP: PAUSE IBM CERT HERE."],
+            
+            [7, "phase3", "Intro to AI on GCP", 30, BASE_COURSERA+"google-cloud-java-machine-learning", "Build vs Buy.", ["Vision API vs Custom", "BigQuery ML", "Data Gravity", "GCP Hierarchy"]],
+            [8, "phase3", "Feature Engineering", 30, BASE_COURSERA+"feature-engineering", "Dataflow, tf.Transform.", ["Windowing/Triggers", "Skew Prevention", "Feature Store", "Categorical Data"]],
+            [9, "phase3", "ML in the Enterprise", 30, BASE_COURSERA+"machine-learning-enterprise", "Vizier, Governance.", ["Bayesian Opt", "Search Algos", "Model Registry", "Vertex Exp"]],
+            [10, "phase3", "Production ML Systems", 30, BASE_COURSERA+"production-machine-learning-systems", "Dist. Training, Serving.", ["MirroredStrategy", "TPU vs GPU", "Static vs Dynamic", "TF Serving"]],
+            [11, "phase3", "MLOps Fundamentals", 30, BASE_COURSERA+"mlops-fundamentals", "Pipelines, CI/CD.", ["Kubeflow DSL", "Cloud Build", "DAGs", "Pipeline Auto"]],
+            
+            [12, "phase4", "GenAI Architecture", 15, BASE_COURSERA+"generative-ai-llms-architecture-data-preparation", "Transformers.", ["Encoder-Decoder", "Attention", "Positional Enc", "Tokenization"]],
+            [13, "phase4", "Foundational Models NLP", 15, BASE_COURSERA+"generative-ai-foundational-models-for-nlp-and-language-understanding", "BERT, GPT.", ["Encoder vs Decoder", "Prompt Eng", "Domain Adapt", "BLEU/ROUGE"]],
+            [14, "phase4", "Gen AI Fine-Tuning", 15, BASE_COURSERA+"generative-ai-engineering-and-fine-tuning-transformers", "PEFT, LoRA.", ["Freezing Weights", "Low-Rank Adapt", "RLHF", "Quantization"]],
+            [15, "phase4", "AI Agents (RAG)", 15, BASE_COURSERA+"generative-ai-agents-rag-langchain", "Vector DBs, RAG.", ["RAG Flow", "Agent Builder", "ScaNN", "Grounding"]],
+            
+            [16, "phase5", "Project 1: Arabic NLP", 30, "https://cloud.google.com/vertex-ai-notebooks", "AraBERT Tuning.", ["Fine-tune CamelBERT", "Saudi Dialects", "Sentiment Analysis", "Vertex Workbench"]],
+            [17, "phase5", "Project 2: Smart City", 30, "https://www.ultralytics.com/yolo", "YOLOv8 on ArTS.", ["YOLOv8", "Arabic Signs", "Glare/Dust", "Edge Sim"]],
+            [18, "phase5", "Exam Simulation", 20, "https://www.whizlabs.com/", "Whizlabs, Quests.", ["Timed Mocks", "Skills Boost", "Gap Analysis", "<1min/q Speed"]],
+            [19, "phase5", "FINAL EXAM: GCP PMLE", 5, "https://cloud.google.com/learn/certification/machine-learning-engineer", "Execution.", ["Remote/On-site", "ID Check", "Clean Desk", "Trust Prep"], "Good luck. You are ready."]
+        ];
 
-            useEffect(() => {
-                localStorage.setItem('roadmapProgress', JSON.stringify(completedSteps));
-            }, [completedSteps]);
+        const PHASE1_IDS = [101, 102, 103, 104, 105, 106];
+        const STYLES = {
+            card: "group relative bg-white border border-stone-100 rounded-xl p-6 shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer hover:bg-stone-50",
+            cardDone: "opacity-70 bg-stone-50",
+            btnBase: "mt-1 flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors duration-200",
+            btnDone: "bg-emerald-400 border-emerald-400 text-white",
+            btnTodo: "border-stone-300 text-transparent hover:border-emerald-300",
+            pill: "text-xs font-semibold bg-stone-100 text-slate-500 px-2 py-1 rounded-md whitespace-nowrap"
+        };
 
-            const toggleStep = (id) => {
-                // Keep the logic to prevent toggling Phase 1 if you want them strictly "Foundation"
-                // But visualized as checks now.
-                if (phase1Ids.includes(id)) return;
-                setCompletedSteps(prev => 
-                    prev.includes(id) 
-                        ? prev.filter(stepId => stepId !== id) 
-                        : [...prev, id]
-                );
+        const RoadmapTracker = () => {
+            // --- OPTIMIZATION 4: INLINE STATE ---
+            const [done, setDone] = useState(() => JSON.parse(localStorage.getItem('roadmapProgress')) || [...PHASE1_IDS]);
+
+            useEffect(() => localStorage.setItem('roadmapProgress', JSON.stringify(done)), [done]);
+
+            const toggle = (id) => {
+                if (PHASE1_IDS.includes(id)) return; // Keep Phase 1 locked as "Done"
+                setDone(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
             };
 
-            const calculateProgress = () => {
-                if (steps.length === 0) return 0;
-                const allCompleted = new Set([...completedSteps, ...phase1Ids]);
-                return Math.round((allCompleted.size / steps.length) * 100);
-            };
-
-            const calculateHoursStats = () => {
-                const allCompletedIds = new Set([...completedSteps, ...phase1Ids]);
-                const completedHours = steps
-                    .filter(step => allCompletedIds.has(step.id))
-                    .reduce((acc, curr) => acc + curr.hours, 0);
-                
-                const total = steps.reduce((acc, curr) => acc + curr.hours, 0);
-                const remaining = total - completedHours;
-                return { remaining };
-            };
-
-            const formatStudyTime = (hours) => {
-                const weeklyPace = 15;
-                const weeksRemaining = hours / weeklyPace;
-                const daysRemaining = weeksRemaining * 7;
-                if (daysRemaining > 60) return `${Math.round(daysRemaining / 30)} Months Remaining`;
-                if (daysRemaining > 1) return `${Math.round(daysRemaining)} Days Remaining`;
-                return `${hours} Hours Remaining`;
-            };
-
-            const { remaining } = calculateHoursStats();
+            const stats = useMemo(() => {
+                const total = RAW_STEPS.reduce((acc, s) => acc + s[3], 0);
+                const completed = RAW_STEPS.filter(s => PHASE1_IDS.includes(s[0]) || done.includes(s[0])).reduce((acc, s) => acc + s[3], 0);
+                const days = ((total - completed) / 15) * 7; // 15hrs/week pace
+                return { 
+                    pct: Math.round(((new Set([...done, ...PHASE1_IDS]).size) / RAW_STEPS.length) * 100),
+                    time: days > 60 ? `${Math.round(days/30)} Months Left` : `${Math.round(days)} Days Left`
+                };
+            }, [done]);
 
             return (
                 <div className="min-h-screen bg-stone-50 selection:bg-blue-100 pb-20">
                     {/* Header */}
-                    {/* [MODIFICATION: MOBILE] Reduced vertical padding on mobile (py-2) for compactness, md:py-4 for desktop */}
-                    <div className="sticky top-0 z-50 bg-stone-50/90 backdrop-blur-md border-b border-stone-200 shadow-sm transition-all duration-300 py-2 md:py-4">
+                    <div className="sticky top-0 z-50 bg-stone-50/90 backdrop-blur-md border-b border-stone-200 shadow-sm py-2 md:py-4">
                         <div className="max-w-4xl mx-auto px-6">
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-4">
-                                <div>
-                                    <h1 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">Machine Learning Engineer Roadmap</h1>
-                                </div>
-                                <div className="flex gap-4 text-sm font-semibold">
-                                    <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-stone-100 flex items-center gap-2">
-                                        <Icon name="Clock" className="w-4 h-4 text-blue-400" />
-                                        <span>{formatStudyTime(remaining)}</span>
-                                    </div>
+                            <div className="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                                <h1 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight">Machine Learning Engineer Roadmap</h1>
+                                <div className="bg-white px-4 py-2 rounded-lg shadow-sm border border-stone-100 flex items-center gap-2 text-sm font-semibold">
+                                    <Icon n="Clock" c="w-4 h-4 text-blue-400" /> <span>{stats.time}</span>
                                 </div>
                             </div>
-                            
-                            {/* Progress Bar */}
                             <div className="w-full bg-stone-200 rounded-full h-3 overflow-hidden">
-                                <div 
-                                    className="bg-gradient-to-r from-blue-300 via-purple-300 to-rose-300 h-3 rounded-full transition-all duration-1000 ease-out"
-                                    style={{ width: `${calculateProgress()}%` }}
-                                ></div>
+                                <div className="bg-gradient-to-r from-blue-300 via-purple-300 to-rose-300 h-3 rounded-full transition-all duration-1000 ease-out" style={{ width: `${stats.pct}%` }}></div>
                             </div>
                         </div>
                     </div>
 
                     {/* Content */}
                     <div className="max-w-4xl mx-auto px-6 py-8 space-y-12">
-                        {phases.map((phase) => (
-                            <div key={phase.id} className="relative">
-                                {/* Phase Header */}
-                                {/* [MODIFICATION: RESPONSIVE & LAYOUT] 
-                                    Changed 'top-32' to 'top-20 md:top-32'. 
-                                    This prevents the phase header from overlapping under the main header on mobile. 
-                                */}
-                                <div className={`sticky top-20 md:top-32 z-30 mb-6 p-4 rounded-xl border ${phase.borderColor} ${phase.color} shadow-sm backdrop-blur-sm flex items-center gap-4`}>
-                                    <div className={`p-2 bg-white rounded-lg shadow-sm ${phase.iconColor}`}>
-                                        <Icon name={phase.iconName} className="w-6 h-6" />
-                                    </div>
-                                    <div>
-                                        <h2 className={`text-lg font-bold ${phase.iconColor}`}>{phase.title}</h2>
-                                        <p className="text-sm text-slate-600 opacity-90">{phase.subtitle}</p>
-                                    </div>
+                        {RAW_PHASES.map(([pid, title, sub, bg, bdr, txt, icon]) => (
+                            <div key={pid} className="relative">
+                                <div className={`sticky top-20 md:top-32 z-30 mb-6 p-4 rounded-xl border ${bdr} ${bg} shadow-sm backdrop-blur-sm flex items-center gap-4`}>
+                                    <div className={`p-2 bg-white rounded-lg shadow-sm ${txt}`}><Icon n={icon} c="w-6 h-6" /></div>
+                                    <div><h2 className={`text-lg font-bold ${txt}`}>{title}</h2><p className="text-sm text-slate-600 opacity-90">{sub}</p></div>
                                 </div>
 
-                                {/* Steps Grid */}
                                 <div className="grid gap-4">
-                                    {steps.filter(step => step.phaseId === phase.id).map((step) => {
-                                        const isPhase1 = phase1Ids.includes(step.id);
-                                        const isCompleted = isPhase1 || completedSteps.includes(step.id);
+                                    {RAW_STEPS.filter(s => s[1] === pid).map(([id, _, title, hrs, link, focus, dets, critMsg]) => {
+                                        const isP1 = PHASE1_IDS.includes(id);
+                                        const isDone = isP1 || done.includes(id);
                                         
                                         return (
-                                            /* [MODIFICATION: UX] Added 'cursor-pointer' and onClick handler to the entire card div for easier mobile tapping. */
-                                            <div 
-                                                key={step.id}
-                                                onClick={() => toggleStep(step.id)}
-                                                className={`group relative bg-white border border-stone-100 rounded-xl p-6 shadow-sm transition-all duration-200 hover:shadow-md cursor-pointer hover:bg-stone-50 ${isCompleted ? 'opacity-70 bg-stone-50' : ''}`}
-                                            >
+                                            <div key={id} onClick={() => toggle(id)} className={`${STYLES.card} ${isDone ? STYLES.cardDone : ''}`}>
                                                 <div className="flex items-start gap-4">
-                                                    <button 
-                                                        disabled={isPhase1}
-                                                        className={`mt-1 flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-colors duration-200 ${
-                                                            isCompleted 
-                                                                ? 'bg-emerald-400 border-emerald-400 text-white' 
-                                                                : 'border-stone-300 text-transparent hover:border-emerald-300'
-                                                        } ${isPhase1 ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'}`}
-                                                    >
-                                                        {/* [MODIFICATION: LOGIC] Removed the lock icon logic. Even if it's Phase 1, if it's done, it's a check. */ }
-                                                        <Icon name="Check" className="w-4 h-4" />
+                                                    <button className={`${STYLES.btnBase} ${isDone ? STYLES.btnDone : STYLES.btnTodo} ${isP1 ? 'cursor-not-allowed opacity-80' : 'cursor-pointer'}`} disabled={isP1}>
+                                                        <Icon n="Check" c="w-4 h-4" />
                                                     </button>
-
                                                     <div className="flex-1">
                                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-2">
-                                                            <h3 className={`font-bold text-lg ${isCompleted ? 'text-slate-400 line-through decoration-slate-300' : 'text-slate-800'}`}>
-                                                                {step.title}
-                                                            </h3>
-                                                            <span className="text-xs font-semibold bg-stone-100 text-slate-500 px-2 py-1 rounded-md whitespace-nowrap">
-                                                                ~{step.hours} Hours
-                                                            </span>
+                                                            <h3 className={`font-bold text-lg ${isDone ? 'text-slate-400 line-through decoration-slate-300' : 'text-slate-800'}`}>{title}</h3>
+                                                            <span className={STYLES.pill}>~{hrs} Hours</span>
                                                         </div>
-
-                                                        {step.critical && (
-                                                            <div className="mb-3 flex items-start gap-2 text-xs font-bold text-rose-500 bg-rose-50 p-2 rounded border border-rose-100">
-                                                                <Icon name="AlertTriangle" className="w-4 h-4 flex-shrink-0" />
-                                                                {step.criticalMsg}
-                                                            </div>
-                                                        )}
-
+                                                        {critMsg && <div className="mb-3 flex gap-2 text-xs font-bold text-rose-500 bg-rose-50 p-2 rounded border border-rose-100"><Icon n="Alert" c="w-4 h-4" />{critMsg}</div>}
+                                                        
                                                         <div className="mt-4 grid md:grid-cols-2 gap-4">
                                                             <div className="bg-blue-50/50 p-3 rounded-lg border border-blue-50">
-                                                                <span className="block text-xs font-bold text-blue-400 mb-1 uppercase tracking-wide">Primary Focus</span>
-                                                                <p className="text-sm text-slate-700 leading-relaxed">{step.focus}</p>
+                                                                <span className="block text-xs font-bold text-blue-400 mb-1 uppercase tracking-wide">Focus</span>
+                                                                <p className="text-sm text-slate-700 leading-relaxed">{focus}</p>
                                                             </div>
                                                             <div className="bg-slate-50 p-3 rounded-lg border border-stone-100">
-                                                                <span className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide flex items-center gap-1">
-                                                                    <Icon name="Star" className="w-3 h-3" /> Key Concepts
-                                                                </span>
-                                                                <ul className="space-y-1.5">
-                                                                    {step.details.map((detail, idx) => (
-                                                                        <li key={idx} className="text-xs text-slate-600 flex items-start gap-2 leading-relaxed">
-                                                                            <span className="block mt-1.5 w-1 h-1 rounded-full bg-slate-300 flex-shrink-0"></span>
-                                                                            {detail}
-                                                                        </li>
-                                                                    ))}
-                                                                </ul>
+                                                                <span className="block text-xs font-bold text-slate-400 mb-2 uppercase tracking-wide flex items-center gap-1"><Icon n="Star" c="w-3 h-3" /> Key Concepts</span>
+                                                                <ul className="space-y-1.5">{dets.map((d, i) => <li key={i} className="text-xs text-slate-600 flex gap-2"><span className="mt-1.5 w-1 h-1 rounded-full bg-slate-300 shrink-0"></span>{d}</li>)}</ul>
                                                             </div>
                                                         </div>
-
                                                         <div className="mt-4 flex justify-end">
-                                                            {/* [MODIFICATION: UX] Added stopPropagation to prevent the link click from triggering the card toggle. */ }
-                                                            <a 
-                                                                href={step.link} 
-                                                                target="_blank" 
-                                                                rel="noopener noreferrer"
-                                                                onClick={(e) => e.stopPropagation()}
-                                                                className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-blue-500 hover:underline transition-colors"
-                                                            >
-                                                                Launch Course <Icon name="ExternalLink" className="w-3 h-3" />
+                                                            <a href={link} target="_blank" onClick={(e) => e.stopPropagation()} className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-blue-500 hover:underline">
+                                                                Launch Course <Icon n="Link" c="w-3 h-3" />
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        );
+                                        )
                                     })}
                                 </div>
                             </div>
                         ))}
                     </div>
-                    {/* [MODIFICATION: FOOTER] Added version number per request. */ }
-                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">
-                        v1.0
-                    </div>
+                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v1.1</div>
                 </div>
             );
         };
