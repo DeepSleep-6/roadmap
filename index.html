@@ -38,8 +38,6 @@
         };
         const Icon = ({ n, c }) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={n==="Check"?3:2} strokeLinecap="round" strokeLinejoin="round" className={c}>{ICONS[n]}</svg>;
 
-        // [MODIFICATION: REAL MODULES]
-        // Added index 8: Actual modules from the syllabus
         const DATA = [
             ["PHASE 1: FOUNDATION TRACK", "المسار التأسيسي", "Mathematical Core & Python Basics", "bg-slate-50", "border-slate-200", "text-slate-500", "Calculator", [
                 ["Programming for Everybody", "البرمجة للجميع", 12, "python", "Control flow, logic.", ["Core Syntax", "Conditionals", "Algo Prep"], null, "اللغة الأساسية لبرمجة الذكاء الاصطناعي؛ تمكننا من بناء الأنظمة والتحكم في البيانات بدقة.", ["Why Program?", "Variables", "Conditionals", "Functions", "Loops & Iteration"]],
@@ -93,25 +91,59 @@
         };
 
         const RoadmapTracker = () => {
-            // [MODIFICATION: STATE] now stores { "0-1": [0, 1] } (list of completed module indices)
-            const [progress, setProgress] = useState(() => JSON.parse(localStorage.getItem('roadmapV2_1')) || {});
-            const [expanded, setExpanded] = useState(null); // Track expanded card
+            const [progress, setProgress] = useState(() => JSON.parse(localStorage.getItem('roadmapV2_2')) || {});
+            const [expanded, setExpanded] = useState(null);
 
-            useEffect(() => localStorage.setItem('roadmapV2_1', JSON.stringify(progress)), [progress]);
+            useEffect(() => localStorage.setItem('roadmapV2_2', JSON.stringify(progress)), [progress]);
 
             const getUrl = (u) => u.startsWith('http') ? u : `https://www.coursera.org/learn/${u}`;
 
-            const toggleModule = (stepId, modIdx, totalMods) => {
+            // Helper to get linear list of all steps with their module counts
+            const allSteps = useMemo(() => 
+                DATA.flatMap((phase, pIdx) => phase[7].map((step, sIdx) => ({
+                    id: `${pIdx}-${sIdx}`,
+                    modCount: step[8].length
+                })))
+            , []);
+
+            // [MODIFICATION: MASTER TOGGLE]
+            // Restores the "Smart Fill" logic for the main button
+            const toggleMaster = (e, targetId) => {
+                e.stopPropagation(); // Don't expand card
+                
+                const targetIndex = allSteps.findIndex(s => s.id === targetId);
+                if (targetIndex === -1) return;
+
+                const targetStep = allSteps[targetIndex];
+                const currentMods = progress[targetId] || [];
+                const isFullyDone = currentMods.length === targetStep.modCount;
+
+                const newProgress = { ...progress };
+
+                if (isFullyDone) {
+                    // REWIND: Uncheck this step AND all steps after it
+                    for (let i = targetIndex; i < allSteps.length; i++) {
+                        delete newProgress[allSteps[i].id];
+                    }
+                } else {
+                    // FILL: Check this step AND all steps before it
+                    for (let i = 0; i <= targetIndex; i++) {
+                        const step = allSteps[i];
+                        // Fill all modules for this step (indices 0 to modCount-1)
+                        newProgress[step.id] = Array.from({length: step.modCount}, (_, k) => k);
+                    }
+                }
+                setProgress(newProgress);
+            };
+
+            const toggleModule = (stepId, modIdx) => {
                 setProgress(prev => {
                     const currentMods = prev[stepId] || [];
                     const isDone = currentMods.includes(modIdx);
                     let newMods;
-                    if (isDone) {
-                        newMods = currentMods.filter(m => m !== modIdx);
-                    } else {
-                        newMods = [...currentMods, modIdx];
-                    }
-                    // Clean up empty arrays
+                    if (isDone) newMods = currentMods.filter(m => m !== modIdx);
+                    else newMods = [...currentMods, modIdx];
+                    
                     if (newMods.length === 0) {
                         const { [stepId]: _, ...rest } = prev;
                         return rest;
@@ -129,14 +161,13 @@
             const today = new Date();
             const daysLeft = Math.ceil((targetDate - today) / (1000 * 60 * 60 * 24));
             
-            // Calc total stats based on modules
             let totalModules = 0, doneModules = 0;
             let totalHours = 0;
 
             DATA.forEach((phase, pIdx) => phase[7].forEach((step, sIdx) => {
                 const id = `${pIdx}-${sIdx}`;
                 const hrs = step[2];
-                const mods = step[8]; // Module list
+                const mods = step[8]; 
                 
                 totalModules += mods.length;
                 totalHours += hrs;
@@ -145,10 +176,12 @@
                 doneModules += completedMods.length;
             }));
 
-            // Estimate remaining hours based on module completion %
             const pctDone = doneModules / totalModules;
             const remainingHrs = totalHours * (1 - pctDone);
-            const hrsPerDay = daysLeft > 0 ? Math.round(remainingHrs / daysLeft) : 0;
+            // [MODIFICATION: ROUNDING] Round to nearest 0.5
+            const rawHrsPerDay = daysLeft > 0 ? remainingHrs / daysLeft : 0;
+            const hrsPerDay = (Math.round(rawHrsPerDay * 2) / 2).toFixed(1).replace('.0', '');
+            
             const durationStr = daysLeft > 60 ? `${Math.round(daysLeft/30)} Months Left` : `${Math.round(daysLeft)} Days Left`;
 
             let statusLabel;
@@ -167,8 +200,8 @@
                                     <Icon n="Clock" c="w-4 h-4 text-slate-400" /> 
                                     <span>{durationStr}</span>
                                 </div>
-                                <div className={`px-4 py-2 rounded-lg shadow-sm border border-stone-100 flex items-center gap-2 text-sm font-semibold ${hrsPerDay > 4 ? 'bg-rose-50 text-rose-600 border-rose-100' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
-                                    <Icon n="Terminal" c={`w-4 h-4 ${hrsPerDay > 4 ? 'text-rose-500' : 'text-blue-500'}`} /> 
+                                <div className={`px-4 py-2 rounded-lg shadow-sm border border-stone-100 flex items-center gap-2 text-sm font-semibold ${rawHrsPerDay > 4 ? 'bg-rose-50 text-rose-600 border-rose-100' : 'bg-blue-50 text-blue-600 border-blue-100'}`}>
+                                    <Icon n="Terminal" c={`w-4 h-4 ${rawHrsPerDay > 4 ? 'text-rose-500' : 'text-blue-500'}`} /> 
                                     <span>{statusLabel}</span>
                                 </div>
                             </div>
@@ -200,24 +233,25 @@
                                         const isStarted = completedMods.length > 0;
                                         const isExpanded = expanded === id;
 
-                                        // Dynamic Style
                                         let cardClass = `${STYLES.cardBase} bg-white border-stone-100 ${theme.hover}`;
                                         if (isFullyDone) cardClass = `${STYLES.cardBase} ${theme.active} opacity-80`;
-                                        else if (isStarted) cardClass = `${STYLES.cardBase} border-l-4 ${theme.active.split(' ')[1]} bg-white`; // Left border indicator
+                                        else if (isStarted) cardClass = `${STYLES.cardBase} border-l-4 ${theme.active.split(' ')[1]} bg-white`;
 
                                         return (
                                             <div key={id} onClick={() => toggleCard(id)} className={cardClass}>
                                                 
                                                 <div className="flex gap-3 items-start">
-                                                    {/* Progress Ring / Check */}
-                                                    <div className="mt-0.5 shrink-0 w-6 h-6 relative flex items-center justify-center">
+                                                    {/* [MODIFICATION: MASTER BUTTON] */}
+                                                    <div 
+                                                        onClick={(e) => toggleMaster(e, id)}
+                                                        className="mt-0.5 shrink-0 w-6 h-6 relative flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
+                                                    >
                                                         {isFullyDone ? (
-                                                            <div className="w-full h-full rounded-full bg-emerald-400 text-white flex items-center justify-center">
+                                                            <div className="w-full h-full rounded-full bg-emerald-400 text-white flex items-center justify-center shadow-sm">
                                                                 <Icon n="Check" c="w-4 h-4" />
                                                             </div>
                                                         ) : (
-                                                            <div className="w-6 h-6 rounded-full border-2 border-stone-200 relative overflow-hidden">
-                                                                {/* Mini Pie Chart for progress */}
+                                                            <div className="w-6 h-6 rounded-full border-2 border-stone-200 relative overflow-hidden bg-white">
                                                                 <div 
                                                                     className={`absolute bottom-0 left-0 right-0 ${theme.dark}`} 
                                                                     style={{ height: `${(completedMods.length / mods.length) * 100}%`, transition: 'height 0.3s' }}
@@ -250,9 +284,8 @@
                                                     {descAr}
                                                 </div>
 
-                                                {/* EXPANDABLE MODULE GRID */}
                                                 {isExpanded && (
-                                                    <div className="mt-2 pt-2 border-t border-stone-100 animate-fadeIn" onClick={e => e.stopPropagation()}>
+                                                    <div className="mt-2 pt-2 border-t border-stone-100 animate-fadeIn cursor-auto" onClick={e => e.stopPropagation()}>
                                                         <h4 className="text-xs font-bold text-slate-400 uppercase mb-2">Modules Tracker</h4>
                                                         <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                                                             {mods.map((modName, mIdx) => {
@@ -260,7 +293,7 @@
                                                                 return (
                                                                     <button 
                                                                         key={mIdx}
-                                                                        onClick={() => toggleModule(id, mIdx, mods.length)}
+                                                                        onClick={() => toggleModule(id, mIdx)}
                                                                         className={`text-left p-2 rounded text-xs font-medium border transition-all duration-200 flex items-center gap-2 ${
                                                                             isModDone 
                                                                                 ? `${theme.light} ${theme.dark.replace('bg-', 'text-')} border-transparent` 
@@ -275,7 +308,6 @@
                                                                 )
                                                             })}
                                                         </div>
-                                                        {/* Details Info */}
                                                         <div className="grid md:grid-cols-2 gap-2 mt-4">
                                                             <div className="bg-blue-50/50 p-2 rounded-lg text-sm text-slate-700 leading-relaxed border border-blue-50/50">
                                                                 <span className="block text-xs font-bold text-blue-400 mb-1 uppercase tracking-wide">Focus</span>
@@ -302,7 +334,7 @@
                             </div>
                         ))}
                     </div>
-                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v2.1</div>
+                    <div className="text-center text-xs text-slate-400 pb-8 font-mono">v2.2</div>
                 </div>
             );
         };
