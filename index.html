@@ -1,496 +1,982 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Machine Learning Path</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-<body class="min-h-screen bg-slate-50 text-slate-800 font-sans pb-20 selection:bg-blue-200">
-  <div id="app"></div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Cloud PMLE Certification Roadmap: Zero to Certified</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gcp: {
+                            blue: '#4285F4',
+                            red: '#EA4335',
+                            yellow: '#FBBC04',
+                            green: '#34A853',
+                            dark: '#0B0F19',
+                            card: '#161F30',
+                            border: '#2A364F'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <script>
-    const curriculumData = [
-      {
-        phase: "Phase 0: Prerequisites",
-        phaseAr: "المرحلة 0: المتطلبات الأساسية",
-        steps: [
-          {
-            id: "ph0_s1", name: "Python for Everybody", nameAr: "بايثون للجميع", type: "Specialization", institute: "University of Michigan",
-            link: "https://www.coursera.org/specializations/python",
-            courses: [
-              { id: "ph0_s1_c1", name: "Programming for Everybody (Getting Started with Python)", nameAr: "برمجة للجميع (البدء مع بايثون)", hours: 15 },
-              { id: "ph0_s1_c2", name: "Python Data Structures", nameAr: "هياكل بيانات بايثون", hours: 15 },
-              { id: "ph0_s1_c3", name: "Using Python to Access Web Data", nameAr: "استخدام بايثون للوصول إلى بيانات الويب", hours: 15 },
-              { id: "ph0_s1_c4", name: "Using Databases with Python", nameAr: "استخدام قواعد البيانات مع بايثون", hours: 15 },
-              { id: "ph0_s1_c5", name: "Capstone: Retrieving, Processing, and Visualizing Data with Python", nameAr: "مشروع التخرج: استرجاع ومعالجة وتصور البيانات", hours: 20 }
-            ]
-          },
-          {
-            id: "ph0_s2", name: "Mathematics for Machine Learning", nameAr: "الرياضيات لتعلم الآلة", type: "Specialization", institute: "Imperial College London",
-            link: "https://www.coursera.org/specializations/mathematics-machine-learning",
-            courses: [
-              { id: "ph0_s2_c1", name: "Mathematics for Machine Learning: Linear Algebra", nameAr: "الجبر الخطي", hours: 18 },
-              { id: "ph0_s2_c2", name: "Mathematics for Machine Learning: Multivariate Calculus", nameAr: "التفاضل والتكامل متعدد المتغيرات", hours: 18 },
-              { id: "ph0_s2_c3", name: "Mathematics for Machine Learning: PCA", nameAr: "تحليل المكونات الرئيسية (PCA)", hours: 15 }
-            ]
-          },
-          {
-            id: "ph0_s3", name: "Python for Data Science, AI & Development", nameAr: "بايثون لعلوم البيانات والذكاء الاصطناعي والتطوير", type: "Course", institute: "IBM",
-            link: "https://www.coursera.org/learn/python-for-applied-data-science-ai",
-            courses: [
-               { id: "ph0_s3_c1", name: "Python for Data Science, AI & Development", nameAr: "بايثون لعلوم البيانات والذكاء الاصطناعي والتطوير", hours: 20 }
-            ]
-          },
-          {
-            id: "ph0_s4", name: "Machine Learning with Python", nameAr: "تعلم الآلة باستخدام بايثون", type: "Course", institute: "IBM",
-            link: "https://www.coursera.org/learn/machine-learning-with-python",
-            courses: [
-               { id: "ph0_s4_c1", name: "Machine Learning with Python", nameAr: "تعلم الآلة باستخدام بايثون", hours: 22 }
-            ]
-          }
-        ]
-      },
-      {
-        phase: "Phase I: Foundational Cloud Engineering and Infrastructure",
-        phaseAr: "المرحلة الأولى: الهندسة السحابية الأساسية والبنية التحتية",
-        steps: [
-          {
-            id: "ph1_s1", name: "Google Cloud Fundamentals: Core Infrastructure", nameAr: "أساسيات جوجل كلاود: البنية التحتية الأساسية", type: "Course", institute: "Google Cloud Training",
-            link: "https://www.coursera.org/learn/gcp-fundamentals",
-            courses: [
-              { id: "ph1_s1_c1", name: "Google Cloud Fundamentals: Core Infrastructure", nameAr: "أساسيات جوجل كلاود: البنية التحتية الأساسية", hours: 12 }
-            ]
-          },
-          {
-            id: "ph1_s2", name: "Preparing for Google Cloud Certification: Cloud Engineer", nameAr: "التحضير لشهادة جوجل كلاود: مهندس سحابي", type: "Professional Certificate", institute: "Google Cloud Training",
-            link: "https://www.coursera.org/professional-certificates/cloud-engineering-gcp",
-            courses: [
-              { id: "ph1_s2_c1", name: "Preparing for Your Associate Cloud Engineer Journey", nameAr: "التحضير لرحلة مهندس السحابة المساعد", hours: 10 },
-              { id: "ph1_s2_c2", name: "Essential Google Cloud Infrastructure: Foundation", nameAr: "البنية التحتية الأساسية لجوجل كلاود: التأسيس", hours: 14 },
-              { id: "ph1_s2_c3", name: "Essential Google Cloud Infrastructure: Core Services", nameAr: "البنية التحتية الأساسية لجوجل كلاود: الخدمات الأساسية", hours: 14 },
-              { id: "ph1_s2_c4", name: "Elastic Google Cloud Infrastructure: Scaling and Automation", nameAr: "البنية التحتية المرنة لجوجل كلاود: التوسع والأتمتة", hours: 12 }
-            ]
-          }
-        ]
-      },
-      {
-        phase: "Phase II: Data Engineering and Big Data",
-        phaseAr: "المرحلة الثانية: هندسة البيانات والبيانات الضخمة",
-        steps: [
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0F19;
+            color: #E2E8F0;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #4B5563;
+        }
+        .glass-panel {
+            background: rgba(22, 31, 48, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-blue {
+            box-shadow: 0 0 25px -5px rgba(66, 133, 244, 0.25);
+        }
+        .glow-purple {
+            box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.25);
+        }
+        .tab-btn.active {
+            background-color: #4285F4;
+            color: #ffffff;
+            box-shadow: 0 4px 14px 0 rgba(66, 133, 244, 0.39);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scrollbar">
+
+    <!-- Top Global Header -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-gcp-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Brand Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="p-2 bg-blue-600/20 text-blue-400 rounded-lg border border-blue-500/30">
+                        <i class="fa-solid fa-brain text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg text-white flex items-center gap-2">
+                            GCP PMLE Roadmap
+                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                                2026 Gemini Stack
+                            </span>
+                        </h1>
+                        <p class="text-xs text-gray-400">Zero-to-Hero Professional ML Engineer Pathway</p>
+                    </div>
+                </div>
+
+                <!-- Global Roadmap Progress Bar -->
+                <div class="hidden md:flex items-center space-x-4 w-1/3">
+                    <div class="w-full">
+                        <div class="flex justify-between text-xs mb-1">
+                            <span class="text-gray-400">Overall Readiness Progress</span>
+                            <span id="overallPercentText" class="font-bold text-blue-400">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden border border-gray-700">
+                            <div id="overallProgressBar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <button onclick="resetProgress()" title="Reset saved progress" class="text-xs text-gray-400 hover:text-red-400 p-1.5 transition">
+                        <i class="fa-solid fa-rotate-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- Mobile Overall Progress Bar -->
+        <div class="md:hidden glass-panel p-4 rounded-xl mb-6">
+            <div class="flex justify-between text-xs mb-1">
+                <span class="text-gray-400">Overall Readiness Progress</span>
+                <span id="mobilePercentText" class="font-bold text-blue-400">0%</span>
+            </div>
+            <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden border border-gray-700">
+                <div id="mobileProgressBar" class="bg-gradient-to-r from-blue-500 to-emerald-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Navigation Tab Strip -->
+        <div class="flex overflow-x-auto space-x-2 pb-2 mb-8 custom-scrollbar">
+            <button onclick="switchTab('roadmap')" id="tab-roadmap" class="tab-btn active px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-route"></i> Sequential 7-Phase Path
+            </button>
+            <button onclick="switchTab('planner')" id="tab-planner" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-calendar-check"></i> 12-Week Interactive Planner
+            </button>
+            <button onclick="switchTab('domains')" id="tab-domains" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-layer-group"></i> Exam Domains (~100%)
+            </button>
+            <button onclick="switchTab('financial')" id="tab-financial" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-piggy-bank"></i> Financial & Program Optimizer
+            </button>
+            <button onclick="switchTab('onvue')" id="tab-onvue" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
+                <i class="fa-solid fa-laptop-code"></i> OnVUE Remote Exam & NeLC
+            </button>
+        </div>
+
+        <!-- TAB 1: SEQUENTIAL ROADMAP -->
+        <div id="view-roadmap" class="tab-content space-y-8">
+            <div class="glass-panel p-6 rounded-2xl border border-blue-500/20 glow-blue">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                            The Complete Zero-to-Hero Architecture
+                        </h2>
+                        <p class="text-gray-400 text-sm mt-1">
+                            A structured, step-by-step pathway from absolute programming/math fundamentals to advanced operational orchestration on the Gemini Enterprise Agent Platform.
+                        </p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-xs px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                            <i class="fa-solid fa-clock mr-1"></i> ~12 Weeks (8-10 hrs/wk)
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase Cards Container -->
+            <div class="space-y-6">
+
+                <!-- Phase 1 Card -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800 hover:border-gray-700 transition">
+                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg border border-blue-500/30">
+                                1
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Phase 1: Software & Quantitative Foundations</h3>
+                                <p class="text-xs text-gray-400">Duration: Weeks 1–2 | Prerequisite: None</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            Foundational Step
+                        </span>
+                    </div>
+                    
+                    <p class="text-sm text-gray-300 mb-4">
+                        Establish fluency in Python, NumPy high-dimensional array arithmetic, Pandas DataFrame transformations, and the underlying mathematical metrics evaluated during model validation.
+                    </p>
+
+                    <!-- Mathematical Formula Dynamic Interactive Box -->
+                    <div class="bg-gray-900/90 rounded-xl p-4 border border-gray-800 mb-4 font-mono text-xs text-gray-300 space-y-3">
+                        <div class="flex justify-between items-center text-blue-400 border-b border-gray-800 pb-2">
+                            <span class="font-bold"><i class="fa-solid fa-calculator mr-1"></i> Core Continuous & Discrete Evaluation Metrics</span>
+                            <span class="text-[10px] text-gray-500">Exam Tested Formula Concepts</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-gray-950 p-3 rounded-lg border border-gray-800">
+                                <span class="text-gray-400 font-bold block mb-1">Mean Absolute Error (MAE):</span>
+                                <div class="text-amber-300">MAE = (1/n) * ∑ |y_i - ŷ_i|</div>
+                                <p class="text-[10px] text-gray-500 mt-1">Linear penalty for deviations.</p>
+                            </div>
+                            <div class="bg-gray-950 p-3 rounded-lg border border-gray-800">
+                                <span class="text-gray-400 font-bold block mb-1">Root Mean Squared Error (RMSE):</span>
+                                <div class="text-purple-300">RMSE = √[ (1/n) * ∑ (y_i - ŷ_i)² ]</div>
+                                <p class="text-[10px] text-gray-500 mt-1">Heavy penalty for large outliers.</p>
+                            </div>
+                            <div class="bg-gray-950 p-3 rounded-lg border border-gray-800">
+                                <span class="text-gray-400 font-bold block mb-1">RMS Logarithmic Error (RMSLE):</span>
+                                <div class="text-emerald-300">RMSLE = √[ (1/n) * ∑ (log(ŷ_i+1) - log(y_i+1))² ]</div>
+                                <p class="text-[10px] text-gray-500 mt-1">Penalizes under-estimation heavily.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
+                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-book text-blue-400 mr-1"></i> Free Learning Resources</span>
+                            <ul class="list-disc list-inside text-gray-400 space-y-1">
+                                <li>Kaggle Learn: Python, Pandas, & Intro to Machine Learning</li>
+                                <li>MIT OpenCourseWare / Stanford CS229 (Audit Mode)</li>
+                                <li>Great Learning: Python for Machine Learning</li>
+                            </ul>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
+                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Competency Milestones</span>
+                            <ul class="list-disc list-inside text-gray-400 space-y-1">
+                                <li>Write vector arithmetic and matrix dot products without loops</li>
+                                <li>Perform feature aggregation and handle missing values in Pandas</li>
+                                <li>Choose between MAE, RMSE, and AUPRC for imbalanced datasets</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 Card -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800 hover:border-gray-700 transition">
+                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-lg border border-purple-500/30">
+                                2
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Phase 2: GCP Platform Literacy & Low-Code AI</h3>
+                                <p class="text-xs text-gray-400">Duration: Weeks 3–4 | Focus: BigQuery ML & AutoML</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                            Exam Weight: ~13%
+                        </span>
+                    </div>
+
+                    <p class="text-sm text-gray-300 mb-4">
+                        Decouple compute and storage on Google Cloud. Master SQL-based model development in BigQuery ML, automated hyperparameter tuning via Agent Platform AutoML, and distributed ETL pipelines via Dataflow.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
+                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-layer-group text-purple-400 mr-1"></i> Core Google Cloud Tools</span>
+                            <ul class="list-disc list-inside text-gray-400 space-y-1">
+                                <li><strong>BigQuery ML:</strong> SQL-based training for ARIMA, Logistic Regression, XGBoost</li>
+                                <li><strong>Cloud Storage (GCS):</strong> Storing unstructured shards and TFRecords</li>
+                                <li><strong>Dataflow / Dataproc:</strong> Apache Beam & Spark streaming ETL</li>
+                            </ul>
+                        </div>
+                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
+                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-key text-yellow-400 mr-1"></i> Strategic Exam Insight</span>
+                            <p class="text-gray-400">
+                                Always choose BigQuery ML or AutoML when business requirements demand minimal engineering overhead, rapid prototyping, or when data already resides natively in BigQuery tables.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3 Card -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800 hover:border-gray-700 transition">
+                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-lg border border-amber-500/30">
+                                3
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white">Phase 3: Custom Models, Hardware & Prototyping</h3>
+                                <p class="text-xs text-gray-400">Duration: Weeks 5–8 | Focus: PyTorch/sklearn Containers & Accelerators</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                            Exam Weight: ~21%
+                        </span>
+                    </div>
+
+                    <p class="text-sm text-gray-300 mb-4">
+                        Transition from interactive Colab Enterprise notebooks to custom containerized training workloads on Artifact Registry, selection of CPU/GPU/TPU hardware topologies, and parallel distributed strategies.
+                    </p>
+
+                    <!-- Hardware Selection Table -->
+                    <div class="overflow-x-auto mb-4">
+                        <table class="w-full text-left text-xs text-gray-300 border border-gray-800 rounded-lg overflow-hidden">
+                            <thead class="bg-gray-900 text-gray-400 uppercase text-[10px]">
+                                <tr>
+                                    <th class="p-2 border-b border-gray-800">Hardware Accelerator</th>
+                                    <th class="p-2 border-b border-gray-800">Optimal ML Workload</th>
+                                    <th class="p-2 border-b border-gray-800">Parallelism & Tuning</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-800/60 bg-gray-950/40">
+                                <tr>
+                                    <td class="p-2 font-bold text-blue-400">CPUs</td>
+                                    <td class="p-2">Light tabular models, small inference endpoints</td>
+                                    <td class="p-2">Multi-core threading</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-amber-400">GPUs (NVIDIA L4/A100/H100)</td>
+                                    <td class="p-2">Deep learning, PyTorch custom containers, general matrix operations</td>
+                                    <td class="p-2">Data Parallelism (DistributedDataParallel)</td>
+                                </tr>
+                                <tr>
+                                    <td class="p-2 font-bold text-purple-400">TPUs (v4/v5e/v6)</td>
+                                    <td class="p-2">Ultra-large transformer models, massive matrix multiplication</td>
+                                    <td class="p-2">Model & Tensor Parallelism, bfloat16 precision</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Phase 4 Card -->
+                <div class="glass-panel p-6 rounded-2xl border border-purple-500/30 hover:border-purple-500/50 transition glow-purple">
+                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-purple-600/30 text-purple-300 flex items-center justify-center font-bold text-lg border border-purple-500/40">
+                                4
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                                    Phase 4: MLOps & The Gemini Enterprise Agent Platform
+                                    <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">Core Domain</span>
+                                </h3>
+                                <p class="text-xs text-gray-400">Duration: Weeks 9–11 | Focus: Serving, Pipelines, & Agentic Systems</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/40">
+                            Exam Weight: ~51% Combined (Sec 4, 5, 6)
+                        </span>
+                    </div>
+
+                    <p class="text-sm text-gray-300 mb-4">
+                        Master enterprise-grade deployment and automation. Operationalize canary rollouts, Feature Store ingestion, Cloud Build CI/CD/CT pipelines, and Gemini Agent Studio capabilities.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs mb-4">
+                        <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800">
+                            <span class="font-bold text-blue-400 block mb-1"><i class="fa-solid fa-server mr-1"></i> Serving & Traffic Splitting</span>
+                            <p class="text-gray-400">
+                                Deploy models to managed endpoints. Perform canary releases (e.g., 90% traffic to v1, 10% to v2) or A/B testing before full production migration.
+                            </p>
+                        </div>
+                        <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800">
+                            <span class="font-bold text-emerald-400 block mb-1"><i class="fa-solid fa-diagram-project mr-1"></i> Automated Pipelines</span>
+                            <p class="text-gray-400">
+                                Build Kubeflow / Agent Platform Pipelines connected to Cloud Build. Trigger automatic retraining on data drift detection.
+                            </p>
+                        </div>
+                        <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800">
+                            <span class="font-bold text-purple-400 block mb-1"><i class="fa-solid fa-robot mr-1"></i> Gemini Agent Architecture</span>
+                            <p class="text-gray-400">
+                                Utilize Agent Development Kit (ADK), Grounding Engine with Search, Model Armor prompt filters, and SPIFFE cryptographic identities.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5 & 6 & 7 Quick Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                    <!-- Phase 5 -->
+                    <div class="glass-panel p-5 rounded-2xl border border-gray-800">
+                        <div class="flex items-center gap-2 font-bold text-white mb-2">
+                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm border border-emerald-500/30">5</div>
+                            Phase 5: Financial Optimization
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3">
+                            Subscribe to Innovators Plus ($299/yr) to receive $500 cloud credits, a free exam voucher, and $500 bonus credits upon passing. Join the free GEAR program.
+                        </p>
+                    </div>
+
+                    <!-- Phase 6 -->
+                    <div class="glass-panel p-5 rounded-2xl border border-gray-800">
+                        <div class="flex items-center gap-2 font-bold text-white mb-2">
+                            <div class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm border border-blue-500/30">6</div>
+                            Phase 6: 12-Week Execution
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3">
+                            Follow our weekly checklist. Complete hands-on Qwiklabs skill badges and review practice sample scenarios in the interactive planner tab.
+                        </p>
+                    </div>
+
+                    <!-- Phase 7 -->
+                    <div class="glass-panel p-5 rounded-2xl border border-gray-800">
+                        <div class="flex items-center gap-2 font-bold text-white mb-2">
+                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm border border-amber-500/30">7</div>
+                            Phase 7: OnVUE & NeLC Exam
+                        </div>
+                        <p class="text-xs text-gray-400 mb-3">
+                            Register via Pearson VUE / CM Connect profile. Ensure clean workspace, single monitor, and NeLC platform integration if testing in Saudi Arabia.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 2: INTERACTIVE 12-WEEK PLANNER -->
+        <div id="view-planner" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        12-Week Interactive Execution Planner
+                    </h2>
+                    <p class="text-gray-400 text-sm mt-1">
+                        Track your progress week-by-week. Check off tasks as you complete labs, courses, and exam drills.
+                    </p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="filterPlanner('all')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-800 text-gray-300 hover:bg-gray-700">All Weeks</button>
+                    <button onclick="filterPlanner('incomplete')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20">Pending</button>
+                    <button onclick="filterPlanner('completed')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20">Completed</button>
+                </div>
+            </div>
+
+            <!-- Weeks Accordion Grid -->
+            <div id="plannerWeeksContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically Populated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- TAB 3: EXAM DOMAINS & WEIGHT BREAKDOWN -->
+        <div id="view-domains" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                <h2 class="text-2xl font-bold text-white">Exam Domain Mastery (~100%)</h2>
+                <p class="text-gray-400 text-sm mt-1">
+                    Detailed breakdown of the 6 official exam sections, key architectural competencies, and scenario expectations.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- Domain 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30">Section 1</span>
+                        <span class="text-sm font-bold text-blue-400">~13% Weight</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Architecting Low-Code AI Solutions</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
+                        <li>Developing ML models using BigQuery ML (ARIMA, XGBoost, Linear/Logistic Regression).</li>
+                        <li>Feature engineering and predictions inside BigQuery using standard SQL.</li>
+                        <li>AutoML tabular, image, and text models on Gemini Enterprise Agent Platform.</li>
+                        <li>Selecting pre-built AI APIs (Document AI, Vision API, Translate API).</li>
+                    </ul>
+                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
+                        <span class="font-bold text-gray-200"><i class="fa-solid fa-lightbulb text-yellow-400 mr-1"></i> Exam Rule of Thumb:</span>
+                        If a scenario asks for rapid time-to-market with tabular data in BigQuery without exporting data, choose **BigQuery ML**.
+                    </div>
+                </div>
+
+                <!-- Domain 2 -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-400 border border-purple-500/30">Section 2</span>
+                        <span class="text-sm font-bold text-purple-400">~16% Weight</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Managing Data & Models Across Teams</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
+                        <li>Data exploration and preprocessing tools (BigQuery, Dataflow, Apache Spark, Pandas).</li>
+                        <li>Creating and serving central features using Agent Platform Feature Store.</li>
+                        <li>Collaborative secure notebooks (Colab Enterprise, Agent Platform Workbench).</li>
+                        <li>Tracking artifacts, lineage, and experiment iterations using ML Metadata.</li>
+                    </ul>
+                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
+                        <span class="font-bold text-gray-200"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Privacy First:</span>
+                        When handling PII or sensitive training data, integrate Cloud DLP (Data Loss Prevention) before feature store ingestion.
+                    </div>
+                </div>
+
+                <!-- Domain 3 -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30">Section 3</span>
+                        <span class="text-sm font-bold text-amber-400">~21% Weight</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Scaling Prototypes into ML Models</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
+                        <li>Building models considering cost, latency, interpretability, and scale.</li>
+                        <li>Packaging PyTorch, sklearn, or custom frameworks into Artifact Registry Docker images.</li>
+                        <li>Selecting GPU vs. TPU compute clusters for high-performance training.</li>
+                        <li>Implementing Data Parallelism and Model Parallelism across accelerator pods.</li>
+                    </ul>
+                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
+                        <span class="font-bold text-gray-200"><i class="fa-solid fa-microchip text-amber-400 mr-1"></i> Compute Selection:</span>
+                        Use **TPUs** for large matrix-heavy transformer models; use **GPUs** for general custom PyTorch/TensorFlow deep learning.
+                    </div>
+                </div>
+
+                <!-- Domain 4 -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Section 4</span>
+                        <span class="text-sm font-bold text-emerald-400">~20% Weight</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Serving and Scaling Models</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
+                        <li>Deploying online inference endpoints vs. non-real-time batch prediction jobs.</li>
+                        <li>Registering model versions in Gemini Enterprise Agent Platform Model Registry.</li>
+                        <li>Executing canary rollouts, A/B testing, and traffic split percentages.</li>
+                        <li>Optimizing inference containers on Cloud Run or Google Kubernetes Engine (GKE).</li>
+                    </ul>
+                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
+                        <span class="font-bold text-gray-200"><i class="fa-solid fa-rocket text-blue-400 mr-1"></i> Deployment Strategy:</span>
+                        Never shift 100% traffic immediately to a newly trained model. Always configure canary split (e.g. 10/90) with metric monitoring.
+                    </div>
+                </div>
+
+                <!-- Domain 5 -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">Section 5</span>
+                        <span class="text-sm font-bold text-indigo-400">~18% Weight</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Automating & Orchestrating ML Pipelines</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
+                        <li>Building end-to-end pipelines using Agent Platform Pipelines / Kubeflow.</li>
+                        <li>Establishing automated retraining triggers based on schedule or performance degradation.</li>
+                        <li>Deploying models within CI/CD/CT pipelines using Cloud Build.</li>
+                        <li>Maintaining consistent preprocessing code between training and serving.</li>
+                    </ul>
+                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
+                        <span class="font-bold text-gray-200"><i class="fa-solid fa-gears text-indigo-400 mr-1"></i> CT (Continuous Training):</span>
+                        Automation must ensure data skew is checked prior to triggering expensive retraining pipelines.
+                    </div>
+                </div>
+
+                <!-- Domain 6 -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-red-500/20 text-red-400 border border-red-500/30">Section 6</span>
+                        <span class="text-sm font-bold text-red-400">~13% Weight</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Monitoring & Securing AI Solutions</h3>
+                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
+                        <li>Monitoring for Training-Serving Skew, Data Drift, and Concept Drift.</li>
+                        <li>Securing AI solutions against prompt injection, data exfiltration, and malicious queries using **Model Armor**.</li>
+                        <li>Configuring model explainability and feature attributions (Agent Platform Inference).</li>
+                        <li>Evaluating Generative AI outputs using LLM-as-a-judge and Gen AI Evaluation Service.</li>
+                    </ul>
+                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
+                        <span class="font-bold text-gray-200"><i class="fa-solid fa-bug text-red-400 mr-1"></i> Drift Definitions:</span>
+                        **Data Drift** = shift in input feature distribution; **Concept Drift** = shift in statistical relation between inputs and ground truth target.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 4: FINANCIAL & PROGRAM OPTIMIZER -->
+        <div id="view-financial" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                <h2 class="text-2xl font-bold text-white">Financial & Program Optimizer</h2>
+                <p class="text-gray-400 text-sm mt-1">
+                    Calculate how to acquire your certification completely online with maximum financial efficiency.
+                </p>
+            </div>
+
+            <!-- Program Comparison Table -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Tier 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-gray-800 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Starter Tier</span>
+                        <h3 class="text-xl font-bold text-white mb-2">Free Community Path</h3>
+                        <div class="text-2xl font-bold text-emerald-400 mb-4">$0 USD</div>
+                        <ul class="text-xs text-gray-300 space-y-2.5 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 35 Monthly Skills Boost Credits</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> GCP Free Tier ($300 initial credits)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Free GEAR Developer Program Access</li>
+                            <li class="flex items-center gap-2 text-gray-500"><i class="fa-solid fa-xmark text-red-400"></i> Exam Voucher Excluded ($200 fee)</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-gray-900 rounded-xl border border-gray-800 text-center text-xs text-gray-400">
+                        Out-of-Pocket: <strong>$200 USD</strong> (Exam fee only)
+                    </div>
+                </div>
+
+                <!-- Tier 2 (Highlighted) -->
+                <div class="glass-panel p-6 rounded-2xl border border-blue-500/40 glow-blue flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-bl-lg">
+                        Recommended
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-blue-400 uppercase tracking-wider block mb-1">Innovators Plus Subscription</span>
+                        <h3 class="text-xl font-bold text-white mb-2">All-Inclusive Bundle</h3>
+                        <div class="text-2xl font-bold text-blue-400 mb-4">$299 USD / year</div>
+                        <ul class="text-xs text-gray-300 space-y-2.5 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 1 Free Certification Exam Voucher ($200 value)</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> $500 Initial Google Cloud Credits</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> $500 Bonus Credits upon passing PMLE</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Unlimited Skills Boost On-Demand Labs</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 1:1 Cloud Expert Consulting Sessions</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-blue-500/10 rounded-xl border border-blue-500/30 text-center text-xs text-blue-300">
+                        Total Value: <strong>$1,200+ USD</strong> for $299 cost
+                    </div>
+                </div>
+
+                <!-- Tier 3 -->
+                <div class="glass-panel p-6 rounded-2xl border border-purple-500/30 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-purple-400 uppercase tracking-wider block mb-1">GEAR Cohort Path</span>
+                        <h3 class="text-xl font-bold text-white mb-2">Enterprise Sponsored</h3>
+                        <div class="text-2xl font-bold text-purple-300 mb-4">$0 USD (Selected Applicants)</div>
+                        <ul class="text-xs text-gray-300 space-y-2.5 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Instructor-Led Live Review Sessions</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Free Exam Voucher via Cohort Milestones</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Peer Troubleshooting Study Group Access</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Direct Gemini Enterprise Agent Platform Access</li>
+                        </ul>
+                    </div>
+                    <div class="p-3 bg-purple-500/10 rounded-xl border border-purple-500/30 text-center text-xs text-purple-300">
+                        Requires Application via Enterprise Employer
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TAB 5: ONVUE REMOTE EXAM & NELC PREP -->
+        <div id="view-onvue" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                <h2 class="text-2xl font-bold text-white">Pearson VUE / OnVUE Remote Proctoring Readiness</h2>
+                <p class="text-gray-400 text-sm mt-1">
+                    Compliance checklist to ensure your online exam session is not revoked during remote delivery.
+                </p>
+            </div>
+
+            <!-- OnVUE System Requirements Checklist -->
+            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
+                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-blue-400"></i> OnVUE Mandatory Pre-Exam Checklist
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    
+                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
+                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
+                        <div>
+                            <span class="font-bold text-gray-200 block">Personal Computer Only (No VMs)</span>
+                            <span class="text-gray-400">Windows 10/11 or macOS 14+. Work-issued laptops often fail due to corporate VPNs/firewalls.</span>
+                        </div>
+                    </label>
+
+                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
+                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
+                        <div>
+                            <span class="font-bold text-gray-200 block">Single Display Monitor Setup</span>
+                            <span class="text-gray-400">Unplug and physically disconnect all external secondary monitors, TVs, and docking stations.</span>
+                        </div>
+                    </label>
+
+                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
+                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
+                        <div>
+                            <span class="font-bold text-gray-200 block">Isolated Lockable Testing Room</span>
+                            <span class="text-gray-400">Clear all papers, books, whiteboards, pens, and smartwatches. No third party may enter during test.</span>
+                        </div>
+                    </label>
+
+                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
+                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
+                        <div>
+                            <span class="font-bold text-gray-200 block">Unexpired Government Photo ID</span>
+                            <span class="text-gray-400">Name on photo ID must exactly match the name on your Pearson VUE CM Connect candidate profile.</span>
+                        </div>
+                    </label>
+
+                </div>
+            </div>
+
+            <!-- Regional Specifics: Saudi Arabia NeLC & FutureX Integration -->
+            <div class="glass-panel p-6 rounded-2xl border border-amber-500/30">
+                <div class="flex items-center gap-3 mb-3">
+                    <div class="p-2 bg-amber-500/20 text-amber-400 rounded-lg border border-amber-500/30">
+                        <i class="fa-solid fa-building-columns text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white">Saudi Arabia Regulatory Pathway (NeLC & FutureX)</h3>
+                        <p class="text-xs text-gray-400">Specific steps for candidates taking the exam within KSA</p>
+                    </div>
+                </div>
+
+                <ol class="list-decimal list-inside text-xs text-gray-300 space-y-2">
+                    <li>Register and secure authorization through the <strong>National eLearning Center (NeLC)</strong> portal.</li>
+                    <li>Upon NeLC eligibility clearance, receive login authorization credentials for Pearson VUE.</li>
+                    <li>Schedule and complete your OnVUE remote proctored examination session.</li>
+                    <li>Upon passing, your official credential publishes to your <strong>FutureX National E-Learning Platform</strong> profile within 5 business days.</li>
+                </ol>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="glass-panel border-t border-gcp-border py-6 mt-12 text-xs text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>Google Cloud Professional Machine Learning Engineer Certification Pathway</p>
+            <p class="text-gray-600">Updated for 2026 Gemini Enterprise Agent Platform, Pearson VUE, & Agent Development Kit Stack.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        
+        // 12-Week Planner Data Structure
+        const WEEKS_DATA = [
             {
-                id: "ph2_s1", name: "Data Engineering, Big Data, and Machine Learning on GCP", nameAr: "هندسة البيانات، البيانات الضخمة، وتعلم الآلة على GCP", type: "Specialization", institute: "Google Cloud Training",
-                link: "https://www.coursera.org/specializations/gcp-data-machine-learning",
-                courses: [
-                    { id: "ph2_s1_c1", name: "Google Cloud Big Data and Machine Learning Fundamentals", nameAr: "أساسيات البيانات الضخمة وتعلم الآلة في جوجل كلاود", hours: 15 },
-                    { id: "ph2_s1_c2", name: "Modernizing Data Lakes and Data Warehouses with GCP", nameAr: "تحديث بحيرات ومستودعات البيانات باستخدام GCP", hours: 15 },
-                    { id: "ph2_s1_c3", name: "Building Batch Data Pipelines on GCP", nameAr: "بناء مسارات بيانات الدفعات على GCP", hours: 14 },
-                    { id: "ph2_s1_c4", name: "Building Resilient Streaming Analytics Systems on GCP", nameAr: "بناء أنظمة تحليلات التدفق المرنة على GCP", hours: 14 }
-                ]
-            }
-        ]
-      },
-      {
-        phase: "Phase III: Machine Learning on Google Cloud",
-        phaseAr: "المرحلة الثالثة: تعلم الآلة على جوجل كلاود",
-        steps: [
-            {
-                id: "ph3_s1", name: "Machine Learning on Google Cloud", nameAr: "تعلم الآلة على جوجل كلاود", type: "Specialization", institute: "Google Cloud Training",
-                link: "https://www.coursera.org/specializations/machine-learning-tensorflow-gcp",
-                courses: [
-                    { id: "ph3_s1_c1", name: "How Google does Machine Learning", nameAr: "كيف تقوم جوجل بتعلم الآلة", hours: 12 },
-                    { id: "ph3_s1_c2", name: "Launching into Machine Learning", nameAr: "الانطلاق في تعلم الآلة", hours: 15 },
-                    { id: "ph3_s1_c3", name: "TensorFlow on Google Cloud", nameAr: "تنسرفلو على جوجل كلاود", hours: 15 },
-                    { id: "ph3_s1_c4", name: "Feature Engineering", nameAr: "هندسة الميزات (Feature Engineering)", hours: 12 },
-                    { id: "ph3_s1_c5", name: "Machine Learning in the Enterprise", nameAr: "تعلم الآلة في المؤسسات", hours: 12 }
-                ]
-            }
-        ]
-      },
-      {
-        phase: "Phase IV: Advanced ML & MLOps",
-        phaseAr: "المرحلة الرابعة: تعلم الآلة المتقدم وعمليات تعلم الآلة (MLOps)",
-        steps: [
-            {
-                id: "ph4_s1", name: "Advanced Machine Learning on Google Cloud", nameAr: "تعلم الآلة المتقدم على جوجل كلاود", type: "Specialization", institute: "Google Cloud Training",
-                link: "https://www.coursera.org/specializations/advanced-machine-learning-tensorflow-gcp",
-                courses: [
-                    { id: "ph4_s1_c1", name: "Production Machine Learning Systems", nameAr: "أنظمة تعلم الآلة في الإنتاج", hours: 14 },
-                    { id: "ph4_s1_c2", name: "Computer Vision Fundamentals with Google Cloud", nameAr: "أساسيات الرؤية الحاسوبية مع جوجل كلاود", hours: 12 },
-                    { id: "ph4_s1_c3", name: "Natural Language Processing on Google Cloud", nameAr: "معالجة اللغات الطبيعية على جوجل كلاود", hours: 14 }
+                week: 1,
+                title: "Week 1: Software & Vector Math Fundamentals",
+                domain: "Phase 1: Foundations",
+                tasks: [
+                    "Complete Kaggle Learn Python & Pandas Data manipulation tracks",
+                    "Practice high-dimensional array operations with NumPy (dot products, reshapes)",
+                    "Audit Stanford CS229 or MIT OpenCourseWare Machine Learning introduction videos"
                 ]
             },
             {
-                id: "ph4_s2", name: "Machine Learning Operations (MLOps): Getting Started", nameAr: "عمليات تعلم الآلة (MLOps): البدء", type: "Course", institute: "Google Cloud Training",
-                link: "https://www.coursera.org/learn/mlops-fundamentals",
-                courses: [
-                    { id: "ph4_s2_c1", name: "Machine Learning Operations (MLOps): Getting Started", nameAr: "عمليات تعلم الآلة (MLOps): البدء", hours: 12 }
+                week: 2,
+                title: "Week 2: Quantitative Evaluation Metrics",
+                domain: "Phase 1: Foundations",
+                tasks: [
+                    "Master linear regression metrics: MAE, RMSE, and RMSLE penalization rules",
+                    "Understand classification metrics: Precision, Recall, F1-Score, & AUPRC",
+                    "Write custom Python evaluation functions for imbalanced fraud classification"
+                ]
+            },
+            {
+                week: 3,
+                title: "Week 3: GCP Core Storage & Data Topologies",
+                domain: "Phase 2: Platform Literacy",
+                tasks: [
+                    "Understand Cloud Storage bucket classes (Standard, Nearline, Coldline, Archive)",
+                    "Practice BigQuery SQL querying, partitioning, and clustering strategies",
+                    "Learn Apache Beam principles and Dataflow batch vs. streaming ETL pipelines"
+                ]
+            },
+            {
+                week: 4,
+                title: "Week 4: Low-Code Machine Learning & BQML",
+                domain: "Phase 2: Platform Literacy",
+                tasks: [
+                    "Earn 'Create ML Models with BigQuery ML' Skill Badge on Google Skills Boost",
+                    "Train ARIMA time-series forecasting models using standard SQL in BigQuery",
+                    "Configure AutoML Tabular, Vision, and Text training jobs"
+                ]
+            },
+            {
+                week: 5,
+                title: "Week 5: Prototyping in Colab Enterprise & Workbench",
+                domain: "Phase 3: Custom Scaling",
+                tasks: [
+                    "Set up secure Gemini Enterprise Agent Platform Workbench instances",
+                    "Configure Cloud Storage bucket mounts & Git versioning in notebooks",
+                    "Practice data preprocessing with scikit-learn pipelines"
+                ]
+            },
+            {
+                week: 6,
+                title: "Week 6: Custom Containerization & Artifact Registry",
+                domain: "Phase 3: Custom Scaling",
+                tasks: [
+                    "Package custom PyTorch training scripts into Docker containers",
+                    "Push training images to Artifact Registry",
+                    "Submit custom training jobs via Gemini Enterprise Agent Platform SDK"
+                ]
+            },
+            {
+                week: 7,
+                title: "Week 7: Hardware Hardware Selection & Parallelism",
+                domain: "Phase 3: Custom Scaling",
+                tasks: [
+                    "Evaluate CPU vs. GPU (NVIDIA L4/A100) vs. TPU pod computational topologies",
+                    "Study Data Parallelism (PyTorch DDP) vs. Model Parallelism partitioning",
+                    "Configure hyperparameter tuning jobs (Bayesian optimization) on Vertex/Agent Platform"
+                ]
+            },
+            {
+                week: 8,
+                title: "Week 8: Model Serving & Registry Management",
+                domain: "Phase 4: Production MLOps",
+                tasks: [
+                    "Register model artifacts inside Gemini Enterprise Agent Platform Model Registry",
+                    "Deploy PyTorch containers to online inference endpoints with autoscaling",
+                    "Configure batch prediction jobs reading from Cloud Storage and outputting to BigQuery"
+                ]
+            },
+            {
+                week: 9,
+                title: "Week 9: Traffic Splitting, Canary Rollouts & Feature Store",
+                domain: "Phase 4: Production MLOps",
+                tasks: [
+                    "Execute 90/10 traffic splitting rollouts across multiple endpoint model versions",
+                    "Ingest online and offline features into Agent Platform Feature Store",
+                    "Verify feature serving latency and point-in-time correctness to prevent data leakage"
+                ]
+            },
+            {
+                week: 10,
+                title: "Week 10: Automated Pipelines & Cloud Build CI/CD",
+                domain: "Phase 4: Production MLOps",
+                tasks: [
+                    "Build reusable machine learning pipelines using Kubeflow / Agent Platform Pipelines",
+                    "Configure Cloud Build triggers to automatically run unit tests & deploy endpoints",
+                    "Implement automated retraining triggers when performance falls below threshold"
+                ]
+            },
+            {
+                week: 11,
+                title: "Week 11: Gemini Enterprise Agent Platform & Security",
+                domain: "Phase 4: Production MLOps",
+                tasks: [
+                    "Deploy foundation models from Model Garden (Gemini 3.1, Gemma)",
+                    "Configure Grounding Engine using Agent Platform Search for RAG systems",
+                    "Apply Model Armor guardrails and regex safety filters against prompt injections"
+                ]
+            },
+            {
+                week: 12,
+                title: "Week 12: Model Drift Monitoring & Final Exam Drills",
+                domain: "Phase 4: Production MLOps",
+                tasks: [
+                    "Configure Model Monitoring for Training-Serving Skew and Data Drift detection",
+                    "Complete official Google Cloud PMLE Sample Questions",
+                    "Run Pearson VUE OnVUE system diagnostic check and finalize room setup"
                 ]
             }
-        ]
-      },
-      {
-        phase: "Phase V: Generative AI",
-        phaseAr: "المرحلة الخامسة: الذكاء الاصطناعي التوليدي",
-        steps: [
-          {
-            id: "ph5_s1", name: "Introduction to Generative AI Learning Path", nameAr: "مسار تعلم مقدمة إلى الذكاء الاصطناعي التوليدي", type: "Specialization", institute: "Google Cloud Training",
-            link: "https://www.coursera.org/specializations/introduction-to-generative-ai",
-            courses: [
-              { id: "ph5_s1_c1", name: "Introduction to Generative AI", nameAr: "مقدمة في الذكاء الاصطناعي التوليدي", hours: 8 },
-              { id: "ph5_s1_c2", name: "Introduction to Large Language Models", nameAr: "مقدمة في النماذج اللغوية الكبيرة (LLMs)", hours: 8 },
-              { id: "ph5_s1_c3", name: "Introduction to Responsible AI", nameAr: "مقدمة في الذكاء الاصطناعي المسؤول", hours: 8 },
-              { id: "ph5_s1_c4", name: "Responsible AI: Applying AI Principles with Google Cloud", nameAr: "تطبيق مبادئ الذكاء الاصطناعي المسؤول مع جوجل كلاود", hours: 10 }
-            ]
-          },
-          {
-            id: "ph5_s2", name: "Build and Modernize Applications With Generative AI", nameAr: "بناء وتحديث التطبيقات باستخدام الذكاء الاصطناعي التوليدي", type: "Specialization", institute: "Google Cloud Training",
-            link: "https://www.coursera.org/specializations/build-modernize-applications-with-generative-ai",
-            courses: [
-              { id: "ph5_s2_c1", name: "Gemini for Application Developers", nameAr: "جيميني لمطوري التطبيقات", hours: 10 },
-              { id: "ph5_s2_c2", name: "Gemini for end-to-end SDLC", nameAr: "جيميني لدورة حياة تطوير البرمجيات الشاملة", hours: 10 },
-              { id: "ph5_s2_c3", name: "Create Generative AI Apps on Google Cloud", nameAr: "إنشاء تطبيقات الذكاء الاصطناعي التوليدي على جوجل كلاود", hours: 12 },
-              { id: "ph5_s2_c4", name: "Website Modernization with Generative AI on Google Cloud", nameAr: "تحديث مواقع الويب باستخدام الذكاء الاصطناعي التوليدي", hours: 10 },
-              { id: "ph5_s2_c5", name: "Build Generative AI Agents with Vertex AI and Flutter", nameAr: "بناء وكلاء الذكاء الاصطناعي التوليدي باستخدام Vertex AI و Flutter", hours: 12 },
-              { id: "ph5_s2_c6", name: "Accelerate App Development with Gemini CLI", nameAr: "تسريع تطوير التطبيقات باستخدام Gemini CLI", hours: 8 },
-              { id: "ph5_s2_c7", name: "Deploy and Scale AI Models with Cloud Run", nameAr: "نشر وتوسيع نماذج الذكاء الاصطناعي باستخدام Cloud Run", hours: 10 }
-            ]
-          }
-        ]
-      },
-      {
-        phase: "Phase VI: Practice",
-        phaseAr: "المرحلة السادسة: الممارسة العملية",
-        steps: [
-          {
-            id: "ph6_s1", name: "Practice & Hands-on Pipelines", nameAr: "الممارسة ومسارات العمل العملية", type: "Practice", institute: "Self-Paced",
-            link: "",
-            courses: [
-              { id: "ph6_s1_c1", name: "Intensive scenario-based practice exams", nameAr: "امتحانات تدريبية مكثفة تعتمد على السيناريوهات", hours: 20 },
-              { id: "ph6_s1_c2", name: "Executing an independent, end-to-end MLOps pipeline directly on GCP", nameAr: "تنفيذ مسار MLOps مستقل وشامل مباشرة على GCP", hours: 30 }
-            ]
-          }
-        ]
-      },
-      {
-        phase: "Phase VII: Exam",
-        phaseAr: "المرحلة السابعة: الاختبار",
-        steps: [
-          {
-            id: "ph7_s1", name: "Google Cloud Professional Machine Learning Engineer", nameAr: "مهندس تعلم الآلة المحترف من جوجل كلاود", type: "Certification", institute: "Google Cloud",
-            link: "https://cloud.google.com/learn/certification/machine-learning-engineer",
-            courses: [
-              { id: "ph7_s1_c1", name: "Official Certification Exam", nameAr: "امتحان الشهادة الرسمي", hours: 4 }
-            ]
-          }
-        ]
-      }
-    ];
+        ];
 
-    const flatCourseList = [];
-    curriculumData.forEach(phase => {
-      phase.steps.forEach(step => {
-        step.courses.forEach(course => {
-          flatCourseList.push(course.id);
-        });
-      });
-    });
+        // State Management with LocalStorage
+        let appState = JSON.parse(localStorage.getItem('gcp_pmle_state')) || {
+            completedTasks: {},
+            checklistItems: 0
+        };
 
-    // State Initialization
-    const savedProgress = localStorage.getItem('gcp-pmle-progress');
-    let completedIds = new Set(savedProgress ? JSON.parse(savedProgress) : []);
-    let weeklyHours = 10;
-    let expandedPhases = new Set(curriculumData.map(p => p.phase));
-
-    function saveState() {
-      localStorage.setItem('gcp-pmle-progress', JSON.stringify([...completedIds]));
-    }
-
-    // Global Handlers
-    window.toggleCourseState = (id, checked) => {
-      const idx = flatCourseList.indexOf(id);
-      if (checked) {
-        for (let i = 0; i <= idx; i++) completedIds.add(flatCourseList[i]);
-      } else {
-        for (let i = idx; i < flatCourseList.length; i++) completedIds.delete(flatCourseList[i]);
-      }
-      saveState();
-      render();
-    };
-
-    window.toggleStepState = (firstCourseId, lastCourseId, isCompleted) => {
-      if (!isCompleted) {
-        window.toggleCourseState(lastCourseId, true);
-      } else {
-        window.toggleCourseState(firstCourseId, false);
-      }
-    };
-
-    window.togglePhaseExpansion = (phaseName) => {
-      if (expandedPhases.has(phaseName)) {
-        expandedPhases.delete(phaseName);
-      } else {
-        expandedPhases.add(phaseName);
-      }
-      render();
-    };
-
-    window.updateWeeklyHours = (val) => {
-      weeklyHours = Number(val);
-      render();
-    };
-
-    // Calculate Metrics
-    function calculateMetrics() {
-      let tHours = 0;
-      let cHours = 0;
-
-      curriculumData.forEach(phase => {
-        phase.steps.forEach(step => {
-          step.courses.forEach(course => {
-            tHours += course.hours;
-            if (completedIds.has(course.id)) {
-              cHours += course.hours;
-            }
-          });
-        });
-      });
-
-      const percent = tHours === 0 ? 0 : Math.round((cHours / tHours) * 100);
-      const remaining = tHours - cHours;
-      const daysLeft = Math.ceil((remaining * 7) / weeklyHours);
-      const dailyPace = (weeklyHours / 7).toFixed(1);
-
-      let estDate = new Date();
-      estDate.setDate(estDate.getDate() + daysLeft);
-      const dateOptions = { month: 'short', day: 'numeric', year: 'numeric' };
-      const estDateString = isNaN(estDate.getTime()) ? 'N/A' : estDate.toLocaleDateString('en-US', dateOptions);
-
-      return { totalHours: tHours, completedHours: cHours, percent, remaining, daysLeft, dailyPace, estDateString };
-    }
-
-    // Render Logic
-    function render() {
-      const metrics = calculateMetrics();
-      const appContainer = document.getElementById('app');
-
-      let phasesHTML = curriculumData.map((phase, phaseIdx) => {
-        const isExpanded = expandedPhases.has(phase.phase);
-        const totalPhaseCourses = phase.steps.reduce((acc, step) => acc + step.courses.length, 0);
-        const completedPhaseCourses = phase.steps.reduce((acc, step) => acc + step.courses.filter(c => completedIds.has(c.id)).length, 0);
-        const isPhaseCompleted = totalPhaseCourses > 0 && totalPhaseCourses === completedPhaseCourses;
-
-        let stepsHTML = '';
-        if (isExpanded) {
-          stepsHTML = `<div class="p-4 sm:p-6 bg-slate-50/50 border-t border-slate-100 space-y-6">`;
-          
-          stepsHTML += phase.steps.map((step, stepIdx) => {
-            const isStepCompleted = step.courses.every(c => completedIds.has(c.id));
-            const isStepPartiallyCompleted = !isStepCompleted && step.courses.some(c => completedIds.has(c.id));
-            const firstCourseId = step.courses[0].id;
-            const lastCourseId = step.courses[step.courses.length - 1].id;
-
-            let coursesHTML = `<div class="divide-y divide-slate-100">`;
-            coursesHTML += step.courses.map(course => {
-              const isCourseCompleted = completedIds.has(course.id);
-              return `
-                <div class="p-3 sm:px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 transition-colors hover:bg-blue-50/30 ${isCourseCompleted ? 'bg-slate-50/50' : ''}">
-                  <div class="flex items-center gap-3 flex-1 min-w-0">
-                    <button onClick="window.toggleCourseState('${course.id}', ${!isCourseCompleted})" class="flex-shrink-0 focus:outline-none">
-                      ${isCourseCompleted 
-                        ? `<i data-lucide="check-circle-2" class="w-5 h-5 text-blue-500 transition-colors"></i>` 
-                        : `<i data-lucide="circle" class="w-5 h-5 text-slate-300 hover:text-blue-400 transition-colors"></i>`
-                      }
-                    </button>
-                    <span class="text-sm font-medium truncate ${isCourseCompleted ? 'text-slate-500 line-through' : 'text-slate-700'}">
-                      ${course.name}
-                    </span>
-                    <span class="text-xs text-slate-400 whitespace-nowrap hidden md:inline-block">(${course.hours}h)</span>
-                  </div>
-                  <div class="flex items-center gap-3 w-full sm:w-auto justify-end sm:justify-end pl-8 sm:pl-0 mt-1 sm:mt-0" dir="rtl">
-                    <span class="text-sm font-medium ${isCourseCompleted ? 'text-slate-500 line-through' : 'text-slate-700'}">
-                      ${course.nameAr}
-                    </span>
-                  </div>
-                </div>
-              `;
-            }).join('');
-            coursesHTML += `</div>`;
-
-            const linkHTML = step.link ? `
-              <a href="${step.link}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-blue-600 hover:underline">
-                Link <i data-lucide="external-link" class="w-3 h-3"></i>
-              </a>
-            ` : '';
-
-            const stepTypeTranslation = step.type === 'Specialization' ? 'تخصص' : step.type === 'Course' ? 'دورة' : step.type === 'Practice' ? 'تدريب' : 'شهادة';
-
-            return `
-              <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-                <div class="p-4 border-b border-slate-100 bg-slate-50/50 flex flex-col md:flex-row gap-4 justify-between items-start">
-                  <div class="flex gap-3 items-start flex-1">
-                    <button onClick="window.toggleStepState('${firstCourseId}', '${lastCourseId}', ${isStepCompleted})" class="mt-1 flex-shrink-0 focus:outline-none">
-                      ${isStepCompleted 
-                        ? `<i data-lucide="check-circle-2" class="w-5 h-5 text-blue-600 hover:text-blue-700 transition-colors"></i>` 
-                        : isStepPartiallyCompleted 
-                          ? `<div class="w-5 h-5 rounded-full border-2 border-blue-600 flex items-center justify-center"><div class="w-2 h-2 bg-blue-600 rounded-full"></div></div>`
-                          : `<i data-lucide="circle" class="w-5 h-5 text-slate-300 hover:text-blue-400 transition-colors"></i>`
-                      }
-                    </button>
-                    <div>
-                      <h3 class="text-base font-bold text-slate-900">${step.name}</h3>
-                      <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 mt-1.5">
-                        <span class="flex items-center gap-1 bg-slate-100 px-2 py-0.5 rounded-md text-slate-600">
-                          <i data-lucide="book-open" class="w-3 h-3"></i> ${step.type}
-                        </span>
-                        <span class="flex items-center gap-1">
-                          <i data-lucide="building" class="w-3 h-3"></i> ${step.institute}
-                        </span>
-                        ${linkHTML}
-                      </div>
-                    </div>
-                  </div>
-                  <div class="flex-1 w-full text-right" dir="rtl">
-                     <h3 class="text-base font-bold text-slate-900">${step.nameAr}</h3>
-                     <div class="flex flex-wrap items-center justify-end gap-x-3 gap-y-1 text-xs text-slate-500 mt-1.5">
-                        <span class="flex items-center gap-1 bg-slate-100 px-2 py-0.5 rounded-md text-slate-600">
-                          ${stepTypeTranslation} <i data-lucide="book-open" class="w-3 h-3"></i> 
-                        </span>
-                        <span class="flex items-center gap-1">
-                          ${step.institute} <i data-lucide="building" class="w-3 h-3"></i> 
-                        </span>
-                      </div>
-                  </div>
-                </div>
-                ${coursesHTML}
-              </div>
-            `;
-          }).join('');
-          
-          stepsHTML += `</div>`;
+        function saveState() {
+            localStorage.setItem('gcp_pmle_state', JSON.stringify(appState));
+            updateProgressBars();
         }
 
-        return `
-          <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all">
-            <button onClick="window.togglePhaseExpansion('${phase.phase}')" class="w-full px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4 transition-colors hover:bg-slate-50 ${isPhaseCompleted ? 'bg-emerald-50/30' : ''}">
-              <div class="flex items-center gap-4 w-full md:w-auto">
-                ${isPhaseCompleted 
-                  ? `<i data-lucide="check-circle-2" class="w-6 h-6 text-emerald-500 flex-shrink-0"></i>` 
-                  : `<i data-lucide="circle" class="w-6 h-6 text-slate-300 flex-shrink-0"></i>`
-                }
-                <div class="text-left flex-1">
-                  <h2 class="text-lg font-bold text-slate-800">${phase.phase}</h2>
-                  <div class="text-xs text-slate-500 mt-1">${completedPhaseCourses} / ${totalPhaseCourses} courses completed</div>
-                </div>
-              </div>
-              <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
-                <h2 class="text-lg font-bold text-slate-800 text-right w-full md:w-auto" dir="rtl">${phase.phaseAr}</h2>
-                <i data-lucide="${isExpanded ? 'chevron-up' : 'chevron-down'}" class="w-5 h-5 text-slate-400"></i>
-              </div>
-            </button>
-            ${stepsHTML}
-          </div>
-        `;
-      }).join('');
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-gray-800/80', 'text-gray-300');
+            });
 
-      appContainer.innerHTML = `
-        <header class="bg-white border-b border-slate-200 sticky top-0 z-10 shadow-sm px-4 py-4 sm:px-8">
-          <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-              <div class="bg-blue-600 p-2 rounded-lg">
-                <i data-lucide="graduation-cap" class="w-6 h-6 text-white"></i>
-              </div>
-              <div>
-                <h1 class="text-xl sm:text-2xl font-bold text-slate-900 leading-tight">Machine Learning Path</h1>
-                <h2 class="text-sm font-medium text-slate-500" dir="rtl">مُتتبع مسار مهندس تعلم الآلة المحترف</h2>
-              </div>
-            </div>
-            
-            <div class="flex-1 w-full max-w-md hidden md:block">
-              <div class="flex justify-between text-xs font-semibold mb-1">
-                <span class="text-slate-600">Progress: ${metrics.percent}%</span>
-                <span class="text-slate-600" dir="rtl">التقدم</span>
-              </div>
-              <div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-600 transition-all duration-500 ease-out" style="width: ${metrics.percent}%"></div>
-              </div>
-            </div>
-          </div>
-        </header>
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('bg-gray-800/80', 'text-gray-300');
+        }
 
-        <main class="max-w-6xl mx-auto px-4 sm:px-8 py-8">
-          <section class="mb-10">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
-              <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col justify-between">
-                <div class="flex justify-between items-start mb-2">
-                  <i data-lucide="target" class="w-6 h-6 text-blue-500"></i>
-                  <span class="text-2xl font-bold text-slate-800">${metrics.percent}%</span>
-                </div>
-                <div class="flex justify-between items-end mt-4">
-                  <span class="text-sm font-semibold text-slate-600">Total Completion</span>
-                  <span class="text-sm font-semibold text-slate-500" dir="rtl">الإنجاز الكلي</span>
-                </div>
-              </div>
+        // Render 12-Week Interactive Planner Cards
+        function renderPlanner(filter = 'all') {
+            const container = document.getElementById('plannerWeeksContainer');
+            container.innerHTML = '';
 
-              <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col justify-between">
-                <div class="flex justify-between items-start mb-2">
-                  <i data-lucide="clock" class="w-6 h-6 text-emerald-500"></i>
-                  <span class="text-2xl font-bold text-slate-800">${metrics.estDateString}</span>
-                </div>
-                <div class="flex justify-between items-end mt-4">
-                  <span class="text-sm font-semibold text-slate-600">Est. Date of Finish</span>
-                  <span class="text-sm font-semibold text-slate-500" dir="rtl">تاريخ الانتهاء المتوقع</span>
-                </div>
-              </div>
+            WEEKS_DATA.forEach(weekItem => {
+                const totalTasks = weekItem.tasks.length;
+                let completedCount = 0;
 
-              <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col justify-between">
-                <div class="flex justify-between items-start mb-2">
-                  <i data-lucide="calendar" class="w-6 h-6 text-purple-500"></i>
-                  <span class="text-2xl font-bold text-slate-800">${metrics.daysLeft} <span class="text-sm font-medium text-slate-500">days</span></span>
-                </div>
-                <div class="flex justify-between items-end mt-4">
-                  <span class="text-sm font-semibold text-slate-600">Time to Finish</span>
-                  <span class="text-sm font-semibold text-slate-500" dir="rtl">الوقت للانتهاء</span>
-                </div>
-              </div>
+                weekItem.tasks.forEach((_, idx) => {
+                    if (appState.completedTasks[`w_${weekItem.week}_t_${idx}`]) {
+                        completedCount++;
+                    }
+                });
 
-              <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex flex-col justify-between bg-gradient-to-br from-blue-50 to-white">
-                 <div class="flex justify-between items-start mb-2">
-                  <i data-lucide="award" class="w-6 h-6 text-blue-600"></i>
-                  <span class="text-xl font-bold text-blue-700">${metrics.dailyPace} <span class="text-sm font-medium text-blue-500">h/day</span></span>
-                </div>
-                <div>
-                  <div class="flex justify-between items-center text-xs text-slate-500 mb-1">
-                    <span>Commitment</span>
-                    <span dir="rtl">الالتزام</span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <input type="range" min="1" max="40" value="${weeklyHours}" oninput="window.updateWeeklyHours(this.value)" class="w-full accent-blue-600" />
-                    <span class="text-xs font-bold w-12 text-right">${weeklyHours}h/wk</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="md:hidden mt-4">
-              <div class="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
-                <div class="h-full bg-blue-600 transition-all duration-500 ease-out" style="width: ${metrics.percent}%"></div>
-              </div>
-            </div>
-          </section>
+                const isWeekComplete = completedCount === totalTasks;
 
-          <section class="space-y-6">
-            ${phasesHTML}
-          </section>
-        </main>
-      `;
+                if (filter === 'completed' && !isWeekComplete) return;
+                if (filter === 'incomplete' && isWeekComplete) return;
 
-      lucide.createIcons();
-    }
+                const weekCard = document.createElement('div');
+                weekCard.className = `glass-panel p-5 rounded-2xl border ${isWeekComplete ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-gray-800'} transition`;
 
-    // Initial render
-    render();
-  </script>
+                let tasksHtml = '';
+                weekItem.tasks.forEach((task, idx) => {
+                    const taskId = `w_${weekItem.week}_t_${idx}`;
+                    const isChecked = !!appState.completedTasks[taskId];
+
+                    tasksHtml += `
+                        <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-900/60 cursor-pointer text-xs text-gray-300">
+                            <input type="checkbox" onchange="toggleTask('${taskId}')" ${isChecked ? 'checked' : ''} class="mt-0.5 accent-blue-500 w-4 h-4 rounded">
+                            <span class="${isChecked ? 'line-through text-gray-500' : ''}">${task}</span>
+                        </label>
+                    `;
+                });
+
+                weekCard.innerHTML = `
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">${weekItem.domain}</span>
+                        <span class="text-xs font-semibold ${isWeekComplete ? 'text-emerald-400' : 'text-gray-400'}">${completedCount}/${totalTasks} Tasks</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white mb-3">${weekItem.title}</h3>
+                    <div class="space-y-1">${tasksHtml}</div>
+                `;
+
+                container.appendChild(weekCard);
+            });
+        }
+
+        function toggleTask(taskId) {
+            appState.completedTasks[taskId] = !appState.completedTasks[taskId];
+            saveState();
+            renderPlanner();
+        }
+
+        function filterPlanner(filter) {
+            renderPlanner(filter);
+        }
+
+        function toggleChecklist(checkbox) {
+            if (checkbox.checked) {
+                appState.checklistItems++;
+            } else {
+                appState.checklistItems = Math.max(0, appState.checklistItems - 1);
+            }
+            saveState();
+        }
+
+        // Calculate Overall Progress
+        function updateProgressBars() {
+            let totalTasks = 0;
+            WEEKS_DATA.forEach(w => totalTasks += w.tasks.length);
+
+            let completedTasks = 0;
+            Object.keys(appState.completedTasks).forEach(k => {
+                if (appState.completedTasks[k]) completedTasks++;
+            });
+
+            const percent = Math.min(100, Math.round((completedTasks / totalTasks) * 100));
+
+            document.getElementById('overallPercentText').innerText = `${percent}%`;
+            document.getElementById('overallProgressBar').style.width = `${percent}%`;
+
+            document.getElementById('mobilePercentText').innerText = `${percent}%`;
+            document.getElementById('mobileProgressBar').style.width = `${percent}%`;
+        }
+
+        function resetProgress() {
+            if (confirm("Are you sure you want to reset all your roadmap progress?")) {
+                appState = { completedTasks: {}, checklistItems: 0 };
+                saveState();
+                renderPlanner();
+            }
+        }
+
+        // App Initialization
+        window.onload = function() {
+            renderPlanner();
+            updateProgressBars();
+        };
+    </script>
 </body>
 </html>
