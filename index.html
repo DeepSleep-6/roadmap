@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Cloud PMLE Certification Roadmap: Zero to Certified</title>
-    
+    <title>PMLE Pathway & KSA Certification Portal - Faisal's Guide</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,969 +12,1005 @@
             theme: {
                 extend: {
                     colors: {
+                        saudi: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
                         gcp: {
                             blue: '#4285F4',
                             red: '#EA4335',
                             yellow: '#FBBC04',
                             green: '#34A853',
-                            dark: '#0B0F19',
-                            card: '#161F30',
-                            border: '#2A364F'
+                            dark: '#1a1f2c',
+                            card: '#242b3d'
                         }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace']
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    
-    <!-- Google Fonts & FontAwesome -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0B0F19;
-            color: #E2E8F0;
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: #111827;
+            background: rgba(15, 23, 42, 0.6);
         }
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #374151;
-            border-radius: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #4B5563;
-        }
-        .glass-panel {
-            background: rgba(22, 31, 48, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .glow-blue {
-            box-shadow: 0 0 25px -5px rgba(66, 133, 244, 0.25);
-        }
-        .glow-purple {
-            box-shadow: 0 0 25px -5px rgba(168, 85, 247, 0.25);
-        }
-        .tab-btn.active {
-            background-color: #4285F4;
-            color: #ffffff;
-            box-shadow: 0 4px 14px 0 rgba(66, 133, 244, 0.39);
+            background: #059669;
+            border-radius: 3px;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col custom-scrollbar">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col custom-scrollbar selection:bg-saudi-600 selection:text-white">
 
-    <!-- Top Global Header -->
-    <header class="sticky top-0 z-50 glass-panel border-b border-gcp-border">
+    <!-- Top Header Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80 bg-slate-950/90">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <!-- Brand Title -->
+                <!-- Logo / Title -->
                 <div class="flex items-center space-x-3">
-                    <div class="p-2 bg-blue-600/20 text-blue-400 rounded-lg border border-blue-500/30">
-                        <i class="fa-solid fa-brain text-xl"></i>
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-saudi-600 via-emerald-500 to-gcp-blue flex items-center justify-center text-white shadow-lg shadow-saudi-900/30 font-bold text-xl">
+                        <i class="fa-solid fa-brain"></i>
                     </div>
                     <div>
-                        <h1 class="font-bold text-lg text-white flex items-center gap-2">
-                            GCP PMLE Roadmap
-                            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                                2026 Gemini Stack
+                        <div class="flex items-center space-x-2">
+                            <h1 class="text-lg font-bold text-white tracking-tight">PMLE KSA Portal</h1>
+                            <span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-saudi-900/80 text-saudi-100 border border-saudi-700/50">
+                                KSA National Edition
                             </span>
-                        </h1>
-                        <p class="text-xs text-gray-400">Zero-to-Hero Professional ML Engineer Pathway</p>
+                        </div>
+                        <p class="text-xs text-slate-400">GCP Professional ML Engineer & Saudi Citizen Certification Guide</p>
                     </div>
                 </div>
 
-                <!-- Global Roadmap Progress Bar -->
-                <div class="hidden md:flex items-center space-x-4 w-1/3">
-                    <div class="w-full">
-                        <div class="flex justify-between text-xs mb-1">
-                            <span class="text-gray-400">Overall Readiness Progress</span>
-                            <span id="overallPercentText" class="font-bold text-blue-400">0%</span>
-                        </div>
-                        <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden border border-gray-700">
-                            <div id="overallProgressBar" class="bg-gradient-to-r from-blue-500 via-indigo-500 to-emerald-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                <!-- User Profile & Quick Status -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <div class="text-right">
+                        <div class="text-xs text-slate-400">Candidate Status</div>
+                        <div class="text-sm font-semibold text-saudi-100 flex items-center justify-end space-x-1">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Faisal (Saudi National)</span>
                         </div>
                     </div>
-                    <button onclick="resetProgress()" title="Reset saved progress" class="text-xs text-gray-400 hover:text-red-400 p-1.5 transition">
-                        <i class="fa-solid fa-rotate-right"></i>
-                    </button>
+                    <div class="bg-slate-800/80 p-2 rounded-lg border border-slate-700/50 text-center min-w-[100px]">
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-wider">Hadaf Refund</span>
+                        <span class="text-xs font-bold text-emerald-400">100% Eligible</span>
+                    </div>
                 </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
             </div>
+        </div>
+
+        <!-- Navigation Tabs Bar -->
+        <nav class="hidden md:block bg-slate-900/90 border-t border-slate-800/50 px-4">
+            <div class="max-w-7xl mx-auto flex space-x-1 overflow-x-auto custom-scrollbar py-2 text-xs font-medium">
+                <button onclick="switchTab('tab-sanity')" id="btn-tab-sanity" class="nav-tab px-3 py-2 rounded-lg transition-all flex items-center space-x-2 bg-saudi-600 text-white font-semibold">
+                    <i class="fa-solid fa-diagram-project"></i><span>1. Sanity Assessment & Rationale</span>
+                </button>
+                <button onclick="switchTab('tab-math')" id="btn-tab-math" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-calculator"></i><span>2. Math & Metrics Lab</span>
+                </button>
+                <button onclick="switchTab('tab-gemini')" id="btn-tab-gemini" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-microchip"></i><span>3. Gemini Agent Architecture</span>
+                </button>
+                <button onclick="switchTab('tab-roadmap')" id="btn-tab-roadmap" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-calendar-check"></i><span>4. 12-Week Study Plan</span>
+                </button>
+                <button onclick="switchTab('tab-onvue')" id="btn-tab-onvue" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-laptop-code"></i><span>5. OnVUE Workstation Audit</span>
+                </button>
+                <button onclick="switchTab('tab-ksa')" id="btn-tab-ksa" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-building-shield"></i><span>6. Sovereign Cloud & NeLC</span>
+                </button>
+                <button onclick="switchTab('tab-hadaf')" id="btn-tab-hadaf" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-hand-holding-dollar"></i><span>7. HRDF Hadaf Manager</span>
+                </button>
+                <button onclick="switchTab('tab-citizen')" id="btn-tab-citizen" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-passport"></i><span>8. Saudi Citizen Advantage Hub</span>
+                </button>
+                <button onclick="switchTab('tab-quiz')" id="btn-tab-quiz" class="nav-tab px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-vial-circle-check"></i><span>9. Exam Diagnostic Quiz</span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Drawer Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 p-4 space-y-2">
+            <button onclick="switchTab('tab-sanity')" class="w-full text-left p-2.5 rounded bg-slate-800 text-white font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-diagram-project text-saudi-400"></i><span>1. Sanity Assessment & Rationale</span>
+            </button>
+            <button onclick="switchTab('tab-math')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-calculator text-gcp-blue"></i><span>2. Math & Metrics Lab</span>
+            </button>
+            <button onclick="switchTab('tab-gemini')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-microchip text-purple-400"></i><span>3. Gemini Agent Architecture</span>
+            </button>
+            <button onclick="switchTab('tab-roadmap')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-calendar-check text-amber-400"></i><span>4. 12-Week Study Plan</span>
+            </button>
+            <button onclick="switchTab('tab-onvue')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-laptop-code text-cyan-400"></i><span>5. OnVUE Workstation Audit</span>
+            </button>
+            <button onclick="switchTab('tab-ksa')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-building-shield text-emerald-400"></i><span>6. Sovereign Cloud & NeLC</span>
+            </button>
+            <button onclick="switchTab('tab-hadaf')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-hand-holding-dollar text-green-400"></i><span>7. HRDF Hadaf Manager</span>
+            </button>
+            <button onclick="switchTab('tab-citizen')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-passport text-yellow-400"></i><span>8. Saudi Citizen Advantage Hub</span>
+            </button>
+            <button onclick="switchTab('tab-quiz')" class="w-full text-left p-2.5 rounded hover:bg-slate-800 text-slate-300 font-medium flex items-center space-x-2">
+                <i class="fa-solid fa-vial-circle-check text-red-400"></i><span>9. Exam Diagnostic Quiz</span>
+            </button>
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- Main Content Dynamic Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
 
-        <!-- Mobile Overall Progress Bar -->
-        <div class="md:hidden glass-panel p-4 rounded-xl mb-6">
-            <div class="flex justify-between text-xs mb-1">
-                <span class="text-gray-400">Overall Readiness Progress</span>
-                <span id="mobilePercentText" class="font-bold text-blue-400">0%</span>
-            </div>
-            <div class="w-full bg-gray-800 rounded-full h-2.5 overflow-hidden border border-gray-700">
-                <div id="mobileProgressBar" class="bg-gradient-to-r from-blue-500 to-emerald-400 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
-            </div>
-        </div>
-
-        <!-- Navigation Tab Strip -->
-        <div class="flex overflow-x-auto space-x-2 pb-2 mb-8 custom-scrollbar">
-            <button onclick="switchTab('roadmap')" id="tab-roadmap" class="tab-btn active px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
-                <i class="fa-solid fa-route"></i> Sequential 7-Phase Path
-            </button>
-            <button onclick="switchTab('planner')" id="tab-planner" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
-                <i class="fa-solid fa-calendar-check"></i> 12-Week Interactive Planner
-            </button>
-            <button onclick="switchTab('domains')" id="tab-domains" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
-                <i class="fa-solid fa-layer-group"></i> Exam Domains (~100%)
-            </button>
-            <button onclick="switchTab('financial')" id="tab-financial" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
-                <i class="fa-solid fa-piggy-bank"></i> Financial & Program Optimizer
-            </button>
-            <button onclick="switchTab('onvue')" id="tab-onvue" class="tab-btn bg-gray-800/80 hover:bg-gray-700 text-gray-300 px-4 py-2.5 rounded-xl text-sm font-medium whitespace-nowrap transition-all flex items-center gap-2">
-                <i class="fa-solid fa-laptop-code"></i> OnVUE Remote Exam & NeLC
-            </button>
-        </div>
-
-        <!-- TAB 1: SEQUENTIAL ROADMAP -->
-        <div id="view-roadmap" class="tab-content space-y-8">
-            <div class="glass-panel p-6 rounded-2xl border border-blue-500/20 glow-blue">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                            The Complete Zero-to-Hero Architecture
-                        </h2>
-                        <p class="text-gray-400 text-sm mt-1">
-                            A structured, step-by-step pathway from absolute programming/math fundamentals to advanced operational orchestration on the Gemini Enterprise Agent Platform.
-                        </p>
+        <!-- TAB 1: SANITY ASSESSMENT & SEQUENTIAL RATIONALE -->
+        <section id="tab-sanity" class="tab-content space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-slate-900 via-slate-850 to-saudi-950 p-6 sm:p-8 border border-saudi-800/40 shadow-2xl">
+                <div class="relative z-10 max-w-3xl space-y-3">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-saudi-900/80 border border-saudi-600/50 text-saudi-200 text-xs font-semibold">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        <span>Sanity Assessment Status: 100% Validated & Logically Sound</span>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-xs px-3 py-1.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                            <i class="fa-solid fa-clock mr-1"></i> ~12 Weeks (8-10 hrs/wk)
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Phase Cards Container -->
-            <div class="space-y-6">
-
-                <!-- Phase 1 Card -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800 hover:border-gray-700 transition">
-                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-lg border border-blue-500/30">
-                                1
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-white">Phase 1: Software & Quantitative Foundations</h3>
-                                <p class="text-xs text-gray-400">Duration: Weeks 1–2 | Prerequisite: None</p>
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            Foundational Step
-                        </span>
-                    </div>
-                    
-                    <p class="text-sm text-gray-300 mb-4">
-                        Establish fluency in Python, NumPy high-dimensional array arithmetic, Pandas DataFrame transformations, and the underlying mathematical metrics evaluated during model validation.
-                    </p>
-
-                    <!-- Mathematical Formula Dynamic Interactive Box -->
-                    <div class="bg-gray-900/90 rounded-xl p-4 border border-gray-800 mb-4 font-mono text-xs text-gray-300 space-y-3">
-                        <div class="flex justify-between items-center text-blue-400 border-b border-gray-800 pb-2">
-                            <span class="font-bold"><i class="fa-solid fa-calculator mr-1"></i> Core Continuous & Discrete Evaluation Metrics</span>
-                            <span class="text-[10px] text-gray-500">Exam Tested Formula Concepts</span>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-gray-950 p-3 rounded-lg border border-gray-800">
-                                <span class="text-gray-400 font-bold block mb-1">Mean Absolute Error (MAE):</span>
-                                <div class="text-amber-300">MAE = (1/n) * ∑ |y_i - ŷ_i|</div>
-                                <p class="text-[10px] text-gray-500 mt-1">Linear penalty for deviations.</p>
-                            </div>
-                            <div class="bg-gray-950 p-3 rounded-lg border border-gray-800">
-                                <span class="text-gray-400 font-bold block mb-1">Root Mean Squared Error (RMSE):</span>
-                                <div class="text-purple-300">RMSE = √[ (1/n) * ∑ (y_i - ŷ_i)² ]</div>
-                                <p class="text-[10px] text-gray-500 mt-1">Heavy penalty for large outliers.</p>
-                            </div>
-                            <div class="bg-gray-950 p-3 rounded-lg border border-gray-800">
-                                <span class="text-gray-400 font-bold block mb-1">RMS Logarithmic Error (RMSLE):</span>
-                                <div class="text-emerald-300">RMSLE = √[ (1/n) * ∑ (log(ŷ_i+1) - log(y_i+1))² ]</div>
-                                <p class="text-[10px] text-gray-500 mt-1">Penalizes under-estimation heavily.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
-                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-book text-blue-400 mr-1"></i> Free Learning Resources</span>
-                            <ul class="list-disc list-inside text-gray-400 space-y-1">
-                                <li>Kaggle Learn: Python, Pandas, & Intro to Machine Learning</li>
-                                <li>MIT OpenCourseWare / Stanford CS229 (Audit Mode)</li>
-                                <li>Great Learning: Python for Machine Learning</li>
-                            </ul>
-                        </div>
-                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
-                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-circle-check text-emerald-400 mr-1"></i> Competency Milestones</span>
-                            <ul class="list-disc list-inside text-gray-400 space-y-1">
-                                <li>Write vector arithmetic and matrix dot products without loops</li>
-                                <li>Perform feature aggregation and handle missing values in Pandas</li>
-                                <li>Choose between MAE, RMSE, and AUPRC for imbalanced datasets</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Phase 2 Card -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800 hover:border-gray-700 transition">
-                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-lg border border-purple-500/30">
-                                2
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-white">Phase 2: GCP Platform Literacy & Low-Code AI</h3>
-                                <p class="text-xs text-gray-400">Duration: Weeks 3–4 | Focus: BigQuery ML & AutoML</p>
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                            Exam Weight: ~13%
-                        </span>
-                    </div>
-
-                    <p class="text-sm text-gray-300 mb-4">
-                        Decouple compute and storage on Google Cloud. Master SQL-based model development in BigQuery ML, automated hyperparameter tuning via Agent Platform AutoML, and distributed ETL pipelines via Dataflow.
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
-                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-layer-group text-purple-400 mr-1"></i> Core Google Cloud Tools</span>
-                            <ul class="list-disc list-inside text-gray-400 space-y-1">
-                                <li><strong>BigQuery ML:</strong> SQL-based training for ARIMA, Logistic Regression, XGBoost</li>
-                                <li><strong>Cloud Storage (GCS):</strong> Storing unstructured shards and TFRecords</li>
-                                <li><strong>Dataflow / Dataproc:</strong> Apache Beam & Spark streaming ETL</li>
-                            </ul>
-                        </div>
-                        <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
-                            <span class="font-bold text-gray-200 block mb-1"><i class="fa-solid fa-key text-yellow-400 mr-1"></i> Strategic Exam Insight</span>
-                            <p class="text-gray-400">
-                                Always choose BigQuery ML or AutoML when business requirements demand minimal engineering overhead, rapid prototyping, or when data already resides natively in BigQuery tables.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Phase 3 Card -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800 hover:border-gray-700 transition">
-                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-lg border border-amber-500/30">
-                                3
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-white">Phase 3: Custom Models, Hardware & Prototyping</h3>
-                                <p class="text-xs text-gray-400">Duration: Weeks 5–8 | Focus: PyTorch/sklearn Containers & Accelerators</p>
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                            Exam Weight: ~21%
-                        </span>
-                    </div>
-
-                    <p class="text-sm text-gray-300 mb-4">
-                        Transition from interactive Colab Enterprise notebooks to custom containerized training workloads on Artifact Registry, selection of CPU/GPU/TPU hardware topologies, and parallel distributed strategies.
-                    </p>
-
-                    <!-- Hardware Selection Table -->
-                    <div class="overflow-x-auto mb-4">
-                        <table class="w-full text-left text-xs text-gray-300 border border-gray-800 rounded-lg overflow-hidden">
-                            <thead class="bg-gray-900 text-gray-400 uppercase text-[10px]">
-                                <tr>
-                                    <th class="p-2 border-b border-gray-800">Hardware Accelerator</th>
-                                    <th class="p-2 border-b border-gray-800">Optimal ML Workload</th>
-                                    <th class="p-2 border-b border-gray-800">Parallelism & Tuning</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-800/60 bg-gray-950/40">
-                                <tr>
-                                    <td class="p-2 font-bold text-blue-400">CPUs</td>
-                                    <td class="p-2">Light tabular models, small inference endpoints</td>
-                                    <td class="p-2">Multi-core threading</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-2 font-bold text-amber-400">GPUs (NVIDIA L4/A100/H100)</td>
-                                    <td class="p-2">Deep learning, PyTorch custom containers, general matrix operations</td>
-                                    <td class="p-2">Data Parallelism (DistributedDataParallel)</td>
-                                </tr>
-                                <tr>
-                                    <td class="p-2 font-bold text-purple-400">TPUs (v4/v5e/v6)</td>
-                                    <td class="p-2">Ultra-large transformer models, massive matrix multiplication</td>
-                                    <td class="p-2">Model & Tensor Parallelism, bfloat16 precision</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Phase 4 Card -->
-                <div class="glass-panel p-6 rounded-2xl border border-purple-500/30 hover:border-purple-500/50 transition glow-purple">
-                    <div class="flex items-start justify-between flex-wrap gap-4 mb-4">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-purple-600/30 text-purple-300 flex items-center justify-center font-bold text-lg border border-purple-500/40">
-                                4
-                            </div>
-                            <div>
-                                <h3 class="text-lg font-bold text-white flex items-center gap-2">
-                                    Phase 4: MLOps & The Gemini Enterprise Agent Platform
-                                    <span class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded border border-purple-500/30">Core Domain</span>
-                                </h3>
-                                <p class="text-xs text-gray-400">Duration: Weeks 9–11 | Focus: Serving, Pipelines, & Agentic Systems</p>
-                            </div>
-                        </div>
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-300 border border-purple-500/40">
-                            Exam Weight: ~51% Combined (Sec 4, 5, 6)
-                        </span>
-                    </div>
-
-                    <p class="text-sm text-gray-300 mb-4">
-                        Master enterprise-grade deployment and automation. Operationalize canary rollouts, Feature Store ingestion, Cloud Build CI/CD/CT pipelines, and Gemini Agent Studio capabilities.
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs mb-4">
-                        <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800">
-                            <span class="font-bold text-blue-400 block mb-1"><i class="fa-solid fa-server mr-1"></i> Serving & Traffic Splitting</span>
-                            <p class="text-gray-400">
-                                Deploy models to managed endpoints. Perform canary releases (e.g., 90% traffic to v1, 10% to v2) or A/B testing before full production migration.
-                            </p>
-                        </div>
-                        <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800">
-                            <span class="font-bold text-emerald-400 block mb-1"><i class="fa-solid fa-diagram-project mr-1"></i> Automated Pipelines</span>
-                            <p class="text-gray-400">
-                                Build Kubeflow / Agent Platform Pipelines connected to Cloud Build. Trigger automatic retraining on data drift detection.
-                            </p>
-                        </div>
-                        <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800">
-                            <span class="font-bold text-purple-400 block mb-1"><i class="fa-solid fa-robot mr-1"></i> Gemini Agent Architecture</span>
-                            <p class="text-gray-400">
-                                Utilize Agent Development Kit (ADK), Grounding Engine with Search, Model Armor prompt filters, and SPIFFE cryptographic identities.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Phase 5 & 6 & 7 Quick Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    <!-- Phase 5 -->
-                    <div class="glass-panel p-5 rounded-2xl border border-gray-800">
-                        <div class="flex items-center gap-2 font-bold text-white mb-2">
-                            <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm border border-emerald-500/30">5</div>
-                            Phase 5: Financial Optimization
-                        </div>
-                        <p class="text-xs text-gray-400 mb-3">
-                            Subscribe to Innovators Plus ($299/yr) to receive $500 cloud credits, a free exam voucher, and $500 bonus credits upon passing. Join the free GEAR program.
-                        </p>
-                    </div>
-
-                    <!-- Phase 6 -->
-                    <div class="glass-panel p-5 rounded-2xl border border-gray-800">
-                        <div class="flex items-center gap-2 font-bold text-white mb-2">
-                            <div class="w-7 h-7 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm border border-blue-500/30">6</div>
-                            Phase 6: 12-Week Execution
-                        </div>
-                        <p class="text-xs text-gray-400 mb-3">
-                            Follow our weekly checklist. Complete hands-on Qwiklabs skill badges and review practice sample scenarios in the interactive planner tab.
-                        </p>
-                    </div>
-
-                    <!-- Phase 7 -->
-                    <div class="glass-panel p-5 rounded-2xl border border-gray-800">
-                        <div class="flex items-center gap-2 font-bold text-white mb-2">
-                            <div class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-sm border border-amber-500/30">7</div>
-                            Phase 7: OnVUE & NeLC Exam
-                        </div>
-                        <p class="text-xs text-gray-400 mb-3">
-                            Register via Pearson VUE / CM Connect profile. Ensure clean workspace, single monitor, and NeLC platform integration if testing in Saudi Arabia.
-                        </p>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-
-        <!-- TAB 2: INTERACTIVE 12-WEEK PLANNER -->
-        <div id="view-planner" class="tab-content hidden space-y-6">
-            <div class="glass-panel p-6 rounded-2xl border border-gray-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                        12-Week Interactive Execution Planner
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Strategic Research Synthesis: The 3-Stage Sequential Pathway
                     </h2>
-                    <p class="text-gray-400 text-sm mt-1">
-                        Track your progress week-by-week. Check off tasks as you complete labs, courses, and exam drills.
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        A rigorous validation of Faisal's sequential research methodology—bridging foundational quantitative mathematics, applied Google Cloud MLOps, and Saudi sovereign regulatory compliance.
                     </p>
                 </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="filterPlanner('all')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-gray-800 text-gray-300 hover:bg-gray-700">All Weeks</button>
-                    <button onclick="filterPlanner('incomplete')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 hover:bg-amber-500/20">Pending</button>
-                    <button onclick="filterPlanner('completed')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20">Completed</button>
+                <!-- Background visual element -->
+                <div class="absolute -right-10 -bottom-10 opacity-15 text-saudi-500 pointer-events-none">
+                    <i class="fa-solid fa-network-wired text-[220px]"></i>
                 </div>
             </div>
 
-            <!-- Weeks Accordion Grid -->
-            <div id="plannerWeeksContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Dynamically Populated by JavaScript -->
-            </div>
-        </div>
+            <!-- Sanity Matrix Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- File 1 Card -->
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-blue-500 hover:border-slate-600 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/30">STAGE 1</span>
+                        <i class="fa-solid fa-graduation-cap text-2xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Foundational Sheet</h3>
+                    <p class="text-xs text-slate-400 mb-4">Python for Everybody (UMich) & Mathematics for ML (Imperial / DeepLearning.AI)</p>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span>Builds mathematical intuition before cloud sandbox deployment.</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span>Prevents failure caused by ungrounded gradient descent algorithms.</span>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- TAB 3: EXAM DOMAINS & WEIGHT BREAKDOWN -->
-        <div id="view-domains" class="tab-content hidden space-y-6">
-            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                <h2 class="text-2xl font-bold text-white">Exam Domain Mastery (~100%)</h2>
-                <p class="text-gray-400 text-sm mt-1">
-                    Detailed breakdown of the 6 official exam sections, key architectural competencies, and scenario expectations.
-                </p>
+                <!-- File 2 Card -->
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-purple-500 hover:border-slate-600 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-purple-500/20 text-purple-400 border border-purple-500/30">STAGE 2</span>
+                        <i class="fa-solid fa-cloud-bolt text-2xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Applied GCP Track</h3>
+                    <p class="text-xs text-slate-400 mb-4">14-Course Skills Boost Curriculum & Gemini Enterprise Agent Platform</p>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span>Hands-on mastery of ADK, Memory Bank, Model Armor, and Agent Mesh.</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span>Prepares for Pearson VUE proctored exam domain weights.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File 3 Card -->
+                <div class="glass-panel rounded-2xl p-6 border-t-4 border-t-saudi-500 hover:border-slate-600 transition-all">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-lg bg-saudi-500/20 text-saudi-400 border border-saudi-500/30">STAGE 3</span>
+                        <i class="fa-solid fa-landmark-flag text-2xl text-saudi-400"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">KSA Integration & Hadaf</h3>
+                    <p class="text-xs text-slate-400 mb-4">NeLC FutureX Verification & 100% HRDF Hadaf Reimbursement</p>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span>Converts technical knowledge into state-recognized national credentials.</span>
+                        </div>
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-check text-emerald-400 mt-0.5"></i>
+                            <span>Achieves zero net financial cost via Taqat IBAN reimbursement.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sequential Rationale Interactive Flow -->
+            <div class="glass-panel rounded-2xl p-6 space-y-6">
+                <h3 class="text-xl font-bold text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-route text-saudi-500"></i>
+                    <span>Operational Continuity & Rationale Map</span>
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/50">
+                        <div class="text-saudi-400 font-mono text-xs mb-1">01. PREPARATION</div>
+                        <h4 class="font-bold text-white text-sm mb-1">Math & Code Baseline</h4>
+                        <p class="text-xs text-slate-400">Master linear algebra, gradient calculus, and Python tabular structures.</p>
+                    </div>
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/50">
+                        <div class="text-gcp-blue font-mono text-xs mb-1">02. CLOUD PLATFORM</div>
+                        <h4 class="font-bold text-white text-sm mb-1">Gemini Agent Platform</h4>
+                        <p class="text-xs text-slate-400">Deploy custom pipelines, ADK micro-agents, and Model Armor security.</p>
+                    </div>
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/50">
+                        <div class="text-cyan-400 font-mono text-xs mb-1">03. REGULATORY VERIFY</div>
+                        <h4 class="font-bold text-white text-sm mb-1">NeLC FutureX LRS</h4>
+                        <p class="text-xs text-slate-400">Transmit xAPI learning records to secure Pearson VUE proctored exam authorization.</p>
+                    </div>
+                    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700/50">
+                        <div class="text-emerald-400 font-mono text-xs mb-1">04. FINANCIAL CLAIM</div>
+                        <h4 class="font-bold text-white text-sm mb-1">Hadaf 100% Payout</h4>
+                        <p class="text-xs text-slate-400">Upload stamped invoice to Taqat portal for full SAR direct deposit.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: MATH & METRICS LAB -->
+        <section id="tab-math" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 space-y-4 border-l-4 border-l-gcp-blue">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Diagnostic Metrics & Mathematical Formulation Lab</h2>
+                        <p class="text-xs text-slate-400">Interactive calculation engine for continuous regression and imbalanced classification metrics tested on PMLE.</p>
+                    </div>
+                    <span class="px-3 py-1 bg-gcp-blue/20 text-gcp-blue border border-gcp-blue/30 rounded-full text-xs font-bold">PMLE Core Formulas</span>
+                </div>
+            </div>
+
+            <!-- Metric Calculator Shell -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Regression Metrics Calculator -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-chart-line text-blue-400"></i>
+                        <span>Regression Metrics (MAE, RMSE, RMSLE)</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">Input paired sample observations ($y_i$ ground truth vs $\hat{y}_i$ predicted) to calculate error metrics dynamically.</p>
+                    
+                    <!-- Input pairs -->
+                    <div class="space-y-3">
+                        <div class="grid grid-cols-2 gap-2 text-xs font-semibold text-slate-400">
+                            <span>Actual Values ($y$)</span>
+                            <span>Predicted Values ($\hat{y}$)</span>
+                        </div>
+                        <textarea id="regression-input" rows="4" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs font-mono text-emerald-400 focus:outline-none focus:border-saudi-500" placeholder="Actual, Predicted&#10;100, 105&#10;250, 240&#10;300, 315&#10;500, 480&#10;1000, 920"></textarea>
+                        <button onclick="calculateRegressionMetrics()" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs transition-all shadow-lg shadow-blue-900/30">
+                            Compute MAE, RMSE & RMSLE
+                        </button>
+                    </div>
+
+                    <!-- Calculated Results -->
+                    <div id="regression-results" class="grid grid-cols-3 gap-3 pt-2">
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold">MAE</span>
+                            <span id="res-mae" class="text-lg font-bold text-blue-400">--</span>
+                        </div>
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold">RMSE</span>
+                            <span id="res-rmse" class="text-lg font-bold text-purple-400">--</span>
+                        </div>
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold">RMSLE</span>
+                            <span id="res-rmsle" class="text-lg font-bold text-amber-400">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Classification Metrics Calculator -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-bullseye text-emerald-400"></i>
+                        <span>Classification Metrics (Precision, Recall, F1, AUPRC)</span>
+                    </h3>
+                    <p class="text-xs text-slate-400">Adjust confusion matrix parameters to evaluate imbalanced dataset outcomes.</p>
+
+                    <!-- Confusion Matrix Sliders -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">True Positives (TP): <span id="val-tp" class="text-emerald-400 font-bold">85</span></label>
+                            <input type="range" id="input-tp" min="1" max="500" value="85" oninput="calculateClassificationMetrics()" class="w-full accent-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">False Positives (FP): <span id="val-fp" class="text-red-400 font-bold">15</span></label>
+                            <input type="range" id="input-fp" min="0" max="500" value="15" oninput="calculateClassificationMetrics()" class="w-full accent-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">False Negatives (FN): <span id="val-fn" class="text-amber-400 font-bold">25</span></label>
+                            <input type="range" id="input-fn" min="0" max="500" value="25" oninput="calculateClassificationMetrics()" class="w-full accent-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">True Negatives (TN): <span id="val-tn" class="text-slate-400 font-bold">875</span></label>
+                            <input type="range" id="input-tn" min="1" max="2000" value="875" oninput="calculateClassificationMetrics()" class="w-full accent-slate-500">
+                        </div>
+                    </div>
+
+                    <!-- Computed Metrics Display -->
+                    <div class="grid grid-cols-3 gap-3 pt-2">
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold">Precision</span>
+                            <span id="res-precision" class="text-lg font-bold text-emerald-400">85.0%</span>
+                        </div>
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold">Recall</span>
+                            <span id="res-recall" class="text-lg font-bold text-amber-400">77.3%</span>
+                        </div>
+                        <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 text-center">
+                            <span class="block text-[10px] text-slate-400 font-semibold">F1 Score</span>
+                            <span id="res-f1" class="text-lg font-bold text-cyan-400">80.95%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Diagnostic Troubleshooting Guide -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold text-white">Production Operational Anomaly Resolution Matrix</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs text-slate-300">
+                        <thead class="bg-slate-900 text-slate-400 uppercase font-semibold">
+                            <tr>
+                                <th class="p-3">Operational Anomaly</th>
+                                <th class="p-3">Diagnostic Symptom</th>
+                                <th class="p-3">Root Cause</th>
+                                <th class="p-3">GCP Strategic Engineering Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800">
+                            <tr class="hover:bg-slate-900/40">
+                                <td class="p-3 font-semibold text-amber-400">Data Drift & Skew</td>
+                                <td class="p-3">Accuracy drops months after deployment.</td>
+                                <td class="p-3">Serving distribution deviates statistically from training data.</td>
+                                <td class="p-3 text-emerald-400 font-semibold">Vertex AI Model Monitoring alerts + auto-retraining pipeline.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40">
+                                <td class="p-3 font-semibold text-red-400">Out-Of-Memory (OOM)</td>
+                                <td class="p-3">GPU job crashes with ResourceExhaustedError.</td>
+                                <td class="p-3">High batch size exhausts GPU physical VRAM.</td>
+                                <td class="p-3 text-emerald-400 font-semibold">Reduce batch size, use gradient accumulation, or switch to SGD.</td>
+                            </tr>
+                            <tr class="hover:bg-slate-900/40">
+                                <td class="p-3 font-semibold text-purple-400">Loss Divergence</td>
+                                <td class="p-3">Weights explode into NaN values during backprop.</td>
+                                <td class="p-3">Unscaled features cause extreme gradient updates.</td>
+                                <td class="p-3 text-emerald-400 font-semibold">Apply z-score/min-max feature scaling before training.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: GEMINI AGENT ARCHITECTURE -->
+        <section id="tab-gemini" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-purple-500">
+                <h2 class="text-2xl font-bold text-white">The Gemini Enterprise Agent Platform Paradigm Shift</h2>
+                <p class="text-xs text-slate-400 mt-1">The fundamental transition from legacy Vertex AI tools to an agent-first autonomous framework.</p>
+            </div>
+
+            <!-- Component Comparison Table -->
+            <div class="glass-panel rounded-2xl p-6 space-y-4">
+                <h3 class="text-lg font-bold text-white">Legacy Vertex AI vs Modern Gemini Agent Platform</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-900/90 p-4 rounded-xl border border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between text-xs font-bold text-slate-400 border-b border-slate-800 pb-2">
+                            <span>LEGACY VERTEX AI</span>
+                            <span class="text-red-400">DEPRECATED PARADIGM</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-300">
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-xmark text-red-400 mt-0.5"></i><span>Vertex AI AutoML: Static model selection without reasoning loops.</span></li>
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-xmark text-red-400 mt-0.5"></i><span>Vertex AI Pipelines: Rigid Kubeflow linear training DAGs.</span></li>
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-xmark text-red-400 mt-0.5"></i><span>Vector Search: Disconnected vector retrieval without live web grounding.</span></li>
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-xmark text-red-400 mt-0.5"></i><span>Standard IAM Roles: Static credentials vulnerable to exfiltration.</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-saudi-950/60 p-4 rounded-xl border border-saudi-800/60 space-y-3">
+                        <div class="flex items-center justify-between text-xs font-bold text-emerald-400 border-b border-saudi-800/80 pb-2">
+                            <span>GEMINI ENTERPRISE AGENT PLATFORM</span>
+                            <span class="text-emerald-400">2026 ACTIVE STANDARD</span>
+                        </div>
+                        <ul class="space-y-2 text-xs text-slate-200">
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i><span>Agent Studio & Model Garden: Access 200+ models with visual prompt loops.</span></li>
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i><span>Agent Platform Pipelines: Dynamic graph-based multi-agent mesh orchestration.</span></li>
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i><span>Real-Time Grounding Engine: Parallel Web Search integration for zero-hallucination factual grounding.</span></li>
+                            <li class="flex items-start space-x-2"><i class="fa-solid fa-check text-emerald-400 mt-0.5"></i><span>Agent Identity & Gateway: SPIFFE short-lived cryptographic IDs + Model Armor shields.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ADK Core Components Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-5 rounded-xl border border-slate-800 space-y-2">
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">1</div>
+                    <h4 class="font-bold text-white text-sm">Memory Bank & Sessions</h4>
+                    <p class="text-xs text-slate-400">Persistent contextual memory store across disjointed execution threads, mapping Custom Session IDs back to internal databases.</p>
+                </div>
+                <div class="glass-panel p-5 rounded-xl border border-slate-800 space-y-2">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">2</div>
+                    <h4 class="font-bold text-white text-sm">Model Armor Security</h4>
+                    <p class="text-xs text-slate-400">Real-time inline security boundary intercepting prompt injections, blocking data exfiltration, and masking sensitive PII data.</p>
+                </div>
+                <div class="glass-panel p-5 rounded-xl border border-slate-800 space-y-2">
+                    <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold">3</div>
+                    <h4 class="font-bold text-white text-sm">LLM-as-a-Judge Evaluation</h4>
+                    <p class="text-xs text-slate-400">Agent Simulation runs thousands of synthetic interactions to evaluate multi-step task completion and safety compliance.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: 12-WEEK STUDY PLAN -->
+        <section id="tab-roadmap" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-amber-500 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">12-Week Interactive Study Plan Tracker</h2>
+                    <p class="text-xs text-slate-400">Track your progress from zero baseline to PMLE examination readiness.</p>
+                </div>
+                <!-- Progress Ring / Bar -->
+                <div class="flex items-center space-x-3 bg-slate-900/80 px-4 py-2 rounded-xl border border-slate-800">
+                    <div class="text-right">
+                        <span class="block text-[10px] text-slate-400 uppercase">Overall Progress</span>
+                        <span id="plan-progress-text" class="text-sm font-bold text-amber-400">0% Completed</span>
+                    </div>
+                    <div class="w-16 bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                        <div id="plan-progress-bar" class="bg-amber-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Week Checklists Accordion / Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="study-plan-container">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </section>
+
+        <!-- TAB 5: ONVUE WORKSTATION AUDIT -->
+        <section id="tab-onvue" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-cyan-500">
+                <h2 class="text-2xl font-bold text-white">Pearson VUE OnVUE Technical Workstation Checker</h2>
+                <p class="text-xs text-slate-400 mt-1">Verify that your home workstation complies with remote proctoring security rules.</p>
+            </div>
+
+            <!-- Interactive System Checker Checklist -->
+            <div class="glass-panel rounded-2xl p-6 space-y-6">
+                <h3 class="text-lg font-bold text-white">Live Readiness Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Check Item 1 -->
+                    <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 flex items-start space-x-3">
+                        <input type="checkbox" id="chk-os" onchange="auditWorkstation()" class="mt-1 w-4 h-4 rounded accent-cyan-500">
+                        <div>
+                            <label for="chk-os" class="font-bold text-white text-sm">Operating System</label>
+                            <p class="text-xs text-slate-400">Windows 10/11 or macOS 14+ (No Linux/VMs). Chromebooks allowed after June 1, 2026.</p>
+                        </div>
+                    </div>
+                    <!-- Check Item 2 -->
+                    <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 flex items-start space-x-3">
+                        <input type="checkbox" id="chk-net" onchange="auditWorkstation()" class="mt-1 w-4 h-4 rounded accent-cyan-500">
+                        <div>
+                            <label for="chk-net" class="font-bold text-white text-sm">Network Bandwidth</label>
+                            <p class="text-xs text-slate-400">Symmetric $\ge 6.0$ Mbps download and $\ge 3.0$ Mbps upload (Wired Ethernet recommended, no VPNs).</p>
+                        </div>
+                    </div>
+                    <!-- Check Item 3 -->
+                    <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 flex items-start space-x-3">
+                        <input type="checkbox" id="chk-disp" onchange="auditWorkstation()" class="mt-1 w-4 h-4 rounded accent-cyan-500">
+                        <div>
+                            <label for="chk-disp" class="font-bold text-white text-sm">Single Display Unit</label>
+                            <p class="text-xs text-slate-400">Strictly single monitor configuration. Unplug secondary monitors & docking stations.</p>
+                        </div>
+                    </div>
+                    <!-- Check Item 4 -->
+                    <div class="p-4 bg-slate-900/80 rounded-xl border border-slate-800 flex items-start space-x-3">
+                        <input type="checkbox" id="chk-id" onchange="auditWorkstation()" class="mt-1 w-4 h-4 rounded accent-cyan-500">
+                        <div>
+                            <label for="chk-id" class="font-bold text-white text-sm">Saudi National ID Matching</label>
+                            <p class="text-xs text-slate-400">Government photo ID with Romanized characters matching registration name exactly.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audit Output Card -->
+                <div id="audit-status-card" class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center space-y-1">
+                    <span class="text-xs font-semibold text-slate-400 uppercase">Workstation Status</span>
+                    <div id="audit-status-text" class="text-xl font-bold text-amber-400">Incomplete Audit (Select items above)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: SOVEREIGN CLOUD & NELC -->
+        <section id="tab-ksa" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-saudi-500">
+                <h2 class="text-2xl font-bold text-white">KSA Sovereign Cloud & NeLC FutureX Integration</h2>
+                <p class="text-xs text-slate-400 mt-1">Local cloud governance in the Dammam `me-central2` region and NeLC FutureX verification mechanics.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                <!-- Domain 1 -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30">Section 1</span>
-                        <span class="text-sm font-bold text-blue-400">~13% Weight</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Architecting Low-Code AI Solutions</h3>
-                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
-                        <li>Developing ML models using BigQuery ML (ARIMA, XGBoost, Linear/Logistic Regression).</li>
-                        <li>Feature engineering and predictions inside BigQuery using standard SQL.</li>
-                        <li>AutoML tabular, image, and text models on Gemini Enterprise Agent Platform.</li>
-                        <li>Selecting pre-built AI APIs (Document AI, Vision API, Translate API).</li>
+                <!-- Dammam Region & CNTXT Billing -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-server text-saudi-400"></i>
+                        <span>Dammam Region (`me-central2`) & CNTXT</span>
+                    </h3>
+                    <ul class="space-y-3 text-xs text-slate-300">
+                        <li class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                            <strong class="text-emerald-400 block mb-1">CST Class C Regulatory License</strong>
+                            Evaluated against NCA Essential Cybersecurity Controls (ECC) for government and critical infrastructure workloads.
+                        </li>
+                        <li class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                            <strong class="text-emerald-400 block mb-1">Managed Cloud External Key Manager (EKM)</strong>
+                            Cryptographic keys remain under Saudi jurisdiction using Key Access Justifications (KAJ).
+                        </li>
+                        <li class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                            <strong class="text-amber-400 block mb-1">Individual Developer Sandbox Workaround</strong>
+                            CNTXT blocks individual card billing with <em>"Individual onboarding temporarily unavailable"</em>. Workaround: Register on CNTXT Waiting List (`content.cntxt.com/gcp-online-waiting-list`) and run sandbox labs in `us-central1` using global credits.
+                        </li>
                     </ul>
-                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
-                        <span class="font-bold text-gray-200"><i class="fa-solid fa-lightbulb text-yellow-400 mr-1"></i> Exam Rule of Thumb:</span>
-                        If a scenario asks for rapid time-to-market with tabular data in BigQuery without exporting data, choose **BigQuery ML**.
-                    </div>
                 </div>
 
-                <!-- Domain 2 -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-purple-500/20 text-purple-400 border border-purple-500/30">Section 2</span>
-                        <span class="text-sm font-bold text-purple-400">~16% Weight</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Managing Data & Models Across Teams</h3>
-                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
-                        <li>Data exploration and preprocessing tools (BigQuery, Dataflow, Apache Spark, Pandas).</li>
-                        <li>Creating and serving central features using Agent Platform Feature Store.</li>
-                        <li>Collaborative secure notebooks (Colab Enterprise, Agent Platform Workbench).</li>
-                        <li>Tracking artifacts, lineage, and experiment iterations using ML Metadata.</li>
-                    </ul>
-                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
-                        <span class="font-bold text-gray-200"><i class="fa-solid fa-shield-halved text-emerald-400 mr-1"></i> Privacy First:</span>
-                        When handling PII or sensitive training data, integrate Cloud DLP (Data Loss Prevention) before feature store ingestion.
-                    </div>
-                </div>
-
-                <!-- Domain 3 -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30">Section 3</span>
-                        <span class="text-sm font-bold text-amber-400">~21% Weight</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Scaling Prototypes into ML Models</h3>
-                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
-                        <li>Building models considering cost, latency, interpretability, and scale.</li>
-                        <li>Packaging PyTorch, sklearn, or custom frameworks into Artifact Registry Docker images.</li>
-                        <li>Selecting GPU vs. TPU compute clusters for high-performance training.</li>
-                        <li>Implementing Data Parallelism and Model Parallelism across accelerator pods.</li>
-                    </ul>
-                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
-                        <span class="font-bold text-gray-200"><i class="fa-solid fa-microchip text-amber-400 mr-1"></i> Compute Selection:</span>
-                        Use **TPUs** for large matrix-heavy transformer models; use **GPUs** for general custom PyTorch/TensorFlow deep learning.
+                <!-- NeLC FutureX xAPI Integration -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-shield-halved text-cyan-400"></i>
+                        <span>NeLC FutureX Verification Cycle</span>
+                    </h3>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">1</span>
+                            <span>Coursework completed on GCP Skills Boost platform.</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">2</span>
+                            <span>Automated xAPI transmission to FutureX Learning Record Store (LRS).</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">3</span>
+                            <span>Pearson VUE exam booking authorization granted within 5 working days.</span>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <span class="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">4</span>
+                            <span>Certified credential published to MicroX national personal file.</span>
+                        </div>
                     </div>
                 </div>
-
-                <!-- Domain 4 -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Section 4</span>
-                        <span class="text-sm font-bold text-emerald-400">~20% Weight</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Serving and Scaling Models</h3>
-                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
-                        <li>Deploying online inference endpoints vs. non-real-time batch prediction jobs.</li>
-                        <li>Registering model versions in Gemini Enterprise Agent Platform Model Registry.</li>
-                        <li>Executing canary rollouts, A/B testing, and traffic split percentages.</li>
-                        <li>Optimizing inference containers on Cloud Run or Google Kubernetes Engine (GKE).</li>
-                    </ul>
-                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
-                        <span class="font-bold text-gray-200"><i class="fa-solid fa-rocket text-blue-400 mr-1"></i> Deployment Strategy:</span>
-                        Never shift 100% traffic immediately to a newly trained model. Always configure canary split (e.g. 10/90) with metric monitoring.
-                    </div>
-                </div>
-
-                <!-- Domain 5 -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">Section 5</span>
-                        <span class="text-sm font-bold text-indigo-400">~18% Weight</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Automating & Orchestrating ML Pipelines</h3>
-                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
-                        <li>Building end-to-end pipelines using Agent Platform Pipelines / Kubeflow.</li>
-                        <li>Establishing automated retraining triggers based on schedule or performance degradation.</li>
-                        <li>Deploying models within CI/CD/CT pipelines using Cloud Build.</li>
-                        <li>Maintaining consistent preprocessing code between training and serving.</li>
-                    </ul>
-                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
-                        <span class="font-bold text-gray-200"><i class="fa-solid fa-gears text-indigo-400 mr-1"></i> CT (Continuous Training):</span>
-                        Automation must ensure data skew is checked prior to triggering expensive retraining pipelines.
-                    </div>
-                </div>
-
-                <!-- Domain 6 -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-red-500/20 text-red-400 border border-red-500/30">Section 6</span>
-                        <span class="text-sm font-bold text-red-400">~13% Weight</span>
-                    </div>
-                    <h3 class="text-lg font-bold text-white mb-2">Monitoring & Securing AI Solutions</h3>
-                    <ul class="text-xs text-gray-300 space-y-2 mb-4 list-disc list-inside">
-                        <li>Monitoring for Training-Serving Skew, Data Drift, and Concept Drift.</li>
-                        <li>Securing AI solutions against prompt injection, data exfiltration, and malicious queries using **Model Armor**.</li>
-                        <li>Configuring model explainability and feature attributions (Agent Platform Inference).</li>
-                        <li>Evaluating Generative AI outputs using LLM-as-a-judge and Gen AI Evaluation Service.</li>
-                    </ul>
-                    <div class="p-3 bg-gray-900/80 rounded-xl border border-gray-800 text-[11px] text-gray-400">
-                        <span class="font-bold text-gray-200"><i class="fa-solid fa-bug text-red-400 mr-1"></i> Drift Definitions:</span>
-                        **Data Drift** = shift in input feature distribution; **Concept Drift** = shift in statistical relation between inputs and ground truth target.
-                    </div>
-                </div>
-
             </div>
-        </div>
+        </section>
 
-        <!-- TAB 4: FINANCIAL & PROGRAM OPTIMIZER -->
-        <div id="view-financial" class="tab-content hidden space-y-6">
-            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                <h2 class="text-2xl font-bold text-white">Financial & Program Optimizer</h2>
-                <p class="text-gray-400 text-sm mt-1">
-                    Calculate how to acquire your certification completely online with maximum financial efficiency.
-                </p>
+        <!-- TAB 7: HRDF HADAF MANAGER -->
+        <section id="tab-hadaf" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-green-500 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">HRDF Hadaf 100% Reimbursement Manager</h2>
+                    <p class="text-xs text-slate-400">Navigate Taqat portal submission rules for 100% exam fee recovery.</p>
+                </div>
+                <div class="bg-green-950/80 px-4 py-2 rounded-xl border border-green-700/50 text-right">
+                    <span class="block text-[10px] text-green-300 uppercase font-semibold">Estimated Payout Window</span>
+                    <span class="text-sm font-bold text-emerald-400">40 Working Days SLA</span>
+                </div>
             </div>
 
-            <!-- Program Comparison Table -->
+            <!-- Taqat Submission Timeline & Document Validator -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Step-by-Step Taqat Guide -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white">Taqat Step-by-Step Claim Flow</h3>
+                    <ol class="space-y-3 text-xs text-slate-300 list-decimal list-inside">
+                        <li class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <strong class="text-white">Nafath SSO Access:</strong> Log in to the official Taqat portal using Saudi Unified Access.
+                        </li>
+                        <li class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <strong class="text-white">IBAN Setup:</strong> Verify registered bank IBAN in Faisal's exact legal name.
+                        </li>
+                        <li class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <strong class="text-white">Direct Support Request:</strong> Select "Professional Certifications" &rarr; Google Cloud PMLE.
+                        </li>
+                        <li class="p-3 bg-slate-900/60 rounded-lg border border-slate-800">
+                            <strong class="text-white">Upload PDF Document Package:</strong> Combined PDF (&lt; 5MB) containing PMLE certificate, signed Pearson authorization, and official stamped invoice.
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- Document Checklist & Compliance Rules -->
+                <div class="glass-panel rounded-2xl p-6 space-y-4">
+                    <h3 class="text-lg font-bold text-white">Audit Compliance Checklist</h3>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800 flex items-center justify-between">
+                            <span>PDF Package File Size</span>
+                            <span class="font-bold text-emerald-400">&lt; 5 MB Strict Limit</span>
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800 flex items-center justify-between">
+                            <span>Invoice Authentication</span>
+                            <span class="font-bold text-emerald-400">Must contain corporate logo/stamp</span>
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800 flex items-center justify-between">
+                            <span>Claim Submission Window</span>
+                            <span class="font-bold text-emerald-400">Within 6 months of exam date</span>
+                        </div>
+                        <div class="p-3 bg-slate-900/60 rounded-lg border border-slate-800 flex items-center justify-between">
+                            <span>Lifetime Limit</span>
+                            <span class="font-bold text-amber-400">Max 2 certs per citizen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 8: SAUDI CITIZEN ADVANTAGE HUB -->
+        <section id="tab-citizen" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-yellow-500">
+                <h2 class="text-2xl font-bold text-white">Saudi Citizen Advantage Hub & National Initiatives</h2>
+                <p class="text-xs text-slate-400 mt-1">State-sponsored capacity building programs exclusively for Saudi nationals.</p>
+            </div>
+
+            <!-- Program Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                <!-- Tier 1 -->
-                <div class="glass-panel p-6 rounded-2xl border border-gray-800 flex flex-col justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider block mb-1">Starter Tier</span>
-                        <h3 class="text-xl font-bold text-white mb-2">Free Community Path</h3>
-                        <div class="text-2xl font-bold text-emerald-400 mb-4">$0 USD</div>
-                        <ul class="text-xs text-gray-300 space-y-2.5 mb-6">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 35 Monthly Skills Boost Credits</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> GCP Free Tier ($300 initial credits)</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Free GEAR Developer Program Access</li>
-                            <li class="flex items-center gap-2 text-gray-500"><i class="fa-solid fa-xmark text-red-400"></i> Exam Voucher Excluded ($200 fee)</li>
-                        </ul>
+                <!-- SDAIA Clouder -->
+                <div class="glass-panel rounded-2xl p-6 space-y-3 border-t-2 border-t-saudi-500">
+                    <div class="w-10 h-10 rounded-xl bg-saudi-900/80 text-saudi-400 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-cloud"></i>
                     </div>
-                    <div class="p-3 bg-gray-900 rounded-xl border border-gray-800 text-center text-xs text-gray-400">
-                        Out-of-Pocket: <strong>$200 USD</strong> (Exam fee only)
-                    </div>
+                    <h3 class="text-base font-bold text-white">SDAIA "Clouder" Program</h3>
+                    <p class="text-xs text-slate-400">Multi-tier capability initiative. Level 1 candidates who pass ACE exam within 2 weeks promote to in-person Level 2/3 PDE and ML classes.</p>
                 </div>
 
-                <!-- Tier 2 (Highlighted) -->
-                <div class="glass-panel p-6 rounded-2xl border border-blue-500/40 glow-blue flex flex-col justify-between relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-blue-600 text-white font-bold text-[10px] uppercase px-3 py-1 rounded-bl-lg">
-                        Recommended
+                <!-- MCIT Mostaqbali -->
+                <div class="glass-panel rounded-2xl p-6 space-y-3 border-t-2 border-t-blue-500">
+                    <div class="w-10 h-10 rounded-xl bg-blue-900/80 text-blue-400 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-rocket"></i>
                     </div>
-                    <div>
-                        <span class="text-xs font-bold text-blue-400 uppercase tracking-wider block mb-1">Innovators Plus Subscription</span>
-                        <h3 class="text-xl font-bold text-white mb-2">All-Inclusive Bundle</h3>
-                        <div class="text-2xl font-bold text-blue-400 mb-4">$299 USD / year</div>
-                        <ul class="text-xs text-gray-300 space-y-2.5 mb-6">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 1 Free Certification Exam Voucher ($200 value)</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> $500 Initial Google Cloud Credits</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> $500 Bonus Credits upon passing PMLE</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Unlimited Skills Boost On-Demand Labs</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> 1:1 Cloud Expert Consulting Sessions</li>
-                        </ul>
-                    </div>
-                    <div class="p-3 bg-blue-500/10 rounded-xl border border-blue-500/30 text-center text-xs text-blue-300">
-                        Total Value: <strong>$1,200+ USD</strong> for $299 cost
-                    </div>
+                    <h3 class="text-base font-bold text-white">MCIT "Mostaqbali" Initiative</h3>
+                    <p class="text-xs text-slate-400">National program aiming to train 50,000 Saudi citizens by 2027 with 23 tracks and 300+ hours of guided FutureX digital learning.</p>
                 </div>
 
-                <!-- Tier 3 -->
-                <div class="glass-panel p-6 rounded-2xl border border-purple-500/30 flex flex-col justify-between">
-                    <div>
-                        <span class="text-xs font-bold text-purple-400 uppercase tracking-wider block mb-1">GEAR Cohort Path</span>
-                        <h3 class="text-xl font-bold text-white mb-2">Enterprise Sponsored</h3>
-                        <div class="text-2xl font-bold text-purple-300 mb-4">$0 USD (Selected Applicants)</div>
-                        <ul class="text-xs text-gray-300 space-y-2.5 mb-6">
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Instructor-Led Live Review Sessions</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Free Exam Voucher via Cohort Milestones</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Peer Troubleshooting Study Group Access</li>
-                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-400"></i> Direct Gemini Enterprise Agent Platform Access</li>
-                        </ul>
+                <!-- AI & Cloud Kingdom Tour -->
+                <div class="glass-panel rounded-2xl p-6 space-y-3 border-t-2 border-t-amber-500">
+                    <div class="w-10 h-10 rounded-xl bg-amber-900/80 text-amber-400 flex items-center justify-center font-bold text-lg">
+                        <i class="fa-solid fa-map-location-dot"></i>
                     </div>
-                    <div class="p-3 bg-purple-500/10 rounded-xl border border-purple-500/30 text-center text-xs text-purple-300">
-                        Requires Application via Enterprise Employer
-                    </div>
+                    <h3 class="text-base font-bold text-white">AI & Cloud Kingdom Tour</h3>
+                    <p class="text-xs text-slate-400">Regional roadshows across 10 cities outside Riyadh offering week-long hybrid labs and ML pipelines preparation.</p>
                 </div>
-
             </div>
-        </div>
 
-        <!-- TAB 5: ONVUE REMOTE EXAM & NELC PREP -->
-        <div id="view-onvue" class="tab-content hidden space-y-6">
-            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                <h2 class="text-2xl font-bold text-white">Pearson VUE / OnVUE Remote Proctoring Readiness</h2>
-                <p class="text-gray-400 text-sm mt-1">
-                    Compliance checklist to ensure your online exam session is not revoked during remote delivery.
+            <!-- Jadarat Integration Guidance -->
+            <div class="glass-panel rounded-2xl p-6 space-y-3">
+                <h3 class="text-lg font-bold text-white">National Employment Portal (Jadarat) Integration</h3>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Once certified, Faisal's PMLE badge automatically syncs from FutureX LRS to the national <strong>Jadarat</strong> recruitment registry. Government entities and leading Saudi technology enterprises search this verified database for certified local AI talent under Vision 2030 Saudization targets.
                 </p>
             </div>
+        </section>
 
-            <!-- OnVUE System Requirements Checklist -->
-            <div class="glass-panel p-6 rounded-2xl border border-gray-800">
-                <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-list-check text-blue-400"></i> OnVUE Mandatory Pre-Exam Checklist
-                </h3>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    
-                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
-                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
-                        <div>
-                            <span class="font-bold text-gray-200 block">Personal Computer Only (No VMs)</span>
-                            <span class="text-gray-400">Windows 10/11 or macOS 14+. Work-issued laptops often fail due to corporate VPNs/firewalls.</span>
-                        </div>
-                    </label>
-
-                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
-                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
-                        <div>
-                            <span class="font-bold text-gray-200 block">Single Display Monitor Setup</span>
-                            <span class="text-gray-400">Unplug and physically disconnect all external secondary monitors, TVs, and docking stations.</span>
-                        </div>
-                    </label>
-
-                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
-                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
-                        <div>
-                            <span class="font-bold text-gray-200 block">Isolated Lockable Testing Room</span>
-                            <span class="text-gray-400">Clear all papers, books, whiteboards, pens, and smartwatches. No third party may enter during test.</span>
-                        </div>
-                    </label>
-
-                    <label class="p-4 bg-gray-900/60 rounded-xl border border-gray-800 flex items-start gap-3 cursor-pointer hover:border-gray-700">
-                        <input type="checkbox" onchange="toggleChecklist(this)" class="mt-1 accent-blue-500 w-4 h-4 rounded">
-                        <div>
-                            <span class="font-bold text-gray-200 block">Unexpired Government Photo ID</span>
-                            <span class="text-gray-400">Name on photo ID must exactly match the name on your Pearson VUE CM Connect candidate profile.</span>
-                        </div>
-                    </label>
-
-                </div>
+        <!-- TAB 9: EXAM DIAGNOSTIC QUIZ -->
+        <section id="tab-quiz" class="tab-content hidden space-y-6">
+            <div class="glass-panel rounded-2xl p-6 border-l-4 border-l-red-500">
+                <h2 class="text-2xl font-bold text-white">Interactive PMLE Diagnostic Exam Scenario Simulator</h2>
+                <p class="text-xs text-slate-400 mt-1">Test your scenario resolution skills against real-world Google Cloud PMLE architectural challenges.</p>
             </div>
 
-            <!-- Regional Specifics: Saudi Arabia NeLC & FutureX Integration -->
-            <div class="glass-panel p-6 rounded-2xl border border-amber-500/30">
-                <div class="flex items-center gap-3 mb-3">
-                    <div class="p-2 bg-amber-500/20 text-amber-400 rounded-lg border border-amber-500/30">
-                        <i class="fa-solid fa-building-columns text-xl"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-white">Saudi Arabia Regulatory Pathway (NeLC & FutureX)</h3>
-                        <p class="text-xs text-gray-400">Specific steps for candidates taking the exam within KSA</p>
-                    </div>
+            <!-- Quiz Container Shell -->
+            <div id="quiz-card" class="glass-panel rounded-2xl p-6 space-y-6">
+                <!-- Dynamic Question Content -->
+                <div id="quiz-question-container">
+                    <!-- Populated via JS -->
                 </div>
-
-                <ol class="list-decimal list-inside text-xs text-gray-300 space-y-2">
-                    <li>Register and secure authorization through the <strong>National eLearning Center (NeLC)</strong> portal.</li>
-                    <li>Upon NeLC eligibility clearance, receive login authorization credentials for Pearson VUE.</li>
-                    <li>Schedule and complete your OnVUE remote proctored examination session.</li>
-                    <li>Upon passing, your official credential publishes to your <strong>FutureX National E-Learning Platform</strong> profile within 5 business days.</li>
-                </ol>
             </div>
-
-        </div>
+        </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="glass-panel border-t border-gcp-border py-6 mt-12 text-xs text-gray-400">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p>Google Cloud Professional Machine Learning Engineer Certification Pathway</p>
-            <p class="text-gray-600">Updated for 2026 Gemini Enterprise Agent Platform, Pearson VUE, & Agent Development Kit Stack.</p>
+    <footer class="glass-panel border-t border-slate-800/80 text-center py-6 text-xs text-slate-500 mt-12">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p>PMLE KSA Portal &bull; Designed for Faisal &bull; Fully Aligned with KSA Vision 2030 Digital Capacity Building</p>
+            <p class="text-[10px] text-slate-600">Built for Google Cloud Professional Machine Learning Engineer Certification Prep & HRDF Hadaf Integration</p>
         </div>
     </footer>
 
-    <!-- JavaScript Application Logic -->
     <script>
-        
-        // 12-Week Planner Data Structure
-        const WEEKS_DATA = [
+        // Global Study Plan Data
+        const studyPlan = [
+            { week: 1, title: "Python & Vector Foundations", tasks: ["Kaggle Python Course", "NumPy & Pandas Array Operations"], domain: "Foundations" },
+            { week: 2, title: "Mathematics for ML", tasks: ["Linear Algebra & Matrix Transformations", "Multivariate Calculus & Backprop"], domain: "Foundations" },
+            { week: 3, title: "GCP Storage & Compute", tasks: ["Google Cloud Tour Lab", "Cloud Storage & BigQuery IAM Roles"], domain: "Cloud Fundamentals" },
+            { week: 4, title: "Data Pipelines at Scale", tasks: ["Dataflow Apache Beam Pipelines", "Dataproc Spark Clusters"], domain: "Cloud Fundamentals" },
+            { week: 5, title: "Low-Code AI & BigQuery ML", tasks: ["Create ML Models with BigQuery ML Badge", "SQL-based Feature Engineering"], domain: "Low-Code AI" },
+            { week: 6, title: "AutoML & Model Garden", tasks: ["AutoML Tabular & Vision Training", "Model Garden Model Selection"], domain: "Low-Code AI" },
+            { week: 7, title: "Prototyping & Notebooks", tasks: ["Colab Enterprise & Workbench Setup", "Custom Containerization (Artifact Registry)"], domain: "Scaling Models" },
+            { week: 8, title: "Distributed GPU/TPU Training", tasks: ["Data vs Model Parallelism", "PyTorch/TensorFlow Distributed Jobs"], domain: "Scaling Models" },
+            { week: 9, title: "Model Serving & Endpoints", tasks: ["Online Prediction Endpoints Autoscaling", "Batch Prediction Processing Pipelines"], domain: "Serving & MLOps" },
+            { week: 10, title: "Pipeline Automation & CI/CD", tasks: ["Agent Platform Pipelines & Kubeflow", "Cloud Build Continuous Retraining"], domain: "Serving & MLOps" },
+            { week: 11, title: "Generative AI & Gemini ADK", tasks: ["Agent Development Kit (ADK) Micro-Agents", "Memory Bank & Grounding Engine"], domain: "GenAI & Agents" },
+            { week: 12, title: "Monitoring, Safety & Exam Drill", tasks: ["Vertex Model Monitoring & Model Armor", "Pearson VUE OnVUE Timed Exam Drills"], domain: "Monitoring & Review" }
+        ];
+
+        // Quiz Questions Data
+        const quizQuestions = [
             {
-                week: 1,
-                title: "Week 1: Software & Vector Math Fundamentals",
-                domain: "Phase 1: Foundations",
-                tasks: [
-                    "Complete Kaggle Learn Python & Pandas Data manipulation tracks",
-                    "Practice high-dimensional array operations with NumPy (dot products, reshapes)",
-                    "Audit Stanford CS229 or MIT OpenCourseWare Machine Learning introduction videos"
-                ]
+                id: 1,
+                question: "A custom computer vision training job running on a Compute Engine GPU instance fails with 'ResourceExhaustedError: Out Of Memory (OOM)' during backpropagation. What is the immediate architectural fix?",
+                options: [
+                    "Increase the learning rate parameter",
+                    "Reduce the training batch size or implement gradient accumulation",
+                    "Migrate training dataset from Cloud Storage to BigQuery",
+                    "Disable Model Armor inline security boundary"
+                ],
+                correct: 1,
+                explanation: "High batch sizes exhaust the physical VRAM of accelerator GPUs. Downscaling batch size or using gradient accumulation directly decreases active memory footprint during tensor backpropagation."
             },
             {
-                week: 2,
-                title: "Week 2: Quantitative Evaluation Metrics",
-                domain: "Phase 1: Foundations",
-                tasks: [
-                    "Master linear regression metrics: MAE, RMSE, and RMSLE penalization rules",
-                    "Understand classification metrics: Precision, Recall, F1-Score, & AUPRC",
-                    "Write custom Python evaluation functions for imbalanced fraud classification"
-                ]
+                id: 2,
+                question: "Six months after deploying a tabular churn model, customer predictions show degraded accuracy. Vertex AI Model Monitoring indicates that feature distributions have shifted over time. What solution restores performance with minimal manual effort?",
+                options: [
+                    "Redesign the model using a deeper neural network topology",
+                    "Configure automated retraining pipelines triggered by Vertex AI Model Monitoring skew alerts",
+                    "Migrate the endpoint to a multi-region deployment",
+                    "Convert online prediction to daily batch prediction"
+                ],
+                correct: 1,
+                explanation: "Data drift and training-serving skew are automatically mitigated by configuring monitoring alerts that trigger automated retraining pipelines (Agent Platform Pipelines) to refresh model weights."
             },
             {
-                week: 3,
-                title: "Week 3: GCP Core Storage & Data Topologies",
-                domain: "Phase 2: Platform Literacy",
-                tasks: [
-                    "Understand Cloud Storage bucket classes (Standard, Nearline, Coldline, Archive)",
-                    "Practice BigQuery SQL querying, partitioning, and clustering strategies",
-                    "Learn Apache Beam principles and Dataflow batch vs. streaming ETL pipelines"
-                ]
-            },
-            {
-                week: 4,
-                title: "Week 4: Low-Code Machine Learning & BQML",
-                domain: "Phase 2: Platform Literacy",
-                tasks: [
-                    "Earn 'Create ML Models with BigQuery ML' Skill Badge on Google Skills Boost",
-                    "Train ARIMA time-series forecasting models using standard SQL in BigQuery",
-                    "Configure AutoML Tabular, Vision, and Text training jobs"
-                ]
-            },
-            {
-                week: 5,
-                title: "Week 5: Prototyping in Colab Enterprise & Workbench",
-                domain: "Phase 3: Custom Scaling",
-                tasks: [
-                    "Set up secure Gemini Enterprise Agent Platform Workbench instances",
-                    "Configure Cloud Storage bucket mounts & Git versioning in notebooks",
-                    "Practice data preprocessing with scikit-learn pipelines"
-                ]
-            },
-            {
-                week: 6,
-                title: "Week 6: Custom Containerization & Artifact Registry",
-                domain: "Phase 3: Custom Scaling",
-                tasks: [
-                    "Package custom PyTorch training scripts into Docker containers",
-                    "Push training images to Artifact Registry",
-                    "Submit custom training jobs via Gemini Enterprise Agent Platform SDK"
-                ]
-            },
-            {
-                week: 7,
-                title: "Week 7: Hardware Hardware Selection & Parallelism",
-                domain: "Phase 3: Custom Scaling",
-                tasks: [
-                    "Evaluate CPU vs. GPU (NVIDIA L4/A100) vs. TPU pod computational topologies",
-                    "Study Data Parallelism (PyTorch DDP) vs. Model Parallelism partitioning",
-                    "Configure hyperparameter tuning jobs (Bayesian optimization) on Vertex/Agent Platform"
-                ]
-            },
-            {
-                week: 8,
-                title: "Week 8: Model Serving & Registry Management",
-                domain: "Phase 4: Production MLOps",
-                tasks: [
-                    "Register model artifacts inside Gemini Enterprise Agent Platform Model Registry",
-                    "Deploy PyTorch containers to online inference endpoints with autoscaling",
-                    "Configure batch prediction jobs reading from Cloud Storage and outputting to BigQuery"
-                ]
-            },
-            {
-                week: 9,
-                title: "Week 9: Traffic Splitting, Canary Rollouts & Feature Store",
-                domain: "Phase 4: Production MLOps",
-                tasks: [
-                    "Execute 90/10 traffic splitting rollouts across multiple endpoint model versions",
-                    "Ingest online and offline features into Agent Platform Feature Store",
-                    "Verify feature serving latency and point-in-time correctness to prevent data leakage"
-                ]
-            },
-            {
-                week: 10,
-                title: "Week 10: Automated Pipelines & Cloud Build CI/CD",
-                domain: "Phase 4: Production MLOps",
-                tasks: [
-                    "Build reusable machine learning pipelines using Kubeflow / Agent Platform Pipelines",
-                    "Configure Cloud Build triggers to automatically run unit tests & deploy endpoints",
-                    "Implement automated retraining triggers when performance falls below threshold"
-                ]
-            },
-            {
-                week: 11,
-                title: "Week 11: Gemini Enterprise Agent Platform & Security",
-                domain: "Phase 4: Production MLOps",
-                tasks: [
-                    "Deploy foundation models from Model Garden (Gemini 3.1, Gemma)",
-                    "Configure Grounding Engine using Agent Platform Search for RAG systems",
-                    "Apply Model Armor guardrails and regex safety filters against prompt injections"
-                ]
-            },
-            {
-                week: 12,
-                title: "Week 12: Model Drift Monitoring & Final Exam Drills",
-                domain: "Phase 4: Production MLOps",
-                tasks: [
-                    "Configure Model Monitoring for Training-Serving Skew and Data Drift detection",
-                    "Complete official Google Cloud PMLE Sample Questions",
-                    "Run Pearson VUE OnVUE system diagnostic check and finalize room setup"
-                ]
+                id: 3,
+                question: "An engineer needs to deploy an autonomous conversational agent that retains context across disconnected user sessions and calls external microservices securely without hardcoded credentials. Which Gemini Agent Platform features should be used?",
+                options: [
+                    "BigQuery ML & Dataflow",
+                    "Memory Bank (Sessions API) & Agent Identity (SPIFFE IDs)",
+                    "Vertex AI Feature Store & Cloud Composer",
+                    "Cloud Run & AutoML Vision"
+                ],
+                correct: 1,
+                explanation: "The Memory Bank maintains stateful multi-turn session context, while Agent Identity issues short-lived SPIFFE cryptographic tokens for secure downstream microservice tool calls."
             }
         ];
 
-        // State Management with LocalStorage
-        let appState = JSON.parse(localStorage.getItem('gcp_pmle_state')) || {
-            completedTasks: {},
-            checklistItems: 0
-        };
+        let currentQuizIndex = 0;
+        let selectedAnswers = {};
 
-        function saveState() {
-            localStorage.setItem('gcp_pmle_state', JSON.stringify(appState));
-            updateProgressBars();
-        }
-
-        // Tab Switching Logic
         function switchTab(tabId) {
+            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-                btn.classList.add('bg-gray-800/80', 'text-gray-300');
+            // Remove active styling from all nav buttons
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.classList.remove('bg-saudi-600', 'text-white', 'font-semibold');
+                btn.classList.add('text-slate-300');
             });
 
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-            const activeBtn = document.getElementById(`tab-${tabId}`);
-            activeBtn.classList.add('active');
-            activeBtn.classList.remove('bg-gray-800/80', 'text-gray-300');
+            // Show target tab
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) targetTab.classList.remove('hidden');
+
+            // Highlight target button
+            const targetBtn = document.getElementById('btn-' + tabId);
+            if (targetBtn) {
+                targetBtn.classList.add('bg-saudi-600', 'text-white', 'font-semibold');
+                targetBtn.classList.remove('text-slate-300');
+            }
+
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
         }
 
-        // Render 12-Week Interactive Planner Cards
-        function renderPlanner(filter = 'all') {
-            const container = document.getElementById('plannerWeeksContainer');
+        function calculateRegressionMetrics() {
+            const inputVal = document.getElementById('regression-input').value.trim();
+            const lines = inputVal.split('\n');
+            let actuals = [], preds = [];
+
+            lines.forEach(line => {
+                const parts = line.split(',');
+                if (parts.length >= 2) {
+                    const a = parseFloat(parts[0]);
+                    const p = parseFloat(parts[1]);
+                    if (!isNaN(a) && !isNaN(p)) {
+                        actuals.push(a);
+                        preds.push(p);
+                    }
+                }
+            });
+
+            if (actuals.length === 0) {
+                document.getElementById('res-mae').innerText = 'Err';
+                document.getElementById('res-rmse').innerText = 'Err';
+                document.getElementById('res-rmsle').innerText = 'Err';
+                return;
+            }
+
+            const n = actuals.length;
+            let sumAbsErr = 0;
+            let sumSqErr = 0;
+            let sumSqLogErr = 0;
+
+            for (let i = 0; i < n; i++) {
+                const absErr = Math.abs(actuals[i] - preds[i]);
+                sumAbsErr += absErr;
+                sumSqErr += Math.pow(actuals[i] - preds[i], 2);
+
+                const logAct = Math.log(Math.max(0, actuals[i]) + 1);
+                const logPred = Math.log(Math.max(0, preds[i]) + 1);
+                sumSqLogErr += Math.pow(logAct - logPred, 2);
+            }
+
+            const mae = sumAbsErr / n;
+            const rmse = Math.sqrt(sumSqErr / n);
+            const rmsle = Math.sqrt(sumSqLogErr / n);
+
+            document.getElementById('res-mae').innerText = mae.toFixed(2);
+            document.getElementById('res-rmse').innerText = rmse.toFixed(2);
+            document.getElementById('res-rmsle').innerText = rmsle.toFixed(3);
+        }
+
+        function calculateClassificationMetrics() {
+            const tp = parseFloat(document.getElementById('input-tp').value) || 0;
+            const fp = parseFloat(document.getElementById('input-fp').value) || 0;
+            const fn = parseFloat(document.getElementById('input-fn').value) || 0;
+            const tn = parseFloat(document.getElementById('input-tn').value) || 0;
+
+            document.getElementById('val-tp').innerText = tp;
+            document.getElementById('val-fp').innerText = fp;
+            document.getElementById('val-fn').innerText = fn;
+            document.getElementById('val-tn').innerText = tn;
+
+            const precision = (tp + fp) > 0 ? (tp / (tp + fp)) * 100 : 0;
+            const recall = (tp + fn) > 0 ? (tp / (tp + fn)) * 100 : 0;
+            const f1 = (precision + recall) > 0 ? (2 * precision * recall) / (precision + recall) : 0;
+
+            document.getElementById('res-precision').innerText = precision.toFixed(1) + '%';
+            document.getElementById('res-recall').innerText = recall.toFixed(1) + '%';
+            document.getElementById('res-f1').innerText = f1.toFixed(2) + '%';
+        }
+
+        function auditWorkstation() {
+            const os = document.getElementById('chk-os').checked;
+            const net = document.getElementById('chk-net').checked;
+            const disp = document.getElementById('chk-disp').checked;
+            const id = document.getElementById('chk-id').checked;
+
+            const count = [os, net, disp, id].filter(Boolean).length;
+            const textEl = document.getElementById('audit-status-text');
+
+            if (count === 4) {
+                textEl.innerText = '100% OnVUE Compliant - Ready for Exam Scheduling!';
+                textEl.className = 'text-xl font-bold text-emerald-400';
+            } else if (count >= 2) {
+                textEl.innerText = `Partial Compliance (${count}/4 Passed) - Complete remaining checks.`;
+                textEl.className = 'text-xl font-bold text-amber-400';
+            } else {
+                textEl.innerText = 'Incomplete Audit (Select items above)';
+                textEl.className = 'text-xl font-bold text-slate-400';
+            }
+        }
+
+        function renderStudyPlan() {
+            const container = document.getElementById('study-plan-container');
             container.innerHTML = '';
 
-            WEEKS_DATA.forEach(weekItem => {
-                const totalTasks = weekItem.tasks.length;
-                let completedCount = 0;
-
-                weekItem.tasks.forEach((_, idx) => {
-                    if (appState.completedTasks[`w_${weekItem.week}_t_${idx}`]) {
-                        completedCount++;
-                    }
-                });
-
-                const isWeekComplete = completedCount === totalTasks;
-
-                if (filter === 'completed' && !isWeekComplete) return;
-                if (filter === 'incomplete' && isWeekComplete) return;
-
-                const weekCard = document.createElement('div');
-                weekCard.className = `glass-panel p-5 rounded-2xl border ${isWeekComplete ? 'border-emerald-500/40 bg-emerald-950/10' : 'border-gray-800'} transition`;
-
-                let tasksHtml = '';
-                weekItem.tasks.forEach((task, idx) => {
-                    const taskId = `w_${weekItem.week}_t_${idx}`;
-                    const isChecked = !!appState.completedTasks[taskId];
-
-                    tasksHtml += `
-                        <label class="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-900/60 cursor-pointer text-xs text-gray-300">
-                            <input type="checkbox" onchange="toggleTask('${taskId}')" ${isChecked ? 'checked' : ''} class="mt-0.5 accent-blue-500 w-4 h-4 rounded">
-                            <span class="${isChecked ? 'line-through text-gray-500' : ''}">${task}</span>
-                        </label>
-                    `;
-                });
-
-                weekCard.innerHTML = `
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30">${weekItem.domain}</span>
-                        <span class="text-xs font-semibold ${isWeekComplete ? 'text-emerald-400' : 'text-gray-400'}">${completedCount}/${totalTasks} Tasks</span>
+            studyPlan.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'glass-panel p-4 rounded-xl border border-slate-800 space-y-3';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold text-amber-400">WEEK ${item.week}</span>
+                        <span class="px-2 py-0.5 text-[10px] bg-slate-800 text-slate-300 rounded">${item.domain}</span>
                     </div>
-                    <h3 class="text-base font-bold text-white mb-3">${weekItem.title}</h3>
-                    <div class="space-y-1">${tasksHtml}</div>
+                    <h4 class="font-bold text-white text-sm">${item.title}</h4>
+                    <div class="space-y-1.5">
+                        ${item.tasks.map((t, idx) => `
+                            <label class="flex items-center space-x-2 text-xs text-slate-300 cursor-pointer">
+                                <input type="checkbox" onchange="updatePlanProgress()" class="plan-chk w-3.5 h-3.5 rounded accent-amber-500">
+                                <span>${t}</span>
+                            </label>
+                        `).join('')}
+                    </div>
                 `;
-
-                container.appendChild(weekCard);
+                container.appendChild(card);
             });
         }
 
-        function toggleTask(taskId) {
-            appState.completedTasks[taskId] = !appState.completedTasks[taskId];
-            saveState();
-            renderPlanner();
+        function updatePlanProgress() {
+            const allCheckboxes = document.querySelectorAll('.plan-chk');
+            const checked = document.querySelectorAll('.plan-chk:checked');
+            const total = allCheckboxes.length;
+            const percentage = total > 0 ? Math.round((checked.length / total) * 100) : 0;
+
+            document.getElementById('plan-progress-text').innerText = `${percentage}% Completed`;
+            document.getElementById('plan-progress-bar').style.width = `${percentage}%`;
         }
 
-        function filterPlanner(filter) {
-            renderPlanner(filter);
+        function renderQuiz() {
+            const container = document.getElementById('quiz-question-container');
+            const q = quizQuestions[currentQuizIndex];
+
+            container.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between text-xs text-slate-400">
+                        <span>Scenario ${currentQuizIndex + 1} of ${quizQuestions.length}</span>
+                        <span class="text-saudi-400 font-semibold">PMLE Diagnostic Exam</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white">${q.question}</h3>
+                    <div class="space-y-2">
+                        ${q.options.map((opt, idx) => `
+                            <button onclick="selectAnswer(${idx})" class="w-full text-left p-3 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 text-xs text-slate-200 transition-all flex items-center space-x-3">
+                                <span class="w-6 h-6 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center font-bold text-xs">${String.fromCharCode(65 + idx)}</span>
+                                <span>${opt}</span>
+                            </button>
+                        `).join('')}
+                    </div>
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl text-xs space-y-1"></div>
+                </div>
+            `;
         }
 
-        function toggleChecklist(checkbox) {
-            if (checkbox.checked) {
-                appState.checklistItems++;
+        function selectAnswer(index) {
+            const q = quizQuestions[currentQuizIndex];
+            const feedbackEl = document.getElementById('quiz-feedback');
+            feedbackEl.classList.remove('hidden');
+
+            if (index === q.correct) {
+                feedbackEl.className = 'p-4 rounded-xl bg-emerald-950/80 border border-emerald-700/50 text-emerald-200 text-xs space-y-1';
+                feedbackEl.innerHTML = `<strong class="block text-emerald-400"><i class="fa-solid fa-circle-check"></i> Correct Answer!</strong><p>${q.explanation}</p>`;
             } else {
-                appState.checklistItems = Math.max(0, appState.checklistItems - 1);
+                feedbackEl.className = 'p-4 rounded-xl bg-red-950/80 border border-red-700/50 text-red-200 text-xs space-y-1';
+                feedbackEl.innerHTML = `<strong class="block text-red-400"><i class="fa-solid fa-circle-xmark"></i> Incorrect Selection</strong><p>${q.explanation}</p>`;
             }
-            saveState();
         }
 
-        // Calculate Overall Progress
-        function updateProgressBars() {
-            let totalTasks = 0;
-            WEEKS_DATA.forEach(w => totalTasks += w.tasks.length);
-
-            let completedTasks = 0;
-            Object.keys(appState.completedTasks).forEach(k => {
-                if (appState.completedTasks[k]) completedTasks++;
+        window.onload = function() {
+            // Setup Mobile Menu Toggle
+            document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.toggle('hidden');
             });
 
-            const percent = Math.min(100, Math.round((completedTasks / totalTasks) * 100));
+            // Initial Computations
+            calculateRegressionMetrics();
+            calculateClassificationMetrics();
 
-            document.getElementById('overallPercentText').innerText = `${percent}%`;
-            document.getElementById('overallProgressBar').style.width = `${percent}%`;
-
-            document.getElementById('mobilePercentText').innerText = `${percent}%`;
-            document.getElementById('mobileProgressBar').style.width = `${percent}%`;
-        }
-
-        function resetProgress() {
-            if (confirm("Are you sure you want to reset all your roadmap progress?")) {
-                appState = { completedTasks: {}, checklistItems: 0 };
-                saveState();
-                renderPlanner();
-            }
-        }
-
-        // App Initialization
-        window.onload = function() {
-            renderPlanner();
-            updateProgressBars();
+            // Render Interactive Modules
+            renderStudyPlan();
+            renderQuiz();
         };
     </script>
 </body>
